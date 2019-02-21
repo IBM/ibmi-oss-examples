@@ -4,4 +4,4 @@
     cd mynodeapp
     npm i
     node index.js
-## Open browser to access http://yourip:8081/sample.html
+Then browse http://yourip:8081/sample.html
