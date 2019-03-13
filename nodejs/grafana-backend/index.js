@@ -49,7 +49,7 @@ for (let i = 0; i < 5; i += 1) {
     showLine: true,
   };
   annotations.push({
-    title : alldata[i].LSTNAME,
+    title : alldata[i].LSTNAM,
     time : (now - decreaser),
     text : 'text',
     tags : 'tags',
