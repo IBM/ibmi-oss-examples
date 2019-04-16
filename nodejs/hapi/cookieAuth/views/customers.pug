@@ -1,0 +1,26 @@
+extends layout
+
+block content
+  .container-fluid
+    h1 Customer Search
+    .zoomInRight
+      .input-group.search-bar
+        form.navbar-form(id='search' method='get', action='/customers')
+          .input-group.add-on
+            input#search_str.form-control(type='text', name='search_str', value=search_str, size='300' placeholder='Enter Customer Number, Last Name or Zip Code', autofocus)  
+            .input-group-btn
+              button.btn.btn-default(type='submit')
+                i.fa.fa-search
+      div()
+        table.table.table-striped
+          th Customer Number
+          th Last Name
+          th Zip Code
+          th Balance Due
+          each c in customers
+            tr
+              td=c.CUSNUM
+              td=c.LSTNAM
+              td=c.ZIPCOD
+              td=c.BALDUE
+  template(id='csv_export_data')!=JSON.stringify(customers)

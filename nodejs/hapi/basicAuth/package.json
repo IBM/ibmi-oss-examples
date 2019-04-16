@@ -1,0 +1,19 @@
+{
+  "name": "customers",
+  "version": "1.0.0",
+  "description": "Rest API using basic auth",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "hapi": "^18.1.0",
+    "hapi-auth-basic": "^5.0.0",
+    "idb-pconnector": "^1.0.4"
+  },
+  "devDependencies": {
+    "eslint": "^5.15.3",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.16.0"
+  }
+}
