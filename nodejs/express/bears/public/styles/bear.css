@@ -1,0 +1,49 @@
+div {
+    width: 300px;
+    border: 25px solid green;
+    padding: 25px;
+    margin: 25px;
+    background: wheat;
+}
+ol {
+    background: #ff9999;
+    padding: 20px;
+}
+
+ul {
+    background: #3399ff;
+    padding: 20px;
+}
+
+ol li {
+    background: #ffe5e5;
+    padding: 5px;
+    margin-left: 35px;
+    list-style-type: none;
+}
+
+ul li {
+    background: #cce5ff;
+    margin: 5px;
+    list-style-type: none;
+}
+h3 {
+    text-align: center;
+    color: green;
+}
+p {
+    line-height: 0.8;
+    color: green;
+}
+input[type=submit]{
+    color: black;
+    background: #3399ff;
+    padding: 5px;
+}
+input[type=text] {
+    color: black;
+    background: #cce5ff;
+    padding: 5px;
+    margin: 5px;
+    width: 230px;
+}

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif
+        }
+        .col-centered{
+            float: none;
+            margin: 0 auto;
+            }
+        .rowglyph{
+            padding: 10px;
+        }
+        .form-inline{
+            width:50%;
+        }
+        .form-space{
+            margin-left: 15px;
+        }
+        #openAddBookModal{
+            margin-bottom: 10px;
+        }
+        .loader {
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 16px solid #3498db;
+            width: 120px;
+            height: 120px;
+            -webkit-animation: spin 2s linear infinite; /* Safari */
+            animation: spin 2s linear infinite;
+            display: none;
+            }
+        .myTableHeader {
+            background-color: #4CAF50;
+            color: #f3f3f3;
+        }
+
+        .myTable {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .centered {
+            text-align: center;
+        }
+
+        #errorAlert {
+           display: none;
+        }
+
+        #successAlert {
+           display: none;
+        }
+
+        /* Safari */
+        @-webkit-keyframes spin {
+        0% { -webkit-transform: rotate(0deg); }
+        100% { -webkit-transform: rotate(360deg); }
+        }
+
+        @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header"><button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+                <a
+                    class="navbar-brand" href="#">My Books</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="/">Home <span class="sr-only">(current)</span></a></li>
+                    <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-expanded="false">Menu <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="/books">View books</a></li>
+                            <li><a href="/edit">Manage books</a></li>
+                            <li><a href="/appmetrics-dash">Appmetrics dashboard</a></li>
+                            <li><a href="/primes">Primes</a></li>
+                        </ul>
+                    </li>
+                    <% if (locals.isAuthenticated){ %>
+                    <li><a href="/logout">Logout<span class="sr-only">(current)</span></a></li>
+                    <% }%>
+                    <% if (!locals.isAuthenticated){ %>
+                    <li><a href="/login">Login<span class="sr-only">(current)</span></a></li>
+                    <% }%>
+                </ul>
+            </div>
+        </div>
+    </nav>

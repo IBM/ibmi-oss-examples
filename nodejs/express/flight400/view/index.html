@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Flight 400</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/assets/flight400.css">
+    <script src="/assets/flight400.js"></script>
+    <script>
+    </script>
+  </head>
+  <body>
+  <div id="flight400">
+
+  <!-- Tabs -->
+  <div id="tabs">
+    <ul>
+      <li><a href="#tab-welcome">Flight 400</a></li>
+      <li><a href="#tab-flights">Flights</a></li>
+      <li><a href="#tab-depart">Depart</a></li>
+      <li><a href="#tab-return">Return</a></li>
+      <li><a href="#tab-book">Book</a></li>
+      <li><a href="#tab-api">API</a></li>
+    </ul>
+
+    <!-- Welcome tab -->
+    <div id="tab-welcome">
+      <table>
+      <tr><td>Customer:</td><td><input type="text" id="flight400_customer"></td></tr>
+      <tr><td>ID:</td><td><p id="flight400_custid"/></td></tr>
+      </table>
+      <p id="flight400_customer_msg">Partial name will autocomplete. 
+       Only using existing customers. (Not tested with Windows IE).
+      </p>
+    </div>
+
+    <div id="tab-flights">
+      <table>
+      <tr><td><button id="flight400_history">Refresh</button></td><td><select id="flight400_order_list"></select></td></tr>
+      <tr><td><p>Order:</p></td><td class="righty"><p id="flight400_history_order"/></td></tr>
+      <tr><td><p>Agent:</p></td><td class="righty"><p id="flight400_history_agent"/></td></tr>
+      <tr><td><p>Customer:</p></td><td class="righty"><p id="flight400_history_customer"/></td></tr>
+      <tr><td><p>ID:</p></td><td class="righty"><p id="flight400_history_custid"/></td></tr>
+      <tr><td><p>Flight:</p></td><td class="righty"><p id="flight400_history_flight"/></td></tr>
+      <tr><td><p>Depart:</p></td><td class="righty"><p id="flight400_history_datefrom"/></td></tr>
+      <tr><td><p>Tickets:</p></td><td class="righty"><p id="flight400_history_tickets"/></td></tr>
+      <tr><td><p>Service:</p></td><td class="righty"><p id="flight400_history_service"/></td></tr>
+      <tr><td><p>Airline:</p></td><td class="righty"><p id="flight400_history_airline"/></td></tr>
+      <tr><td><p>CityFrom:</p></td><td class="righty"><p id="flight400_history_cityfrom"/></td></tr>
+      <tr><td><p>TimeFrom:</p></td><td class="righty"><p id="flight400_history_timefrom"/></td></tr>
+      <tr><td><p>CityTo:</p></td><td class="righty"><p id="flight400_history_cityto"/></td></tr>
+      <tr><td><p>TimeTo:</p></td><td class="righty"><p id="flight400_history_timeto"/></td></tr>
+      </table>
+      <p id="flight400_history_msg"/>
+    </div>
+
+    <!-- Depart tab -->
+    <div id="tab-depart">
+      <table>
+      <tr><td>From:</td><td><input type="text" id="flight400_depart_from">
+      <tr><td>To:</td><td><input type="text" id="flight400_depart_to">
+      <tr><td>Date:</td><td><input type="text" id="flight400_depart_date">
+      <tr><td>Flight:</td><td><select id="flight400_depart_list"></select>
+      <tr><td>Class:</td><td><select id="flight400_depart_class"></select>
+      </td><tr>
+      <table>
+      <tr>
+      <td>
+      <p>Flight:</p>
+      <p>Price:</p>
+      <p>Tax:</p>
+      <p>Cost:</p>
+      </td>
+      <td class="righty">
+      <p id="flight400_depart_flight"/>
+      <p id="flight400_depart_price"/>
+      <p id="flight400_depart_tax"/>
+      <p id="flight400_depart_cost"/>
+      </td>
+      </tr>
+      </table>
+      </tr>
+      <tr><td>
+      <p id="flight400_depart_msg"/>
+      </td></tr>
+      </table>
+    </div>
+
+    <!-- Return tab -->
+    <div id="tab-return">
+      <table>
+      <tr><td>From:</td><td><input type="text" id="flight400_return_from"></td></tr>
+      <tr><td>To:</td><td><input type="text" id="flight400_return_to"></td></tr>
+      <tr><td>Date:</td><td><input type="text" id="flight400_return_date"></td></tr>
+      <tr><td>Flight:</td><td><select id="flight400_return_list"></select></td></tr>
+      <tr><td>Class:</td><td><select id="flight400_return_class"></select></td></tr>
+      </td><tr>
+      <table>
+      <tr>
+      <td>
+      <p>Flight:</p>
+      <p>Price:</p>
+      <p>Tax:</p>
+      <p>Cost:</p>
+      </td>
+      <td class="righty">
+      <p id="flight400_return_flight"/>
+      <p id="flight400_return_price"/>
+      <p id="flight400_return_tax"/>
+      <p id="flight400_return_cost"/>
+      </td>
+      </tr>
+      </table>
+      </tr>
+      <tr><td>
+      <p id="flight400_return_msg"/>
+      </td></tr>
+      </table>
+    </div>
+
+    <!-- Book tab -->
+    <div id="tab-book">
+      <table>
+      <tr><td><p>Depart:</p></td><td class="righty"><p id="flight400_total_depart_flight"/></td></tr>
+      <tr><td><p>Return:</p></td><td class="righty"><p id="flight400_total_return_flight"/></td></tr>
+      <tr><td><p>Price:</p></td><td class="righty"><p id="flight400_total_price"/></td></tr>
+      <tr><td><p>Tax:</p></td><td class="righty"><p id="flight400_total_tax"/></td></tr>
+      <tr><td><p>Cost:</p></td><td class="righty"><p id="flight400_total_cost"/></td></tr>
+      </table>
+      <br>
+      <button id="flight400_book">Book</button>
+      <p id="flight400_total_msg1"/>
+      <p id="flight400_total_msg2"/>
+    </div>
+
+<!-- API tab -->
+<div id="tab-api">
+<p>
+The following REST API is available for flight400 RPG programs. 
+Students may use REST APIs for Common Academic Initiative programming.
+Refer to Bluemix account link free access for your contest project.
+</p>
+<ul>
+<li><a href="https://ibm.onthehub.com">IBM Academic Initiative</a>- Bluemix for students accounts</li>
+<li><a href="https://github.com/IBM/ibmi-oss-examples">IBM i OSS Examples </a>- reference only, not need for student project</li>
+</ul>
+<p>
+Machines hosting flight 400 (replace myibmi below).
+<ul>
+<li><a href="http://yips.idevcloud.com/flight400/">Yips</a> - Common Yips machine (no profile)</li>
+</ul>
+</p>
+<p>
+<img src="/assets/flight400.png" alt="Flight 400" style="width:800px;height:400px;">
+</p>
+<pre>
+//--------------------
+// GET:/flight400/api
+//--------------------
+// http://myibmi/flight400/api
+// {"message":"hooray! welcome to our api!"}
+
+//--------------------
+// GET:/flight400/api/city
+//--------------------
+
+// GET:/flight400/api/city/initials
+// http://myibmi/flight400/api/city/hou
+// {"ok":true,"status":200,"message":"found (HOU-T)","result":"Houston"}
+// http://myibmi/flight400/api/city/bad
+// {"ok":false,"status":404,"message":"not found (BAD-T)","result":false}
+
+// GET:/flight400/api/city/initials/from|to
+// http://myibmi/flight400/api/city/hou/from
+// {"ok":true,"status":200,"message":"found (HOU-F)","result":"Houston"}
+// http://myibmi/flight400/api/city/bad/to
+// {"ok":false,"status":404,"message":"not found (BAD-F)","result":false}
+
+//--------------------
+// GET:/flight400/api/cities
+//--------------------
+
+// GET:/flight400/api/cities/Alba
+// http://myibmi/flight400/api/cities/Alb
+// {"ok":true,"status":200,"message":"found (Alb-f-12)","result":[
+// {"city":"Albany","initials":"ABY","airline":"AMA"},
+// {"city":"Albuquerque","initials":"ALB","airline":"UNI"},
+// {"city":"Anchorage","initials":"ANC","airline":"NWA"},
+// {"city":"Atlanta","initials":"ATL","airline":"DLT"},
+// {"city":"Atlantic City","initials":"ATC","airline":"UNI"},
+// {"city":"Baltimore","initials":"BLT","airline":"DLT"},
+// {"city":"Billings","initials":"BLL","airline":"UNI"},
+// {"city":"Birmingham","initials":"BRM","airline":"CON"},
+// {"city":"Bismarck","initials":"BMK","airline":"NWA"},
+// {"city":"Boise","initials":"BOS","airline":"NWA"},
+// {"city":"Boston","initials":"BST","airline":"DLT"},
+// {"city":"Bozeman","initials":"BOZ","airline":"UNI"}
+// ]}
+
+// GET:/flight400/api/cities/Alba/from|to
+// http://myibmi/flight400/api/cities/Alba/to
+//{"ok":true,"status":200,"message":"found (Alba-t-12)","result":[
+//{"city":"Albany","initials":"ABY","airline":null},
+//{"city":"Albuquerque","initials":"ALB","airline":null},
+//{"city":"Anchorage","initials":"ANC","airline":null},
+//{"city":"Atlanta","initials":"ATL","airline":null},
+//{"city":"Atlantic City","initials":"ATC","airline":null},
+//{"city":"Baltimore","initials":"BLT","airline":null},
+//{"city":"Billings","initials":"BLL","airline":null},
+//{"city":"Birmingham","initials":"BRM","airline":null},
+//{"city":"Bismarck","initials":"BMK","airline":null},
+//{"city":"Boise","initials":"BOS","airline":null},
+//{"city":"Boston","initials":"BST","airline":null},
+//{"city":"Bozeman","initials":"BOZ","airline":null}
+//]}
+//
+// GET:/flight400/api/cities/Alba/2
+// http://myibmi/flight400/api/cities/Alba/2
+// {"ok":true,"status":200,"message":"found (Alba-f-2)","result":[
+// {"city":"Albany","initials":"ABY","airline":"AMA"},
+// {"city":"Albuquerque","initials":"ALB","airline":"UNI"}
+// ]}
+
+// GET:/flight400/api/cities/Alba/3/from|to
+// http://myibmi/flight400/api/cities/Alba/3/from
+// {"ok":true,"status":200,"message":"found (Alba-f-3)","result":[
+// {"city":"Albany","initials":"ABY","airline":"AMA"},
+// {"city":"Albuquerque","initials":"ALB","airline":"UNI"},
+// {"city":"Anchorage","initials":"ANC","airline":"NWA"}
+// ]}
+
+// GET:/flight400/api/all/from|to
+// http://myibmi/flight400/api/all/from
+// {"ok":true,"status":200,"message":"found (f)","result":[
+// {"city":"Albany"},
+// {"city":"Albuquerque"},
+// :
+// {"city":"Winnipeg"}]}
+
+//--------------------
+// GET:/flight400/api/flights
+//--------------------
+
+// GET:/flight400/api/flights/cityfrom/cityto
+// http://myibmi/flight400/api/flights/Albany/Houston
+// {"ok":true,"status":200,"message":"found (Albany-Houston-07/27/17)","result":[
+// {"airline":"AMA","flight":"4101918","dow":"Th","cityfrom":"ABY","cityto":"HOU","timefrom":"07:19 AM","timeto":"09:19 AM","price":"169"},
+// {"airline":"AMA","flight":"4201919","dow":"Th","cityfrom":"ABY","cityto":"HOU","timefrom":"08:22 AM","timeto":"10:22 AM","price":"179"},
+// {"airline":"AMA","flight":"4301920","dow":"Th","cityfrom":"ABY","cityto":"HOU","timefrom":"09:24 AM","timeto":"11:24 AM","price":"199"},
+// {"airline":"AMA","flight":"4401921","dow":"Th","cityfrom":"ABY","cityto":"HOU","timefrom":"10:27 AM","timeto":"12:27 PM","price":"199"},
+// {"airline":"AMA","flight":"4501922","dow":"Th","cityfrom":"ABY","cityto":"HOU","timefrom":"11:41 AM","timeto":"01:41 PM","price":"299"},
+// {"airline":"AMA","flight":"4601923","dow":"Th","cityfrom":"ABY","cityto":"HOU","timefrom":"01:19 PM","timeto":"03:19 PM","price":"299"},
+// {"airline":"AMA","flight":"4701924","dow":"Th","cityfrom":"ABY","cityto":"HOU","timefrom":"02:47 PM","timeto":"04:47 PM","price":"299"},
+// {"airline":"AMA","flight":"4801925","dow":"Th","cityfrom":"ABY","cityto":"HOU","timefrom":"04:48 PM","timeto":"06:48 PM","price":"269"},
+// {"airline":"AMA","flight":"4901926","dow":"Th","cityfrom":"ABY","cityto":"HOU","timefrom":"06:36 PM","timeto":"08:36 PM","price":"199"}
+// ]}
+// http://myibmi/flight400/api/flights/Bad/Houston
+// {"ok":false,"status":404,"message":"not found (Bad-Houston-07/27/17)","result":false}
+
+// GET:/flight400/api/flights/cityfrom/cityto/mm/dd
+// http://myibmi/flight400/api/flights/Albany/Houston/08/20
+// {"ok":true,"status":200,"message":"found (Albany-Houston-08/20/17)","result":[
+// {"airline":"AMA","flight":"7101945","dow":"Su","cityfrom":"ABY","cityto":"HOU","timefrom":"07:19 AM","timeto":"09:19 AM","price":"169"},
+// {"airline":"AMA","flight":"7201946","dow":"Su","cityfrom":"ABY","cityto":"HOU","timefrom":"08:22 AM","timeto":"10:22 AM","price":"179"},
+// {"airline":"AMA","flight":"7301947","dow":"Su","cityfrom":"ABY","cityto":"HOU","timefrom":"09:24 AM","timeto":"11:24 AM","price":"199"},
+// {"airline":"AMA","flight":"7401948","dow":"Su","cityfrom":"ABY","cityto":"HOU","timefrom":"10:27 AM","timeto":"12:27 PM","price":"199"},
+// {"airline":"AMA","flight":"7501949","dow":"Su","cityfrom":"ABY","cityto":"HOU","timefrom":"11:41 AM","timeto":"01:41 PM","price":"299"},
+// {"airline":"AMA","flight":"7601950","dow":"Su","cityfrom":"ABY","cityto":"HOU","timefrom":"01:19 PM","timeto":"03:19 PM","price":"299"},
+// {"airline":"AMA","flight":"7701951","dow":"Su","cityfrom":"ABY","cityto":"HOU","timefrom":"02:47 PM","timeto":"04:47 PM","price":"299"},
+// {"airline":"AMA","flight":"7801952","dow":"Su","cityfrom":"ABY","cityto":"HOU","timefrom":"04:48 PM","timeto":"06:48 PM","price":"269"},
+// {"airline":"AMA","flight":"7901953","dow":"Su","cityfrom":"ABY","cityto":"HOU","timefrom":"06:36 PM","timeto":"08:36 PM","price":"199"}
+// ]}
+
+// GET:/flight400/api/flights/cityfrom/cityto/mm/dd/yy
+// http://myibmi/flight400/api/flights/Albany/Houston/08/20/17
+// {"ok":true,"status":200,"message":"found (Albany-Houston-08/20/17)","result":[
+// {"airline":"AMA","flight":"7101945","dow":"Su","cityfrom":"ABY","cityto":"HOU","timefrom":"07:19 AM","timeto":"09:19 AM","price":"169"},
+// {"airline":"AMA","flight":"7201946","dow":"Su","cityfrom":"ABY","cityto":"HOU","timefrom":"08:22 AM","timeto":"10:22 AM","price":"179"},
+// {"airline":"AMA","flight":"7301947","dow":"Su","cityfrom":"ABY","cityto":"HOU","timefrom":"09:24 AM","timeto":"11:24 AM","price":"199"},
+// {"airline":"AMA","flight":"7401948","dow":"Su","cityfrom":"ABY","cityto":"HOU","timefrom":"10:27 AM","timeto":"12:27 PM","price":"199"},
+// {"airline":"AMA","flight":"7501949","dow":"Su","cityfrom":"ABY","cityto":"HOU","timefrom":"11:41 AM","timeto":"01:41 PM","price":"299"},
+// {"airline":"AMA","flight":"7601950","dow":"Su","cityfrom":"ABY","cityto":"HOU","timefrom":"01:19 PM","timeto":"03:19 PM","price":"299"},
+// {"airline":"AMA","flight":"7701951","dow":"Su","cityfrom":"ABY","cityto":"HOU","timefrom":"02:47 PM","timeto":"04:47 PM","price":"299"},
+// {"airline":"AMA","flight":"7801952","dow":"Su","cityfrom":"ABY","cityto":"HOU","timefrom":"04:48 PM","timeto":"06:48 PM","price":"269"},
+// {"airline":"AMA","flight":"7901953","dow":"Su","cityfrom":"ABY","cityto":"HOU","timefrom":"06:36 PM","timeto":"08:36 PM","price":"199"}
+// ]}
+
+//--------------------
+// GET:/flight400/api/flight
+//--------------------
+
+// GET:/flight400/api/flight/nbr
+// http://myibmi/flight400/api/flight/7769972
+// {"ok":true,"status":200,"message":"found (flight-7769972)",
+// "result":{"airline":"DLT","flight":"7769972","dow":"Su","cityfrom":"HOU","cityto":"ABY","timefrom":"02:33 PM","timeto":"04:33 PM","price":"299"}
+// }
+// http://myibmi/flight400/api/flight/4132425
+// {"ok":false,"status":404,"message":"not found (flight-4132425)","result":false}
+
+//--------------------
+// GET:/flight400/api/customers
+//--------------------
+
+// GET:/flight400/api/customers/name
+// http://myibmi/flight400/api/customers/Bi
+// {"ok":true,"status":200,"message":"found (Bi-S-12)","result":[
+// {"customer":"Bianco, Dawn","custid":"9706"},{"customer":"Bianco, Hurch","custid":"3963"},
+// {"customer":"Bianco, Lonnie","custid":"9808"},{"customer":"Bickle, Darold","custid":"5014"},
+// {"customer":"Bickle, Erna","custid":"9715"},{"customer":"Bickle, Steve","custid":"7788"},
+// {"customer":"Biddison, Epifanio","custid":"5240"},{"customer":"Biddison, Joanne","custid":"40"},
+// {"customer":"Biddison, Ruthetta","custid":"8732"},{"customer":"Biddison, Willis","custid":"8257"},
+// {"customer":"Bielefeldt, Gerd","custid":"3810"},{"customer":"Bielefeldt, Jacqueline","custid":"6062"}
+// ]}
+
+// GET:/flight400/api/customers/name/nbr
+// http://myibmi/flight400/api/customers/Bi/2
+// {"ok":true,"status":200,"message":"found (Bi-S-2)","result":[
+// {"customer":"Bianco, Dawn","custid":"9706"},
+// {"customer":"Bianco, Hurch","custid":"3963"}
+// ]}
+
+//--------------------
+// GET:/flight400/api/customer
+//--------------------
+
+// GET:/flight400/api/customer/nbr
+// http://myibmi/flight400/api/customer/4999
+// {"ok":true,"status":200,"message":"found (findNbr-4999)","result":"Haarstad, Efrain"}
+// http://myibmi/flight400/api/customer/46575
+// {"ok":false,"status":404,"message":"not found (findNbr-46575)","result":false}
+//
+// GET:/flight400/api/customer/Spicer, Diane
+// http://myibmi/flight400/api/customer/Spicer, Diane
+// {"ok":true,"status":200,"message":"found (findName-Spicer, Diane)","result":"6"}
+// http://myibmi/flight400/api/customer/Wilbur
+// {"ok":true,"status":200,"message":"found (findName-Wilbur)","result":"-1"}
+
+//--------------------
+// GET:/flight400/api/price
+//--------------------
+
+// GET:/flight400/api/price/baseprice
+// http://myibmi/flight400/api/price/199
+// {"ok":true,"status":200,"message":"found (price-199-C-1)","result":{"price":"199.00","tax":"7.96","total":"206.96"}}
+
+// GET:/flight400/api/price/baseprice/coach|business|first
+// http://myibmi/flight400/api/price/199/coach
+// {"ok":true,"status":200,"message":"found (price-199-C-1)","result":{"price":"199.00","tax":"7.96","total":"206.96"}}
+//
+// GET:/flight400/api/price/baseprice/nbrtickets
+// http://myibmi/flight400/api/price/199/2
+// {"ok":true,"status":200,"message":"found (price-199-C-2)","result":{"price":"398.00","tax":"15.92","total":"413.92"}}
+
+// GET:/flight400/api/price/baseprice/coach|business|first/nbrtickets
+// http://myibmi/flight400/api/price/199/coach/3
+// {"ok":true,"status":200,"message":"found (price-199-C-3)","result":{"price":"597.00","tax":"23.88","total":"620.88"}}
+
+//--------------------
+// GET:/flight400/api/orders
+//--------------------
+
+// GET:/flight400/api/orders/name
+// http://myibmi/flight400/api/orders/Bi
+// {"ok":true,"status":200,"message":"found (Bi-M-12)","result":[
+// {"order":"4970343","customer":"Bianco, Dawn","depart":"06/18/04"},
+// {"order":"4971985","customer":"Bianco, Dawn","depart":"03/10/04"},
+// {"order":"4980253","customer":"Bianco, Dawn","depart":"02/11/04"},
+// {"order":"5003197","customer":"Bianco, Dawn","depart":"12/17/04"},
+// {"order":"5003607","customer":"Bianco, Dawn","depart":"12/04/04"},
+// {"order":"5020259","customer":"Bianco, Dawn","depart":"04/03/04"},
+// {"order":"5030631","customer":"Bianco, Dawn","depart":"04/09/04"},
+// {"order":"5033896","customer":"Bianco, Dawn","depart":"06/18/04"},
+// {"order":"5036850","customer":"Bianco, Dawn","depart":"03/20/04"},
+// {"order":"5039160","customer":"Bianco, Dawn","depart":"03/20/04"},
+// {"order":"5056490","customer":"Bianco, Dawn","depart":"06/18/04"},
+// {"order":"5059491","customer":"Bianco, Dawn","depart":"10/08/04"}
+// ]}
+// http://myibmi/flight400/api/orders/BAD
+// {"ok":false,"status":404,"message":"not found (BAD-M-12)","result":false}
+
+// GET:/flight400/api/orders/name/nbr
+// http://myibmi/flight400/api/orders/Bi/3
+// {"ok":true,"status":200,"message":"found (Bi-M-3)","result":[
+// {"order":"4970343","customer":"Bianco, Dawn","depart":"06/18/04"},
+// {"order":"4971985","customer":"Bianco, Dawn","depart":"03/10/04"},
+// {"order":"4980253","customer":"Bianco, Dawn","depart":"02/11/04"}
+// ]}
+// http://myibmi/flight400/api/orders/BAD/3
+// {"ok":false,"status":404,"message":"not found (BAD-M-3)","result":false}
+
+// GET:/flight400/api/orders/mm/dd/yy
+// http://myibmi/flight400/api/orders/03/11/04
+// {"ok":true,"status":200,"message":"found (03/11/04-S-12)","result":[
+// {"order":"4971378","customer":"Kiss, Arvester","depart":"03/11/04"},
+// {"order":"4978226","customer":"Merriman, Dawn","depart":"03/11/04"},
+// {"order":"4983029","customer":"Wozniak, Hurshal","depart":"03/11/04"},
+// {"order":"4988749","customer":"Penny, Nolan","depart":"03/11/04"},
+// {"order":"4990505","customer":"Devine, Jared","depart":"03/11/04"},
+// {"order":"4993871","customer":"Penny, Nolan","depart":"03/11/04"},
+// {"order":"4994273","customer":"Norles, Charmaine","depart":"03/11/04"},
+// {"order":"4994745","customer":"Golz, Emery","depart":"03/11/04"},
+// {"order":"4998261","customer":"Norles, Charmaine","depart":"03/11/04"},
+// {"order":"4999445","customer":"Griesman, Shelby","depart":"03/11/04"},
+// {"order":"5003281","customer":"Strom, Karla","depart":"03/11/04"},
+// {"order":"5003627","customer":"Glenn, Adrian","depart":"03/11/04"}
+// ]}
+// http://myibmi/flight400/api/orders/03/11/29
+// {"ok":false,"status":404,"message":"not found (03/11/29-S-12)","result":false}
+
+// GET:/flight400/api/orders/mm/dd/yy/nbr
+// http://myibmi/flight400/api/orders/03/11/04/3
+// {"ok":true,"status":200,"message":"found (03/11/04-S-3)","result":[
+// {"order":"4971378","customer":"Kiss, Arvester","depart":"03/11/04"},
+// {"order":"4978226","customer":"Merriman, Dawn","depart":"03/11/04"},
+// {"order":"4983029","customer":"Wozniak, Hurshal","depart":"03/11/04"}
+// ]}
+// http://myibmi/flight400/api/orders/03/11/29/3
+// {"ok":false,"status":404,"message":"not found (03/11/29-S-3)","result":false}
+
+//--------------------
+// GET:/flight400/api/order
+//--------------------
+
+// GET:/flight400/api/order/nbr
+// http://myibmi/flight400/api/order/4971378
+// "ok":true,"status":200,"message":"found (order-4971378)",
+// "result":{"agent":"2","custid":"9340","flight":"4113661","datefrom":"03/11/04","timefrom":"07:05 AM","tickets":"1","service":"C","order":"4971378"}
+// }
+// http://myibmi/flight400/api/order/497535
+// {"ok":false,"status":404,"message":"not found (order-497535)","result":false}
+
+//--------------------
+// POST:/flight400/api/reserve
+//--------------------
+
+// POST
+// http://myibmi/flight400/api/reserve
+// req.body
+// {"agent":"1","custid":"9340","flight":"4113661","datefrom":"03/11/04","timefrom":"07:05 AM","tickets":"1","service":"C"}
+</pre>
+
+</div>
+
+  </div>
+
+  </div>
+  </body>
+</html>
+

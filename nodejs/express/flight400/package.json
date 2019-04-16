@@ -1,0 +1,9 @@
+{
+    "name": "flight400-example",
+    "main": "server.js",
+    "dependencies": {
+        "express": "^4.16.4",
+        "body-parser": "^1.18.3",
+        "itoolkit": "^0.1.6"
+    }
+}

@@ -1,0 +1,13 @@
+{
+  "name": "silly-hats-example",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "^4.16.4",
+    "body-parser": "^1.18.3",
+    "pug": "^2.0.3",
+    "itoolkit": "^0.1.6"
+  }
+}

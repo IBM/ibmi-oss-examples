@@ -1,0 +1,20 @@
+head
+  title Edit Customer
+  meta(http-equiv="Content-Type", content="text/html; charset=utf-8")
+  script(src="https://unpkg.com/axios/dist/axios.min.js")
+  script(src="/public/js/addUpdateCustomer.js")
+  style(type="text/css").
+    form  { display: table;      }
+    p     { display: table-row;  }
+    label { display: table-cell; }
+    input { display: table-cell; }
+
+a(href='/')
+  button() Back
+
+<h1>New Customer</h1>
+
+include _form
+
+a(href='/customers')
+

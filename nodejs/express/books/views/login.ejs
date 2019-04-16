@@ -1,0 +1,25 @@
+<%- include('includes/header') %>
+
+        <div class="container">
+            <% if (locals.error){ %>
+                <div class="alert alert-danger" role="alert">
+                    <strong><%= error %></strong>
+                  </div>
+            <%}%>
+            <form method="POST" action="/login">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input class="form-control form-inline" id="username" type="text" name="username" placeholder="Enter Username" 
+                        maxlength="20" required/>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input class="form-control form-inline" id="password" type="password" name="password" placeholder="Enter Password" 
+                        maxlength="20" required/>
+                </div>
+                <button class="btn btn-primary" type="submit" name="submit">Login</button>
+            </form>
+        </div>
+
+    </body>
+</html>

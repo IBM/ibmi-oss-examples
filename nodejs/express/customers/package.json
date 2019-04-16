@@ -1,0 +1,14 @@
+{
+  "name": "express-customers-example",
+  "version": "0.0.1",
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "^1.13.3",
+    "express": "^4.12.3",
+    "pug": "^2.0.3",
+    "idb-pconnector": "^1.0.4"
+  },
+  "scripts": {
+    "start": "node app.js"
+  }
+}

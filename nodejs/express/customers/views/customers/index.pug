@@ -1,0 +1,28 @@
+head
+  title Customers
+  meta(http-equiv="Content-Type", content="text/html; charset=utf-8")
+  script(src="https://unpkg.com/axios/dist/axios.min.js")
+  script(src="/public/js/deleteCustomer.js")
+
+
+body
+
+  a(href="/customers/new")
+    button() New Customer
+
+  h1=title
+    table
+      thead
+        tr
+          th Number
+          th Last Name
+          th 
+          th 
+      tbody
+        each row in results
+          tr
+            td: a(href="/customers/" + row.CUSNUM)=row.CUSNUM
+            td= row.LSTNAM
+            td: a(href="/customers/" + row.CUSNUM + "/edit")
+                  button() edit
+            td: button(class="delete-link" id=row.CUSNUM) delete

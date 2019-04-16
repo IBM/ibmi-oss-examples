@@ -1,0 +1,24 @@
+form(id="customer-form" method=formMethod)
+  p 
+    label(for="CUSNUM") Number:
+    if disable
+      input(type="number", id="CUSNUM", value=result.CUSNUM, disabled)
+    else
+      input(type="number", id="CUSNUM", value=result.CUSNUM, required)
+  p
+    label(for="LSTNAM") Last Name:
+    input(type="text", id="LSTNAM", value=result.LSTNAM, required)
+  p 
+    label(for="INIT") Initials:
+    input(type="text", id="INIT", value=result.INIT)
+  p 
+    label(for="STREET") Street:
+    input(type="text", id="STREET", value=result.STREET)
+  p 
+    label(for="CITY") City:
+    input(type="text", id="CITY", value=result.CITY)
+  p 
+    label(for="STATE") State:
+    input(type="text", id="STATE", value=result.STATE)
+  p
+    button(id="form-submit-btn" type="submit") submit
