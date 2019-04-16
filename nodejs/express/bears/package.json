@@ -1,0 +1,13 @@
+{
+  "name": "bears-example",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "setup": "node setup.js"
+  },
+  "dependencies": {
+    "express": "^4.16.4",
+    "body-parser": "^1.18.3",
+    "idb-connector": "^1.1.9"
+  }
+}

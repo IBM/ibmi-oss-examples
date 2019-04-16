@@ -1,0 +1,116 @@
+<%- include('includes/header') %>
+
+    <div class="container">
+        <h1 class="centered"> <%= title%></h1>
+
+        <% if (error) { %>
+            <div class="alert alert-danger" role="alert">
+                    <%= error %>
+            </div>
+        <% }%>
+        
+
+        <% if (!error) { %>
+            <div id="infoAlert" class="alert alert-info" role="alert">
+                    <strong> Use Actions to Add, Update, or Delete Books </strong>
+            </div>
+
+            <button id="openAddBookModal" class="btn btn-success">New Book</button>
+            
+            <div id="errorAlert" class="alert alert-danger" role="alert">
+
+            </div>
+        <% }%>
+
+        <table class="table table-striped table-hover myTable">
+            <thead class="myTableHeader">
+                <tr>
+                    <th>Title</th>
+                    <th>ISBN</th>
+                    <th>Price</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if(data !== null){
+                    data.forEach(function(book , index , array){%>
+
+                    <tr id="bookRow-<%= book.BOOKID%>">
+                        <td id="title-<%= book.BOOKID%>">
+                            <%= book.TITLE%>
+                        </td>
+                        <td id="isbn-<%= book.BOOKID%>">
+                            <%= book.ISBN%>
+                        </td>
+                        <td id="amount-<%= book.BOOKID%>">
+                            <%= book.AMOUNT%>
+                        </td>
+                        <td>
+                            <span id="edit-<%= book.BOOKID%>" class="glyphicon glyphicon-pencil rowglyph"> </span>
+                            <span id="save-<%= book.BOOKID%>" style="display: none" class="glyphicon glyphicon-floppy-disk rowglyph"> </span>
+                            <span id="del-<%= book.BOOKID%>" class="glyphicon glyphicon-trash rowglyph"> </span>
+                        </td>
+                    </tr>
+                    <% })}; %>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="modal fade" id="addBook-modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content" id="info-modal-content">
+                <div class="modal-header">
+                        <h1><strong> New Book Info</strong></h1>
+                </div>
+                <div class="modal-body">
+                    <form class="" id="addBookForm" action="/addBook" method="post" role="form">
+                        
+                        <div class="form-group">
+                            <label class="form-space" for="titleInput">Title:</label>
+                            <input id="titleInput" name="title" type="text" class="form-control form-inline form-space" name="title" placeholder="Enter Title"
+                                required>
+                            </input>
+                        </div>
+
+                        <div class="form-group">
+                                <label class="form-space" for="isbnInput">ISBN:</label>
+                                <input id="isbnInput" name="isbn" type="number" class="form-control form-inline form-space" name="isbn" placeholder="Enter ISBN"
+                                required>
+                        </div>
+
+                        <div class="form-group"> 
+                            <label class="form-space" for="amountInput">Price:</label>
+                            <input id="amountInput" name="amount" type="number" class="form-control form-inline form-space" name="amount"
+                            placeholder="Enter Price" required>
+                        </div>
+
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button data-dismiss="modal" class="btn btn-secondary">Cancel</button>
+                    <button name="" id="submitAddBookBtn" type="submit" class="btn btn-success">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <div class="modal fade" id="deleteBook-modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="deleteH1"></h3>
+                </div>
+                <div class="modal-footer">
+                    <button data-dismiss="modal" class="btn btn-secondary">Cancel</button>
+                    <button name="" id="deleteBookBtn" type="submit" class="btn btn-danger">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script src = "/assets/js/crudTable.js"></script>
+    </body>
+
+    </html>

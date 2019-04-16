@@ -1,0 +1,34 @@
+//- big.jade
+//- This file defines the view of this app.
+//- [prod,cat,desc,photo,price,chat]
+
+doctype html
+html
+  include head
+  include body
+  block content
+    div.large
+      table(border='1')
+        th(colspan='2')= title
+        tr
+          td
+            p=item[2]
+            p="$" + item[4]
+            p
+              img(src=item[3])
+          td
+            p
+              mixin text(name, value, title)
+                key=title
+                input(type="text" id=name name=name value=value)
+              mixin hide(name, value)
+                input(type="hidden" id=name name=name value=value)
+              mixin submit(name, value)
+                input(type="submit" id=name name=name value=value)
+              form(name="input", action="/big", method="post")
+                +submit("do", "chat about hat")
+                +text("chat", null, "?")
+                +hide("prod", item[0])
+            p What people are saying ...
+            p
+              textarea(readonly)=item[5]

@@ -1,0 +1,48 @@
+<%- include('includes/header') %>
+
+        <div class="container">
+            <h1 class="centered"><%= title%></h1>
+
+            <% if (error){ %>
+                <div class="alert alert-danger" role="alert">
+                        <%= error %>
+                </div>
+            <% }%>
+
+            <% if (!locals.isAuthenticated && !error){ %>
+                <div class="alert alert-warning" role="alert">
+                    <strong> 
+                        <a href="/login"> Login</a> to manage books </strong>
+                </div>
+            <% }%>
+            <table class="table table-striped table-hover myTable">
+                <thead class="myTableHeader">
+                    <tr>
+                        <th>Title</th>
+                        <th>ISBN</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if(data !== null){
+                        data.forEach(function(book , index , array){%>
+
+                        <tr id="bookRow-<%= book.BOOKID%>">
+                            <td>
+                                <%= book.TITLE%>
+                            </td>
+                            <td>
+                                <%= book.ISBN%>
+                            </td>
+                            <td>
+                                $<%= book.AMOUNT%>
+                            </td>
+                        </tr>
+                        <% })}; %>
+                </tbody>
+            </table>
+        </div>
+
+    </body>
+
+</html>

@@ -1,0 +1,12 @@
+select {
+    width: 230px;
+}
+td.righty {
+    text-align: right;
+}
+p {
+    line-height: 0.9;
+    margin: 5px;
+}
+
+
