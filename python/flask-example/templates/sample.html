@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Python for i Sample</title>
+<style>
+
+input
+{
+    height:30px;
+    border:#ccc solid 1px
+}
+
+input[type="text"]
+{
+    width:500px
+}
+
+input[type="submit"]
+{
+    margin:1em;
+    width:120px
+}
+</style>
+</head>
+<body>
+    <form name="input" action="query" method="post">
+        <div>SQL Command </div>
+        <input type="text" name="sql" placeholder="SELECT * FROM ..."/>
+        <input type="submit" value="Query"/>
+    </form>
+
+    <form name="input" action="cmd" method="post">
+        <div>CL Command </div>
+        <input type="text" name="cl" placeholder="WRKSYSSTS"/>
+        <input type="submit" value="Run"/>
+    </form>
+</body>
+</html>
