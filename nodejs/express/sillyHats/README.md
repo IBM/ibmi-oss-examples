@@ -81,3 +81,6 @@ Visit `http://HOSTNAME/cgi-bin/xmlcgi.pgm` from a browser. You should see an XML
 
 6. access http://hostname:port/
 
+# YIPS live demo
+
+- [YIPS silly hats](http://yips.idevcloud.com/silly)
