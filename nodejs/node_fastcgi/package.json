@@ -1,0 +1,17 @@
+{
+  "name": "node_fastcgi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "idb-connector": "^1.1.10",
+    "itoolkit": "^0.1.6",
+    "node-fastcgi": "^1.3.3"
+  }
+}
