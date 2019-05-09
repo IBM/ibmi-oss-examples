@@ -19,5 +19,5 @@ const fcgiServer = fcgi.createServer((req, res) => {
     }
   });
 });
-// fcgiServer.listen();  //Local mode
-fcgiServer.listen(8088);  //Remote mode
+fcgiServer.listen();  //Local mode
+//fcgiServer.listen(8088);  //Remote mode
