@@ -26,6 +26,7 @@ let decreaser = 0;
 
 for (let i = 0; i < 5; i += 1) {
   timeserie[i] = { target: alldata[i].LSTNAM, datapoints: []};
+  decreaser = 0;
   for (let y = 0; y <= 100; y += 1) {
     timeserie[i].datapoints.push([
       500 * Math.random(), 
