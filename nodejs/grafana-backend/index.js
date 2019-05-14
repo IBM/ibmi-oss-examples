@@ -3,17 +3,11 @@ const bodyParser = require('body-parser');
 const _ = require('lodash');
 const {dbconn, dbstmt} = require('idb-connector');
 
-const sSql = 'SELECT LSTNAM FROM QIWS.QCUSTCDT';
+const sSql = 'SELECT AVERAGE_CPU_UTILIZATION, ACTIVE_JOBS_IN_SYSTEM, CURRENT_TEMPORARY_STORAGE FROM QSYS2.SYSTEM_STATUS_INFO';
+
 const connection = new dbconn();
 connection.conn('*LOCAL');
 const statement = new dbstmt(connection);
-
-const alldata = statement.execSync(sSql);
-statement.close();
-connection.disconn();
-connection.close();
-
-// console.log(JSON.stringify(alldata));  // for debug
 
 const app = express();
 
@@ -21,20 +15,37 @@ app.use(bodyParser.json());
 
 // Let us build the fake timeserie data
 const timeserie = [];
-let now = Date.now();
-let decreaser = 0;
+timeserie[0] = { target: "CPU Usage", datapoints: []};
+timeserie[1] = { target: "Active Jobs", datapoints: []};
+timeserie[2] = { target: "Temp Storage Usage", datapoints: []};
 
-for (let i = 0; i < 5; i += 1) {
-  timeserie[i] = { target: alldata[i].LSTNAM, datapoints: []};
-  decreaser = 0;
-  for (let y = 0; y <= 100; y += 1) {
-    timeserie[i].datapoints.push([
-      500 * Math.random(), 
-      Math.round((now - decreaser) / 1000) * 1000
-    ]);
-    decreaser += 50000;
-  }
+function updateJSON() {
+  const sys_usage = statement.execSync(sSql);
+  statement.closeCursor();
+  // console.log(JSON.stringify(sys_usage));  // for debug
+
+  const now = Math.round(Date.now() / 1000) * 1000;
+
+  if(timeserie[0].datapoints.length > 500)
+    timeserie[0].datapoints.shift();
+  timeserie[0].datapoints.push([
+    parseFloat(sys_usage[0].AVERAGE_CPU_UTILIZATION), now
+  ]);
+
+  if(timeserie[1].datapoints.length > 500)
+    timeserie[1].datapoints.shift();
+  timeserie[1].datapoints.push([
+    parseInt(sys_usage[0].ACTIVE_JOBS_IN_SYSTEM), now
+  ]);
+
+  if(timeserie[2].datapoints.length > 500)
+    timeserie[2].datapoints.shift();
+  timeserie[2].datapoints.push([
+    parseInt(sys_usage[0].CURRENT_TEMPORARY_STORAGE), now
+  ]);
 }
+
+setInterval(updateJSON, 5000); // Refresh every 5 sec
 // console.log(JSON.stringify(timeserie));  // for debug
 
 // Let us build the fake annotations data
@@ -42,7 +53,7 @@ const annotations = [];
 now = Date.now();
 decreaser = 0;
 
-for (let i = 0; i < 5; i += 1) {
+for (let i = 0; i < timeserie.length; i += 1) {
   let annot = {
     name: 'annotation name',
     enabled: true,
@@ -50,7 +61,7 @@ for (let i = 0; i < 5; i += 1) {
     showLine: true,
   };
   annotations.push({
-    title : alldata[i].LSTNAM,
+    title : "System Usage",
     time : (now - decreaser),
     text : 'text',
     tags : 'tags',
@@ -102,10 +113,6 @@ app.all('/query', (req, res) => {
 
   const tsResult = [];
   let fakeData = timeserie;
-
-  if (req.body.adhocFilters && req.body.adhocFilters.length > 0) {
-    fakeData = countryTimeseries;
-  }
 
   _.each(req.body.targets, (target) => {
     const k = _.filter(fakeData, (t) => {
