@@ -22,12 +22,14 @@ npm -g i node-red
 ## Install the Db2 for i addon
 - Lanuch your browser and visit http://yourip:1880
 - Click the button at the upper-right corner and click Manage palette.
-- On the Install tab, search for db2, and then search for node-red-contrib-db2-for-i, and click Install. 
+- On the Install tab, search and install ***node-red-contrib-db2-for-i*** and ***node-red-dashboard***. 
 
 ## Run the example
 - Click the menu at the upper-right corner and click Import->Clipboard.
 - Select the flow.json file to import to current flow.
 - Click the depoly button at the upper-right corner
-- Visit http://yourip:1880/query?sql=SELECT... to run your qurey
+- Visit http://yourip:1880/ui to see the dashboard
 
-![screen shot](./screenshot.png?raw=true)
+![screen shot](./screenshot1.png?raw=true)
+
+![screen shot](./screenshot2.png?raw=true)
