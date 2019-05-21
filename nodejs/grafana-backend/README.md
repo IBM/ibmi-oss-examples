@@ -15,3 +15,5 @@ Server is listening to port 3333
 3) Add data source (type: SimpleJson) with the IP:port of your IBM i node.js server instance.
 4) Add a dashboard query
 5) Select a serie of `timeserie` from the dropdown list.
+
+![screen shot](./screenshot.png?raw=true)
