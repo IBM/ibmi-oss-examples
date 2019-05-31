@@ -63,7 +63,9 @@ Simulate requests to the express books application with `demo.sh`
 
 `usage: demo.sh host [PORT=4000]`
 
-`demo.sh http://hostname.com`
+`PORT=4000 demo.sh http://hostname.com`
+
+Access appmetrics-dash by visiting `http://hostname:port/appmetrics-dash`
 
 ## Author
 
