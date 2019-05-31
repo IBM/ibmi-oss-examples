@@ -6,7 +6,7 @@
   - **xlsxwriter** `pip3 install xlsxwriter`
 
 # Example
-- `python3 dbtoxlsx -h`
+- `python3 dbtoxlsx.py -h`
 - `python3 dbtoxlsx.py -c "select * From QSYS2.USER_INFO WHERE STATUS = '*ENABLED'" -o /home/test.xlsx `
 
 # Usage
