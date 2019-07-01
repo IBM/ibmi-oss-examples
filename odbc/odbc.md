@@ -48,19 +48,11 @@ The instructions for installing and ODBC driver and manager and the IBM i ODBC d
 
 ### **Driver Manager**
 
-On IBM i, we will be using unixODBC as our driver manager. Like all open-source software, you need to use yum to install these packages, which will require you to be using IBM 7.2 or greater. If you do not yet have yum installed on your system, [please consult the installation guide here.](https://ibm.biz/ibmi-rpms)
-
-To use an ODBC connection on your IBM i system, you will need to install the `unixODBC` package. Additionally, if you want to develop your applications using ODBC connections with connectors like pyODBC for Python or odbc for Node.js. you will have to install `unixODBC-devel` as well.
-
-```bash
-$ yum install unixODBC unixODBC-devel
-```
-
-You now have unixODBC installed on your system. This serves as your driver manager, allowing the ODBC applications you write to communicate with your drivers and from there Db2. 
+On Linux, we will be using unixODBC as our driver manager. Fortunately, unixODBC is automatically pulled in when you install the IBM i Access ODBC Driver for Linux, so there isn't any set up that you have to do for this stage. If you want to develop applications using ODBC packages like pyODBC for Python or odbc for Node.js, you will have to manually use yum to install `unixODBC-devel` as well.
 
 ### **Driver**
 
-Now that you have the driver manager installed, you will have to install the ODBC driver that allows your IBM i machine to use unixODBC to talk to Db2. To get the driver, visit [the IBM i Access - Client Solutions page](https://www-01.ibm.com/support/docview.wss?uid=isg3T1026805) and select **Downloads for IBM i Access Client Solutions**. After logging in and redirected to the IBM I Access Client Solutions download page, select the `Download using http` tab then scroll down and download the **ODBC driver for IBM i 7.2 or later**.  More complete instructions on how to download this driver can be found at [this TechNote on the ODBC Driver for the IBM i PASE environment](https://www-01.ibm.com/support/docview.wss?uid=ibm10885929).
+To get both the unixODBC driver manager and the driver that allows ODBC to talk to Db2 for i, you will have to install the ODBC driver that allows your IBM i machine to use unixODBC to talk to Db2. To get the driver, visit [the IBM i Access - Client Solutions page](https://www-01.ibm.com/support/docview.wss?uid=isg3T1026805) and select **Downloads for IBM i Access Client Solutions**. After logging in and redirected to the IBM I Access Client Solutions download page, select the `Download using http` tab then scroll down and download the **ODBC driver for IBM i 7.2 or later**.  More complete instructions on how to download this driver can be found at [this TechNote on the ODBC Driver for the IBM i PASE environment](https://www-01.ibm.com/support/docview.wss?uid=ibm10885929).
 
 When the driver has been downloaded and unzipped and transferred to your IBM i system, you can run the rpm with yum the same way you would otherwise, but giving it the location of the file instead of the name of the package:
 
@@ -74,11 +66,11 @@ This will install the Db2 ODBC driver onto your IBM i system. It will also creat
 
 ### **Driver Manager**
 
-On Linux, we will be using unixODBC as our driver manager. Fortunately, unixODBC is automatically pulled in when you install the IBM i Access ODBC Driver for Linux, so there isn't any set up that you have to do for this stage.
+On Linux, we will be using unixODBC as our driver manager. Fortunately, unixODBC is automatically pulled in when you install the IBM i Access ODBC Driver for Linux, so there isn't any set up that you have to do for this stage. If you want to develop applications using ODBC packages like pyODBC for Python or odbc for Node.js, you will have to manually use yum to install `unixODBC-devel` as well.
 
 ### **Driver**
 
-To get both the driver manager and the driver that allows ODBC to talk to Db2 for i, you will have to install the IBM i Access ODBC Driver for Linux. To get the driver, visit [the IBM i Access - Client Solutions page](https://www-01.ibm.com/support/docview.wss?uid=isg3T1026805) and select **Downloads for IBM i Access Client Solutions**. After logging in and redirected to the IBM I Access Client Solutions Download page, select the `Download using http` tab then scroll down and download the **ACS Linux App Pkg**.
+To get both the unixODBC driver manager and the driver that allows ODBC to talk to Db2 for i, you will have to install the IBM i Access ODBC Driver for Linux. To get the driver, visit [the IBM i Access - Client Solutions page](https://www-01.ibm.com/support/docview.wss?uid=isg3T1026805) and select **Downloads for IBM i Access Client Solutions**. After logging in and redirected to the IBM I Access Client Solutions Download page, select the `Download using http` tab then scroll down and download the **ACS Linux App Pkg**.
 
 In this package, there is a README that will help explain how to install the driver with either with RPMs or DEBs, depending on your Linux distribution. Just know that when you install the driver, it should pull in all of the packages you need to create an ODBC connection to Db2 for i from your Linux system.
 
