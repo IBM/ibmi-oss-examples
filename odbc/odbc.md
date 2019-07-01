@@ -98,7 +98,7 @@ Now that you have the IBM i Access ODBC Driver installed on your system, you are
 
 ## **Connection Strings**
 
-ODBC uses a connection string with keywords to create a database connection. Keywords are written in UPPERCASE letters, and values passed are separated from the keyword by an equals sign ("`=`") and end with a semi-colon ("`;`"). As long as you are using an ODBC database connector, you should be able to pass an identical connection string in language or technology and be confident that it will correctly connect to Db2 on i. A common connection string may look something like:
+ODBC uses a connection string with keywords to create a database connection. Keywords are case insensitive, and values passed are separated from the keyword by an equals sign ("`=`") and end with a semi-colon ("`;`"). As long as you are using an ODBC database connector, you should be able to pass an identical connection string in language or technology and be confident that it will correctly connect to Db2 on i. A common connection string may look something like:
 
 ```
 DRIVER=IBM i Access ODBC Driver;SYSTEM=my.ibmi.system;UID=foo;PWD=bar;
@@ -151,7 +151,7 @@ DefaultLibraries       = MYLIB
 TrueAutoCommit         = 1
 ```
 
-(**Note:** The name of the driver specified in the `Driver` keyword must match the name of a driver defined in `odbcinst.ini`. The location of this file can also be found using `$ odbcinst -j`. When you install the IBM i Access ODBC Driver on your system, it automatically creates a driver entry of `IBM i Access ODBC Driver` in `odbcinst.ini`, which you should use for all IBM i connections).
+(**Note:** The name of the driver specified in the `Driver` keyword must match the name of a driver defined in `odbcinst.ini`. The location of this file can also be found by running `odbcinst -j` in PASE. When you install the IBM i Access ODBC Driver on your system, it automatically creates a driver entry of `IBM i Access ODBC Driver` in `odbcinst.ini`, which you should use for all IBM i connections).
 
 When installing the IBM i Access ODBC Driver on IBM i, the driver will automatically create a DSN called `[*LOCAL]` in your `odbc.ini`:
 
