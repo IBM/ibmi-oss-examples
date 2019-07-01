@@ -1,6 +1,6 @@
 # **ODBC**
 
-Open Database Connectivity (ODBC) is a standardized API for connecting to databases that is cross-platform and cross-DBMS. By installing an general ODBC driver manager and a driver for your specific DBMS, the code that interacts with the ODBC API can be generalized. This makes ODBC a very powerful tool for both development and for production, as the application can be deployed on any system and talk to any DBMS as long as it has the correct drivers installed.
+Open Database Connectivity (ODBC) is a standardized API for connecting to databases that is cross-platform and cross-DBMS (Database Management System). By installing an general ODBC driver manager and a driver for your specific DBMS, the code that interacts with the ODBC API can be generalized. This makes ODBC a very powerful tool for both development and for production, as the application can be deployed on any system and talk to any DBMS as long as it has the correct drivers installed.
 
 ## **Table of Contents**
 
@@ -13,8 +13,6 @@ Open Database Connectivity (ODBC) is a standardized API for connecting to databa
     * [Driver](#driver-0)
   * [Installation on Linux](#installation-on-linux)
     * [Driver Manager](#driver-manager-1)
-      * [Installation on Linux with RPMs](#installation-on-linux-with-rpms)
-      * [Installation on Linux with debs](#installation-on-linxu-with-debs)
     * [Driver](#driver-1)
   * [Installation on Windows](#installation-on-windows)
     * [Driver Manager](#driver-manager-2)
@@ -28,19 +26,19 @@ Open Database Connectivity (ODBC) is a standardized API for connecting to databa
 
 ## Why ODBC?
 
-For the open-source software team, ODBC is the preferred method of connecting to Db2 on IBM i.
+For the open-source software team, ODBC is the preferred method of connecting to Db2 on i. There are many resons for this, including:
 
-* Because ODBC is cross-platform, it allows you to develop your applications directly on your development machine, whether it's a Linux, Windows, or directly on on IBM i. Database connectors built specifically for IBM i often cannot be built or run on a non-IBM i system.
+* Because ODBC is a technology that is used for more than just IBM i, there are many applications and technologies that are already enabled to use ODBC. Nearly all open-source programming languages (and many non-open-source languages) have some way to connect to databases through an ODBC interface, facilitating interaction with any database that has an ODBC driver (including IBM i).
 
-* When it is time to deploy your application to IBM i, you can simply move your code from your development machine to your IBM i system. Your database commands will remain unchanged, and as long as you have also set up ODBC on the IBM i system, everything will _just work_.
+* Similarly, because ODBC connectors have already been developed for so many languages and frameworks, the IBM i Open-Source Software Team doesn’t have to spend time creating specific Db2 for i connectors for every new technology we deliver on the platform. This means that we can spend more time delivering new software for you and pushing what is possible on IBM i. In the future, most of the packages we develop will require that you use ODBC connections.
 
-* ODBC offers a higher level of connection configuration than is available with CLI-based connectors. This makes it easy for you to change the behavior of Db2 either from on or off system to fit your application's needs.
+* As already mentioned, ODBC is useful if you want to connect to Db2 on i from off-system. Unlike CLI-based connectors, which can only be built on IBM i, ODBC connections can be created from Windows and Linux machines as well. This means that you can develop your applications on one system and then move them to the IBM i when you are ready to deploy them. It also means that you can have the same application running on multiple different platforms that can all communicate with Db2 on i in the same way.
 
-* By moving to ODBC as opposed to an IBM i-only solution, the open-source team can contribute alongside developers working on other systems, making the open-source software available to IBM i users much more robust.
+* Finally, there are many more connection options available for ODBC than on CLI. When you create an ODBC connection through a DSN or a connection string, there are approximately 70 different connection options that can be set. This includes everything from specifying the system, your username, or your password, to defining default libraries and schemas or whether or not stored procedures can be called. A full list of options can be found on the [“Connection string keywords” page of the 7.4 documentation](https://www.ibm.com/support/knowledgecenter/ssw_ibm_i_74/rzaik/connectkeywords.htm).
 
 # **Installation**
 
-The instructions for installing and ODBC driver and manager and the IBM i ODBC driver for Db2 on IBM i will depend on what operating system you are running. Select your operating system below to see setup instructions for getting ODBC on your system and connected to your IBM i.
+The instructions for installing and ODBC driver and manager and the IBM i ODBC driver for Db2 on i will depend on what operating system you are running. Select your operating system below to see setup instructions for getting ODBC on your system and connected to IBM i.
 
 * [Installation on IBM i](#installation-on-ibm-i)
 * [Installation on Linux](#installation-on-linux)
@@ -52,16 +50,7 @@ The instructions for installing and ODBC driver and manager and the IBM i ODBC d
 
 On IBM i, we will be using unixODBC as our driver manager. Like all open-source software, you need to use yum to install these packages, which will require you to be using IBM 7.2 or greater. If you do not yet have yum installed on your system, [please consult the installation guide here.](https://ibm.biz/ibmi-rpms)
 
-To make sure that unixODBC is available (it should be, if you have yum installed), run `yum list available unixODBC*` to get a print out of all packages matching that name:
-
-```bash
-$ yum list available unixODBC*
-Available Packages
-unixODBC.ppc64                          2.3.4-2                     Artifactory 
-unixODBC-devel.ppc64                    2.3.4-2                     Artifactory 
-```
-
-You should see both `unixODBC` and `unixODBC-devel` packages displayed. To develop your applications using ODBC, you will need to download both both of these packages.
+To use an ODBC connection on your IBM i system, you will need to install the `unixODBC` package. Additionally, if you want to develop your applications using ODBC connections with connectors like pyODBC for Python or odbc for Node.js. you will have to install `unixODBC-devel` as well.
 
 ```bash
 $ yum install unixODBC unixODBC-devel
@@ -71,50 +60,27 @@ You now have unixODBC installed on your system. This serves as your driver manag
 
 ### **Driver**
 
-Now that you have the driver manager installed, you will have to install the ODBC driver that allows your IBM i machine to use unixODBC to talk to Db2. To get the driver, visit [the IBM i Access - Client Solutions page](https://www-01.ibm.com/support/docview.wss?uid=isg3T1026805) and select **Downloads for IBM i Access Client Solutions**. After logging in and redirected to the IBM I Access Client Solutions download page, scroll down and download the **ODBC driver for IBM i 7.2 or later**.  More complete instructions on how to download this driver can be found at [this TechNote on the ODBC Driver for the IBM i PASE environment](https://www-01.ibm.com/support/docview.wss?uid=ibm10885929).
+Now that you have the driver manager installed, you will have to install the ODBC driver that allows your IBM i machine to use unixODBC to talk to Db2. To get the driver, visit [the IBM i Access - Client Solutions page](https://www-01.ibm.com/support/docview.wss?uid=isg3T1026805) and select **Downloads for IBM i Access Client Solutions**. After logging in and redirected to the IBM I Access Client Solutions download page, select the `Download using http` tab then scroll down and download the **ODBC driver for IBM i 7.2 or later**.  More complete instructions on how to download this driver can be found at [this TechNote on the ODBC Driver for the IBM i PASE environment](https://www-01.ibm.com/support/docview.wss?uid=ibm10885929).
 
-When the driver has been downloaded and unzipped, you can run the rpm with yum the same way you would otherwise, but giving it the location of the file instead of the name of the package:
+When the driver has been downloaded and unzipped and transferred to your IBM i system, you can run the rpm with yum the same way you would otherwise, but giving it the location of the file instead of the name of the package:
 
 ```bash
 $ yum install <package-location>/ibm-iaccess-<version>.rpm
 ```
 
-This will install the Db2 ODBC driver onto your IBM i system. It will also create a DSN for your local system called `*LOCAL`. This is discussed below.
+This will install the Db2 ODBC driver onto your IBM i system. It will also create a driver entry in your `odbcinst.ini` and a DSN in `odbc.ini` for your local system called `*LOCAL`. This is discussed below.
 
 ## **Installation on Linux**
 
 ### **Driver Manager**
 
-On Linux, we will be using unixODBC as our driver manager. To install, use the package manager that comes with your system and search for `unixODBC*`, which should return all packages available to you that begin with "unixODBC". You will have to download `unixODBC` and `unixODBC-devel` or similar (may be named different things on different Linux distributions).
-
-#### **Installation on Linux with RPMs**
-
-For Linux distributions that use `yum` as their package manager (much like IBM i), the following command and output shows how to check for the correct packages to download:
-
-**yum example**
-```bash
-$ yum list available unixODBC*
-Available Packages
-unixODBC.i686                                2.3.1-11.el7                             RHEL-76-x86_64
-unixODBC-devel.i686                          2.3.1-11.el7                             RHEL-76-x86_64
-```
-
-Once you know what packages are needed, they can be downloaded also through your package manager:
-
-**yum example**
-```bash
-$ yum install unixODBC unixODBC-devel
-```
-
-You now have unixODBC installed on your system
-
-#### **Installation on Linux with debs**
-
-// TODO:
+On Linux, we will be using unixODBC as our driver manager. Fortunately, unixODBC is automatically pulled in when you install the IBM i Access ODBC Driver for Linux, so there isn't any set up that you have to do for this stage.
 
 ### **Driver**
 
-Now that you have the driver manager installed, you will have to install the ODBC driver that allows your IBM i machine to use unixODBC to talk to Db2. To get the driver, visit [the IBM i Access - Client Solutions page](https://www-01.ibm.com/support/docview.wss?uid=isg3T1026805) and select **Downloads for IBM i Access Client Solutions**. After logging in and redirected to the IBM I Access Client Solutions download page, scroll down and download the **ACS Linux App Pkg**.
+To get both the driver manager and the driver that allows ODBC to talk to Db2 for i, you will have to install the IBM i Access ODBC Driver for Linux. To get the driver, visit [the IBM i Access - Client Solutions page](https://www-01.ibm.com/support/docview.wss?uid=isg3T1026805) and select **Downloads for IBM i Access Client Solutions**. After logging in and redirected to the IBM I Access Client Solutions Download page, select the `Download using http` tab then scroll down and download the **ACS Linux App Pkg**.
+
+In this package, there is a README that will help explain how to install the driver with either with RPMs or DEBs, depending on your Linux distribution. Just know that when you install the driver, it should pull in all of the packages you need to create an ODBC connection to Db2 for i from your Linux system.
 
 ## **Installation on Windows**
 
@@ -223,7 +189,7 @@ To create a DSN, select either User DSN or System DSN and then select `Add` on t
 
 ## **DSN in Connection Strings**
 
-With your DSNs now set up, you can use them when connecting to Db2. Many open-source projects have ODBC connectors that allow you to use your DSN to connect to Db2 on IBM i. For example, Node.js has the `odbc` package, Python has `pyodbc`, etc.
+With your DSNs now set up, you can use them when connecting to Db2. Many open-source projects have ODBC connectors that allow you to use your DSN to connect to Db2 on i. For example, Node.js has the `odbc` package, Python has `pyodbc`, etc.
 
 To use your DSN, simply pass a connection string like so to the connection API for the open-source technology and package of your choice:
 
@@ -236,7 +202,7 @@ If you would like to configuration options that extend those listed in your DSN,
 
 ## **Node.js Example**
 
-This quick example will show how your configuration files might look on a non-IBM i machine as your are actively developing against Db2 on IBM i, and then how you would go about transferring that same code to run on your IBM i when you are ready to run in production.
+This quick example will show how your configuration files might look on a non-IBM i machine as your are actively developing against Db2 on i, and then how you would go about transferring that same code to run on IBM i when you are ready to run in production.
 
 For this example, we will be using Node.js and the `odbc` package available on NPM. Node.js is simply used as an example technology, and this same thing could be done with PHP, Python, R, or any other package that has the ability to connect to the ODBC driver manager.
 
@@ -246,7 +212,7 @@ For this example, we will be using Node.js and the `odbc` package available on N
 
 First, you will have to install your driver manager and driver. Steps to do that can be found in the [Windows](#windows.md) or [Linux](./2.linux.md) pages of this tutorial. These pages will also tell you how to set up your Drivers and DSNs, which is a different process depending on if you are on Windows or Linux.
 
-A dummy DSN for connecting to your IBM i might look like:
+A dummy DSN for connecting to IBM i might look like:
 ```ini
 [MYDSN]
 Description            = My dummy IBM i system for this example
@@ -276,7 +242,7 @@ Next, install the `odbc` package, which allows Node.js to talk to your driver ma
 npm install odbc
 ```
 
-You now have everything you need to connect to your IBM i Db2 database from your development machine!
+You now have everything you need to connect to Db2 for i from your development machine!
 
 ## **Development**
 
@@ -288,55 +254,55 @@ const odbc = require('odbc');
 
 odbc.connect('DSN=MYDSN', (error, connection) => {
   if (error) { throw error; }
-  // now have an open connection to your IBM i from any Linux or Windows machine
+  // now have an open connection to IBM i from any Linux or Windows machine
   connection.query('SELECT * FROM QIWS.QCUSTCDT', (error, result) => {
     if (error) { throw error; }
     console.log(result);
   })
 });
 ```
-In this way you can develop remotely instead of directly on your IBM i, while still accessing Db2 on your IBM i.
+In this way you can develop remotely instead of directly on IBM i, while still accessing Db2 for i.
 
-## **Transfer to your IBM i**
+## **Transfer to IBM i**
 
-When you are ready to transfer your program to your IBM i, you just need to make sure you have everything set up on that system.
+When you are ready to transfer your program to IBM i, you just need to make sure you have everything set up on that system.
 
 ### **Driver Manager, Driver, and DSNs**
 
-Like on your development machine, you will have to install your driver manager and driver. Steps to do that can be found in the [IBM i Setup](./2.ibmi.md) page of this tutorial. This page will also tell you where to download the correct Db2 driver and how Drivers and DSNs.
+Like on your development machine, you will have to install your driver manager and driver. Steps to do that can be found in [installation on IBM i](#installation-on-ibm-i) section. This section will also cover instructions for downloading the Db2 for i driver and how to configure your drivers and DSNs.
 
-When working directly on your IBM i system and wanting to connect locally, your DSN in `~/.odbc.ini` may look like:
+When you install the driver on IBM i, you automatically get a DSN labaled `*LOCAL` that is used to connect to the local Db2 on i database using the credentials of the user running the job that the connection is made from. On 7.2 and 7.3, this requires additional PTFs that are outlined in the [installation on IBM i](#installation-on-ibm-i) section. The `*LOCAL` DSN definition looks like:
 
 ```ini
-[MYDSN]
-Description            = This local system
-Driver                 = IBM i Access ODBC Driver
-System                 = localhost
-UserID                 = MYIBMIUSER
-Password               = password1234
-```
+### IBM provided DSN - do not remove this line ###
+[*LOCAL]
+Description = Default IBM i local database
+Driver      = IBM i Access ODBC Driver
+System      = localhost
+UserID      = *CURRENT
+### Start of DSN customization
+### End of DSN customization
+### IBM provided DSN - do not remove this line ###
 
-Note that your Driver name will have to match the name of in your driver list (which is in `/QOpenSys/etc/odbcinst.ini`).
+```
 
 ### Node.js
 
-On IBM i, if you have the open-source environment installed, simply run:
+Below is a simple example of using ODBC with Node.js. On IBM i, if you have the open-source environment installed, simply run:
 
 ```bash
 $ yum install nodejs10
 ```
 
-You will then have Node.js on your system. You simply need to move your code over to your new system, and because we have the same DSN name as we did on our remote development machine, everything will connect the same as it did when you were developing on a different machine!
-
-If you were to give your local machine a different DSN name (something like `[LOCAL]`), you would simply need to change your connection string in your Node.js application:
+You will then have Node.js v10 on your system. You simply need to move your code over to your IBM i system. Because we want to connect to the local database, we change our DSN to be `*LOCAL` instead of `MYDSN`:
 
 **`app.js`**
 ```javascript
 const odbc = require('odbc');
 
-odbc.connect('DSN=LOCAL', (error, connection) => {
+odbc.connect('DSN=*LOCAL', (error, connection) => {
   if (error) { throw error; }
-  // now have an open connection to your IBM i from any Linux or Windows machine
+  // now have an open connection to IBM i from any Linux or Windows machine
   connection.query('SELECT * FROM QIWS.QCUSTCDT', (error, result) => {
     if (error) { throw error; }
     console.log(result);
