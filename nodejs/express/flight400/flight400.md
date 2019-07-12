@@ -37,8 +37,8 @@ An error flght400m service program (IBM error). Please fix for correct operation
 (Note: Fixed on yips.idevcloud.com).
 ```
 fix source, then compile:
-> addlibe flght400
-> addlibe flght400m
+> addlible flght400
+> addlible flght400m
 > CALL PGM(BLDNFS001) PARM(FLGHT400M FLGHT400M)
 > CALL PGM(BLDNFS400) PARM(FLGHT400M FLGHT400M)
 
