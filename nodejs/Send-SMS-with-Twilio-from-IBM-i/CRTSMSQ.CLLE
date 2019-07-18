@@ -1,0 +1,7 @@
+PGM                                                      
+                                                         
+CRTDTAQ    DTAQ(MYLIB/SNDSMSQ) MAXLEN(5000) SEQ(*FIFO) +  
+            SIZE(*MAX2GB) AUTORCL(*YES) +                
+            TEXT('Dataqueue SMS sending') AUT(*USE)      
+                                                         
+ENDPGM                                                   
