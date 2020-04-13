@@ -2,6 +2,8 @@
 
 [![LoopBack](https://github.com/strongloop/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png)](http://loopback.io/)
 
+This example shows how to manipulate DB2 data with the Loopback framework on IBM i. For more details, please refer to the manual  https://loopback.io/doc/en/lb4/DB2-for-i-connector.html
+
 # Prerequisite
 
 ## Installing Node.js
