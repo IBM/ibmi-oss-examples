@@ -33,4 +33,4 @@ Call `PORT=8099 npm start` to start the loopback server.
 # API Explorer
 Visit http://yourip:8099/explorer/ to verify the created APIs.
 
-Or directly call `curl -X GET "http://ut25bp17.rch.stglabs.ibm.com:8099/todos/0" -H "accept: application/json"` to view the response.
+Or directly call `curl -X GET "http://yourip:8099/todos/0" -H "accept: application/json"` to view the response.
