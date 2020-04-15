@@ -15,6 +15,8 @@ This example shows how to manipulate DB2 data with the Loopback framework on IBM
 ## Installing ODBC driver
 `yum install unixODBC-devel`
 
+For more details about how to enable the ODBC driver on IBM i, please refer to this manual -- https://www.ibm.com/support/pages/odbc-driver-ibm-i-pase-environment
+
 # Install
 In the root of the todo-list directory, call `npm i` to install the dependencies.
 
