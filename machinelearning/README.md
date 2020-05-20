@@ -5,7 +5,8 @@
 ## How to setup your environment of ML on i
 + Here's where we can  [setup RPM](http://ibm.biz/ibmi-rpms
 ) env on i. 
-+ After setup the RPM env on i, we need to install following packages by yum.
++ After setup the RPM env on i, we need to install following packages by yum. A [detail instruction](https://www.ibmsystemsmag.com/IT-Strategy/11/2019/How-to-Start-ml-on-IBM-i?utm_content=105130364&utm_medium=social&utm_source=twitter&hss_channel=tw-488711278
+) is also available.
 ---
 Package|Description|Comments
 --|:--|:--
