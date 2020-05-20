@@ -1,1 +1,544 @@
-[{"id":"5ae2424d.d2e8dc","type":"tab","label":"流程1","disabled":false,"info":""},{"id":"87d1c5dd.c924e8","type":"ui_chart","z":"5ae2424d.d2e8dc","name":"","group":"1514d157.d8bebf","order":1,"width":"0","height":"0","label":"Top 10 CPU consumers (%)","chartType":"horizontalBar","legend":"false","xformat":"HH:mm:ss","interpolate":"linear","nodata":"","dot":false,"ymin":"","ymax":"","removeOlder":1,"removeOlderPoints":"","removeOlderUnit":"3600","cutout":0,"useOneColor":false,"colors":["#1f77b4","#aec7e8","#ff7f0e","#2ca02c","#98df8a","#d62728","#ff9896","#9467bd","#c5b0d5"],"useOldStyle":false,"outputs":1,"x":880,"y":405,"wires":[[]]},{"id":"abe36f37.30f7e","type":"inject","z":"5ae2424d.d2e8dc","name":"Top 10 CPU consumers","topic":"CPU","payload":"SELECT JOB_NAME, ELAPSED_CPU_PERCENTAGE     FROM TABLE(ACTIVE_JOB_INFO()) x     ORDER BY ELAPSED_CPU_PERCENTAGE DESC     FETCH FIRST 10 ROWS ONLY;","payloadType":"str","repeat":"10","crontab":"","once":true,"onceDelay":0.1,"x":194,"y":404,"wires":[["28f1972f.23ebd8","c2aea41f.ce0a88"]]},{"id":"28f1972f.23ebd8","type":"DB2 for i","z":"5ae2424d.d2e8dc","mydb":"57e0f8fb.55fa38","name":"Local_DB","arraymode":true,"x":470,"y":405,"wires":[["31816254.e69f9e"]]},{"id":"31816254.e69f9e","type":"function","z":"5ae2424d.d2e8dc","name":"Prepare Data","func":"var m = {};\n\nm.series =[];\nm.data=[];\nm.labels=[];\nvar datatemp=[]; \nmsg.payload.forEach(function(row) {\n    datatemp.push(parseFloat(row.ELAPSED_CPU_PERCENTAGE) * 10);\n    m.labels.push(row.JOB_NAME);\n});\nm.data.push(datatemp);\nm.series.push(\"CPU usage\");\n\nreturn {payload:[m]};","outputs":1,"noerr":0,"x":666,"y":405,"wires":[["87d1c5dd.c924e8"]]},{"id":"fdaa9ba9.e34fe8","type":"ui_chart","z":"5ae2424d.d2e8dc","name":"","group":"3ad41f57.d5c58","order":2,"width":"0","height":"0","label":"Top 10 Storage consumers","chartType":"pie","legend":"false","xformat":"HH:mm:ss","interpolate":"linear","nodata":"","dot":false,"ymin":"","ymax":"","removeOlder":1,"removeOlderPoints":"","removeOlderUnit":"3600","cutout":"0","useOneColor":false,"colors":["#1f77b4","#aec7e8","#ff7f0e","#2ca02c","#98df8a","#d62728","#ff9896","#9467bd","#c5b0d5"],"useOldStyle":false,"outputs":1,"x":879,"y":464,"wires":[[]]},{"id":"c454cedc.ba354","type":"inject","z":"5ae2424d.d2e8dc","name":"Top 10 Storage consumers","topic":"Storage","payload":"SELECT A.AUTHORIZATION_NAME, SUM(A.STORAGE_USED) AS TOTAL_STORAGE_USED, B.TEXT_DESCRIPTION,     B.ACCOUNTING_CODE, B.MAXIMUM_ALLOWED_STORAGE     FROM QSYS2.USER_STORAGE A INNER     JOIN QSYS2.USER_INFO B ON B.USER_NAME = A.AUTHORIZATION_NAME     WHERE B.USER_NAME NOT LIKE 'Q%'     GROUP BY A.AUTHORIZATION_NAME, B.TEXT_DESCRIPTION, B.ACCOUNTING_CODE, B.MAXIMUM_ALLOWED_STORAGE     ORDER BY TOTAL_STORAGE_USED DESC     FETCH FIRST 10 ROWS ONLY;","payloadType":"str","repeat":"600","crontab":"","once":true,"onceDelay":"2.1","x":185,"y":464,"wires":[["58e386c2.e2bb68","e40fe3d1.f61c5"]]},{"id":"58e386c2.e2bb68","type":"DB2 for i","z":"5ae2424d.d2e8dc","mydb":"57e0f8fb.55fa38","name":"Local_DB","arraymode":true,"x":469,"y":464,"wires":[["9e36e805.65a5b8"]]},{"id":"9e36e805.65a5b8","type":"function","z":"5ae2424d.d2e8dc","name":"Prepare Data","func":"var m = {};\n\nm.series =[];\nm.data=[];\nm.labels=[];\nvar datatemp=[]; \nmsg.payload.forEach(function(row) {\n    datatemp.push(parseInt(row.TOTAL_STORAGE_USED));\n    m.labels.push(row.AUTHORIZATION_NAME);\n});\nm.data.push(datatemp);\nm.series.push(\"Storage usage\");\n\nreturn {payload:[m]};","outputs":1,"noerr":0,"x":665,"y":464,"wires":[["fdaa9ba9.e34fe8"]]},{"id":"516acd73.82d8d4","type":"ui_chart","z":"5ae2424d.d2e8dc","name":"","group":"1514d157.d8bebf","order":2,"width":"0","height":"0","label":"Top 10 Temp Storage consumers (MB)","chartType":"horizontalBar","legend":"false","xformat":"HH:mm:ss","interpolate":"linear","nodata":"","dot":false,"ymin":"","ymax":"","removeOlder":1,"removeOlderPoints":"","removeOlderUnit":"3600","cutout":0,"useOneColor":false,"colors":["#1f77b4","#aec7e8","#ff7f0e","#2ca02c","#98df8a","#d62728","#ff9896","#9467bd","#c5b0d5"],"useOldStyle":false,"outputs":1,"x":910,"y":522,"wires":[[]]},{"id":"8cb41ac8.23fbe8","type":"inject","z":"5ae2424d.d2e8dc","name":"Top 10 Temp Storage consumers","topic":"Memory","payload":"SELECT JOB_NAME, AUTHORIZATION_NAME, TEMPORARY_STORAGE, J.*     FROM TABLE(QSYS2.ACTIVE_JOB_INFO()) J     WHERE JOB_TYPE <> 'SYS'     ORDER BY TEMPORARY_STORAGE DESC LIMIT 10;","payloadType":"str","repeat":"10","crontab":"","once":true,"onceDelay":"5.1","x":165,"y":523,"wires":[["4399db4.ca0ff24","3bc1f60d.05633a"]]},{"id":"4399db4.ca0ff24","type":"DB2 for i","z":"5ae2424d.d2e8dc","mydb":"57e0f8fb.55fa38","name":"Local_DB","arraymode":true,"x":470,"y":522,"wires":[["de1d40ad.42e9f"]]},{"id":"de1d40ad.42e9f","type":"function","z":"5ae2424d.d2e8dc","name":"Prepare Data","func":"var m = {};\n\nm.series =[];\nm.data=[];\nm.labels=[];\nvar datatemp=[]; \nmsg.payload.forEach(function(row) {\n    datatemp.push(parseInt(row.TEMPORARY_STORAGE));\n    m.labels.push(row.JOB_NAME);\n});\nm.data.push(datatemp);\nm.series.push(\"Temp storage usage\");\n\nreturn {payload:[m]};","outputs":1,"noerr":0,"x":666,"y":522,"wires":[["516acd73.82d8d4"]]},{"id":"7c4a8278.f2440c","type":"ui_chart","z":"5ae2424d.d2e8dc","name":"","group":"72b5e8f.2ab8d18","order":1,"width":"0","height":"0","label":"Top 10 CPU consumers (%)","chartType":"horizontalBar","legend":"false","xformat":"HH:mm:ss","interpolate":"linear","nodata":"","dot":false,"ymin":"","ymax":"","removeOlder":1,"removeOlderPoints":"","removeOlderUnit":"3600","cutout":0,"useOneColor":false,"colors":["#1f77b4","#aec7e8","#ff7f0e","#2ca02c","#98df8a","#d62728","#ff9896","#9467bd","#c5b0d5"],"useOldStyle":false,"outputs":1,"x":878,"y":623,"wires":[[]]},{"id":"c2aea41f.ce0a88","type":"DB2 for i","z":"5ae2424d.d2e8dc","mydb":"6f3fabdf.122914","name":"RemoteSys01","arraymode":true,"x":488,"y":623,"wires":[["b17a1386.3faa"]]},{"id":"b17a1386.3faa","type":"function","z":"5ae2424d.d2e8dc","name":"Prepare Data","func":"var m = {};\n\nm.series =[];\nm.data=[];\nm.labels=[];\nvar datatemp=[]; \nmsg.payload.forEach(function(row) {\n    datatemp.push(parseFloat(row.ELAPSED_CPU_PERCENTAGE) * 10);\n    m.labels.push(row.JOB_NAME);\n});\nm.data.push(datatemp);\nm.series.push(\"CPU usage\");\n\nreturn {payload:[m]};","outputs":1,"noerr":0,"x":664,"y":623,"wires":[["7c4a8278.f2440c"]]},{"id":"a31095a1.e52758","type":"ui_chart","z":"5ae2424d.d2e8dc","name":"","group":"f82317e4.0e81b8","order":2,"width":"0","height":"0","label":"Top 10 Storage consumers","chartType":"pie","legend":"false","xformat":"HH:mm:ss","interpolate":"linear","nodata":"","dot":false,"ymin":"","ymax":"","removeOlder":1,"removeOlderPoints":"","removeOlderUnit":"3600","cutout":0,"useOneColor":false,"colors":["#1f77b4","#aec7e8","#ff7f0e","#2ca02c","#98df8a","#d62728","#ff9896","#9467bd","#c5b0d5"],"useOldStyle":false,"outputs":1,"x":877,"y":681,"wires":[[]]},{"id":"539ef9a5.b94798","type":"function","z":"5ae2424d.d2e8dc","name":"Prepare Data","func":"var m = {};\n\nm.series =[];\nm.data=[];\nm.labels=[];\nvar datatemp=[]; \nmsg.payload.forEach(function(row) {\n    datatemp.push(parseInt(row.TOTAL_STORAGE_USED));\n    m.labels.push(row.AUTHORIZATION_NAME);\n});\nm.data.push(datatemp);\nm.series.push(\"Storage usage\");\n\nreturn {payload:[m]};","outputs":1,"noerr":0,"x":663,"y":681,"wires":[["a31095a1.e52758"]]},{"id":"8a328e95.e75bb","type":"ui_chart","z":"5ae2424d.d2e8dc","name":"","group":"72b5e8f.2ab8d18","order":2,"width":"0","height":"0","label":"Top 10 Temp Storage consumers (MB)","chartType":"horizontalBar","legend":"false","xformat":"HH:mm:ss","interpolate":"linear","nodata":"","dot":false,"ymin":"","ymax":"","removeOlder":1,"removeOlderPoints":"","removeOlderUnit":"3600","cutout":0,"useOneColor":false,"colors":["#1f77b4","#aec7e8","#ff7f0e","#2ca02c","#98df8a","#d62728","#ff9896","#9467bd","#c5b0d5"],"useOldStyle":false,"outputs":1,"x":908,"y":739,"wires":[[]]},{"id":"3aca4e61.425032","type":"function","z":"5ae2424d.d2e8dc","name":"Prepare Data","func":"var m = {};\n\nm.series =[];\nm.data=[];\nm.labels=[];\nvar datatemp=[]; \nmsg.payload.forEach(function(row) {\n    datatemp.push(parseInt(row.TEMPORARY_STORAGE));\n    m.labels.push(row.JOB_NAME);\n});\nm.data.push(datatemp);\nm.series.push(\"Temp storage usage\");\n\nreturn {payload:[m]};","outputs":1,"noerr":0,"x":664,"y":739,"wires":[["8a328e95.e75bb"]]},{"id":"e40fe3d1.f61c5","type":"DB2 for i","z":"5ae2424d.d2e8dc","mydb":"6f3fabdf.122914","name":"RemoteSys01","arraymode":true,"x":489,"y":681,"wires":[["539ef9a5.b94798"]]},{"id":"3bc1f60d.05633a","type":"DB2 for i","z":"5ae2424d.d2e8dc","mydb":"6f3fabdf.122914","name":"RemoteSys01","arraymode":true,"x":489,"y":739,"wires":[["3aca4e61.425032"]]},{"id":"96cfdec8.f376e","type":"ui_gauge","z":"5ae2424d.d2e8dc","name":"ASP","group":"f82317e4.0e81b8","order":1,"width":0,"height":0,"gtype":"gage","title":"ASP Usage","label":"percent","format":"{{value}}%","min":0,"max":"100","colors":["#00b500","#e6e600","#ca3838"],"seg1":"","seg2":"","x":807,"y":353,"wires":[]},{"id":"c9d9ef32.1db06","type":"inject","z":"5ae2424d.d2e8dc","name":"ASP Usage","topic":"ASP","payload":"WITH sysval(low_limit)     AS (SELECT current_numeric_value / 10000.0 AS QSTGLOWLMT             FROM qsys2.system_value_info             WHERE system_value_name = 'QSTGLOWLMT')     SELECT SYSTEM_ASP_USED FROM sysval, qsys2.SYSTEM_STATUS_INFO;","payloadType":"str","repeat":"1800","crontab":"","once":true,"onceDelay":"0.1","x":234,"y":353,"wires":[["6670b458.48cd6c","d377e61f.348da8"]]},{"id":"6670b458.48cd6c","type":"DB2 for i","z":"5ae2424d.d2e8dc","mydb":"57e0f8fb.55fa38","name":"Local_DB","arraymode":true,"x":469,"y":353,"wires":[["5c2aa0e9.5f43c"]]},{"id":"5c2aa0e9.5f43c","type":"function","z":"5ae2424d.d2e8dc","name":"Prepare Data","func":"var value = parseInt(msg.payload[0].SYSTEM_ASP_USED);\nreturn {payload:[value]};","outputs":1,"noerr":0,"x":662,"y":353,"wires":[["96cfdec8.f376e"]]},{"id":"b8b536a2.5682f8","type":"function","z":"5ae2424d.d2e8dc","name":"Prepare Data","func":"var value = parseInt(msg.payload[0].SYSTEM_ASP_USED);\nreturn {payload:[value]};","outputs":1,"noerr":0,"x":663,"y":573,"wires":[["b80ac06a.b2cbe"]]},{"id":"d377e61f.348da8","type":"DB2 for i","z":"5ae2424d.d2e8dc","mydb":"6f3fabdf.122914","name":"RemoteSys01","arraymode":true,"x":489,"y":573,"wires":[["b8b536a2.5682f8"]]},{"id":"b80ac06a.b2cbe","type":"ui_gauge","z":"5ae2424d.d2e8dc","name":"ASP","group":"3ad41f57.d5c58","order":1,"width":0,"height":0,"gtype":"gage","title":"ASP Usage","label":"percent","format":"{{value}}%","min":0,"max":"100","colors":["#00b500","#e6e600","#ca3838"],"seg1":"","seg2":"","x":809,"y":573,"wires":[]},{"id":"1514d157.d8bebf","type":"ui_group","z":"","name":"Top consumers","tab":"3365fccd.3d14b4","order":2,"disp":true,"width":"10","collapse":true},{"id":"57e0f8fb.55fa38","type":"DB2 for i Config","z":"","cnnname":"Local_DB","db":"*LOCAL","keepalive":true},{"id":"3ad41f57.d5c58","type":"ui_group","z":"","name":"Status","tab":"6b28b3b9.280cdc","order":1,"disp":true,"width":"10","collapse":false},{"id":"72b5e8f.2ab8d18","type":"ui_group","z":"","name":"Top consumers","tab":"6b28b3b9.280cdc","order":2,"disp":true,"width":"10","collapse":true},{"id":"6f3fabdf.122914","type":"DB2 for i Config","z":"","cnnname":"SS1BLD1","db":"SS1BLD1","keepalive":true},{"id":"f82317e4.0e81b8","type":"ui_group","z":"","name":"Status","tab":"3365fccd.3d14b4","order":1,"disp":true,"width":"10","collapse":true},{"id":"3365fccd.3d14b4","type":"ui_tab","z":"","name":"LocalSys","icon":"dashboard","disabled":false,"hidden":false},{"id":"6b28b3b9.280cdc","type":"ui_tab","z":"","name":"Sys01","icon":"dashboard","order":2,"disabled":false,"hidden":false}]
+[
+    {
+        "id": "67dca404.c4f3cc",
+        "type": "tab",
+        "label": "流程1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "5e087a1d.6bb30c",
+        "type": "DB2 for i Config",
+        "z": "",
+        "cnnname": "localhost",
+        "db": "*LOCAL",
+        "keepalive": true
+    },
+    {
+        "id": "8b9e139d.1431f8",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-light",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#0094CE",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#0094CE",
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#fafafa",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#1bbfff",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#0094ce",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey"
+            }
+        },
+        "site": {
+            "name": "Node-RED Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "false",
+            "allowTempTheme": "true",
+            "dateFormat": "DD/MM/YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
+        "id": "4495809.af892",
+        "type": "ui_group",
+        "z": "",
+        "name": "Top consumers",
+        "tab": "ccde3647.e7c7d",
+        "order": 2,
+        "disp": true,
+        "width": "10",
+        "collapse": true
+    },
+    {
+        "id": "9ed194f2.fc5948",
+        "type": "DB2 for i Config",
+        "z": "",
+        "cnnname": "Local_DB",
+        "db": "*LOCAL",
+        "keepalive": true
+    },
+    {
+        "id": "9d5abffd.76be8",
+        "type": "ui_group",
+        "z": "",
+        "name": "Status",
+        "tab": "1a410cba.74d7ab",
+        "order": 1,
+        "disp": true,
+        "width": "10",
+        "collapse": false
+    },
+    {
+        "id": "79f0ffc0.16b83",
+        "type": "ui_group",
+        "z": "",
+        "name": "Top consumers",
+        "tab": "1a410cba.74d7ab",
+        "order": 2,
+        "disp": true,
+        "width": "10",
+        "collapse": true
+    },
+    {
+        "id": "49c60f13.25deb",
+        "type": "ui_group",
+        "z": "",
+        "name": "Status",
+        "tab": "ccde3647.e7c7d",
+        "order": 1,
+        "disp": true,
+        "width": "10",
+        "collapse": true
+    },
+    {
+        "id": "ccde3647.e7c7d",
+        "type": "ui_tab",
+        "z": "",
+        "name": "LocalSys",
+        "icon": "dashboard",
+        "order": 2,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "1a410cba.74d7ab",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Sys01",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": true,
+        "hidden": false
+    },
+    {
+        "id": "60e4b919.1dbab",
+        "type": "ui_chart",
+        "z": "67dca404.c4f3cc",
+        "name": "",
+        "group": "4495809.af892",
+        "order": 1,
+        "width": "0",
+        "height": "0",
+        "label": "Top 10 CPU consumers (%)",
+        "chartType": "horizontalBar",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "outputs": 1,
+        "x": 880,
+        "y": 405,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a0f83bf9.59ab88",
+        "type": "inject",
+        "z": "67dca404.c4f3cc",
+        "name": "Top 10 CPU consumers",
+        "topic": "CPU",
+        "payload": "SELECT JOB_NAME, ELAPSED_CPU_PERCENTAGE     FROM TABLE(ACTIVE_JOB_INFO()) x     ORDER BY ELAPSED_CPU_PERCENTAGE DESC     FETCH FIRST 10 ROWS ONLY;",
+        "payloadType": "str",
+        "repeat": "10",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 194,
+        "y": 404,
+        "wires": [
+            [
+                "6a99e7de.8756c8"
+            ]
+        ]
+    },
+    {
+        "id": "43a724ff.5cffac",
+        "type": "function",
+        "z": "67dca404.c4f3cc",
+        "name": "Prepare Data",
+        "func": "var m = {};\n\nm.series =[];\nm.data=[];\nm.labels=[];\nvar datatemp=[]; \nmsg.payload.forEach(function(row) {\n    datatemp.push(parseFloat(row.ELAPSED_CPU_PERCENTAGE) * 10);\n    m.labels.push(row.JOB_NAME);\n});\nm.data.push(datatemp);\nm.series.push(\"CPU usage\");\n\nreturn {payload:[m]};",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 666,
+        "y": 405,
+        "wires": [
+            [
+                "60e4b919.1dbab"
+            ]
+        ]
+    },
+    {
+        "id": "14c33e57.a40c12",
+        "type": "ui_chart",
+        "z": "67dca404.c4f3cc",
+        "name": "",
+        "group": "49c60f13.25deb",
+        "order": 2,
+        "width": "0",
+        "height": "0",
+        "label": "Top 10 Storage consumers",
+        "chartType": "pie",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": "0",
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "outputs": 1,
+        "x": 879,
+        "y": 464,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4efd796d.1d64e8",
+        "type": "inject",
+        "z": "67dca404.c4f3cc",
+        "name": "Top 10 Storage consumers",
+        "topic": "Storage",
+        "payload": "SELECT A.AUTHORIZATION_NAME, SUM(A.STORAGE_USED) AS TOTAL_STORAGE_USED, B.TEXT_DESCRIPTION,     B.ACCOUNTING_CODE, B.MAXIMUM_ALLOWED_STORAGE     FROM QSYS2.USER_STORAGE A INNER     JOIN QSYS2.USER_INFO B ON B.USER_NAME = A.AUTHORIZATION_NAME     WHERE B.USER_NAME NOT LIKE 'Q%'     GROUP BY A.AUTHORIZATION_NAME, B.TEXT_DESCRIPTION, B.ACCOUNTING_CODE, B.MAXIMUM_ALLOWED_STORAGE     ORDER BY TOTAL_STORAGE_USED DESC     FETCH FIRST 10 ROWS ONLY;",
+        "payloadType": "str",
+        "repeat": "600",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "2.1",
+        "x": 185,
+        "y": 464,
+        "wires": [
+            [
+                "fe7591e1.40c808"
+            ]
+        ]
+    },
+    {
+        "id": "a8fa841a.0c0c9",
+        "type": "function",
+        "z": "67dca404.c4f3cc",
+        "name": "Prepare Data",
+        "func": "var m = {};\n\nm.series =[];\nm.data=[];\nm.labels=[];\nvar datatemp=[]; \nmsg.payload.forEach(function(row) {\n    datatemp.push(parseInt(row.TOTAL_STORAGE_USED));\n    m.labels.push(row.AUTHORIZATION_NAME);\n});\nm.data.push(datatemp);\nm.series.push(\"Storage usage\");\n\nreturn {payload:[m]};",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 665,
+        "y": 464,
+        "wires": [
+            [
+                "14c33e57.a40c12"
+            ]
+        ]
+    },
+    {
+        "id": "602de4f2.2653a4",
+        "type": "ui_chart",
+        "z": "67dca404.c4f3cc",
+        "name": "",
+        "group": "4495809.af892",
+        "order": 2,
+        "width": "0",
+        "height": "0",
+        "label": "Top 10 Temp Storage consumers (MB)",
+        "chartType": "horizontalBar",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "outputs": 1,
+        "x": 910,
+        "y": 522,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a17ec466.bfa098",
+        "type": "inject",
+        "z": "67dca404.c4f3cc",
+        "name": "Top 10 Temp Storage consumers",
+        "topic": "Memory",
+        "payload": "SELECT JOB_NAME, AUTHORIZATION_NAME, TEMPORARY_STORAGE, J.*     FROM TABLE(QSYS2.ACTIVE_JOB_INFO()) J     WHERE JOB_TYPE <> 'SYS'     ORDER BY TEMPORARY_STORAGE DESC LIMIT 10;",
+        "payloadType": "str",
+        "repeat": "10",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "5.1",
+        "x": 165,
+        "y": 523,
+        "wires": [
+            [
+                "97318f98.2f7f"
+            ]
+        ]
+    },
+    {
+        "id": "97318f98.2f7f",
+        "type": "DB2 for i",
+        "z": "67dca404.c4f3cc",
+        "mydb": "5e087a1d.6bb30c",
+        "name": "Local_DB",
+        "arraymode": true,
+        "x": 470,
+        "y": 522,
+        "wires": [
+            [
+                "20c583a4.73bda4"
+            ]
+        ]
+    },
+    {
+        "id": "20c583a4.73bda4",
+        "type": "function",
+        "z": "67dca404.c4f3cc",
+        "name": "Prepare Data",
+        "func": "var m = {};\n\nm.series =[];\nm.data=[];\nm.labels=[];\nvar datatemp=[]; \nmsg.payload.forEach(function(row) {\n    datatemp.push(parseInt(row.TEMPORARY_STORAGE));\n    m.labels.push(row.JOB_NAME);\n});\nm.data.push(datatemp);\nm.series.push(\"Temp storage usage\");\n\nreturn {payload:[m]};",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 666,
+        "y": 522,
+        "wires": [
+            [
+                "602de4f2.2653a4"
+            ]
+        ]
+    },
+    {
+        "id": "5993a741.c65fe",
+        "type": "ui_gauge",
+        "z": "67dca404.c4f3cc",
+        "name": "ASP",
+        "group": "49c60f13.25deb",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "ASP Usage",
+        "label": "percent",
+        "format": "{{value}}%",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 807,
+        "y": 353,
+        "wires": []
+    },
+    {
+        "id": "4d9376b5.6e6df",
+        "type": "inject",
+        "z": "67dca404.c4f3cc",
+        "name": "ASP Usage",
+        "topic": "ASP",
+        "payload": "WITH sysval(low_limit)     AS (SELECT current_numeric_value / 10000.0 AS QSTGLOWLMT             FROM qsys2.system_value_info             WHERE system_value_name = 'QSTGLOWLMT')     SELECT SYSTEM_ASP_USED FROM sysval, qsys2.SYSTEM_STATUS_INFO;",
+        "payloadType": "str",
+        "repeat": "1800",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "0.1",
+        "x": 234,
+        "y": 353,
+        "wires": [
+            [
+                "19998aad.1cbbf5"
+            ]
+        ]
+    },
+    {
+        "id": "19998aad.1cbbf5",
+        "type": "DB2 for i",
+        "z": "67dca404.c4f3cc",
+        "mydb": "5e087a1d.6bb30c",
+        "name": "Local_DB",
+        "arraymode": true,
+        "x": 469,
+        "y": 353,
+        "wires": [
+            [
+                "3014f604.16595a"
+            ]
+        ]
+    },
+    {
+        "id": "3014f604.16595a",
+        "type": "function",
+        "z": "67dca404.c4f3cc",
+        "name": "Prepare Data",
+        "func": "var value = parseInt(msg.payload[0].SYSTEM_ASP_USED);\nreturn {payload:[value]};",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 662,
+        "y": 353,
+        "wires": [
+            [
+                "5993a741.c65fe"
+            ]
+        ]
+    },
+    {
+        "id": "fe7591e1.40c808",
+        "type": "DB2 for i",
+        "z": "67dca404.c4f3cc",
+        "mydb": "5e087a1d.6bb30c",
+        "name": "Local_DB",
+        "arraymode": true,
+        "x": 469,
+        "y": 464,
+        "wires": [
+            [
+                "a8fa841a.0c0c9"
+            ]
+        ]
+    },
+    {
+        "id": "6a99e7de.8756c8",
+        "type": "DB2 for i",
+        "z": "67dca404.c4f3cc",
+        "mydb": "5e087a1d.6bb30c",
+        "name": "",
+        "arraymode": true,
+        "x": 460,
+        "y": 405,
+        "wires": [
+            [
+                "43a724ff.5cffac"
+            ]
+        ]
+    }
+]
