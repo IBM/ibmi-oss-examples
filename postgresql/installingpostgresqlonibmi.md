@@ -162,10 +162,6 @@ Postgresql Site
 
 https://www.postgresql.org
 
-Yips Site
-
-http://yips.idevcloud.com/wiki/index.php/Databases/PostgreSQL
-
-Role postgres does not exist
+Role postgres does not exist error
 
 https://dba.stackexchange.com/questions/221663/psql-fatal-role-postgres-does-not-exist
