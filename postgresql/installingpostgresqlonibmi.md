@@ -3,7 +3,7 @@
 Install postgres yum packages from IBM i ACS Open Source Package Management
 ```
 Package list:
-postgresql12
+postgresql12 ***(This item may be the only one you need to select to include all packages)***
 postgresql12-contrib
 postgresql12-devel
 postgresql12-docs
