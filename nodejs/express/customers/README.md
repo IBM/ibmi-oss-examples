@@ -27,4 +27,4 @@ This example includes a simple frontend using [pug](https://www.npmjs.com/packag
 
    `npm start`
 
-4. access http://hostname:port/
+4. access http://hostname:port/ (port is 8001 by default, or can be changed with the `PORT` environment variable)
