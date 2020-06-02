@@ -8,7 +8,7 @@ postgresql12-contrib
 postgresql12-devel
 postgresql12-docs
 postgresql12-libecpg
-postgresql12-libogtypes
+postgresql12-libpgtypes
 postgresql12-libpq
 postgresql12-server
 ```
