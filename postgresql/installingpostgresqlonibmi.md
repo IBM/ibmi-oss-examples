@@ -10,78 +10,52 @@ Install the `postgres12-server` and `postgresql-contrib` rpm packages using the 
 $ yum install postgresql12-server postgresql12-contrib
 ```
 
-According to the [Postgresql docs](https://www.postgresql.org/docs/12/postgres-user.html), "It is advisable to run PostgreSQL under a separate user account. This user account should only own the data that is managed by the server, and should not be shared with other daemons. The user name postgres is often used but you can use another name if you like."
+According to the [PostgreSQL docs](https://www.postgresql.org/docs/12/postgres-user.html), "It is advisable to run PostgreSQL under a separate user account. This user account should only own the data that is managed by the server, and should not be shared with other daemons. The user name postgres is often used but you can use another name if you like."
 
 From a 5250 session create a ***POSTGRES*** user profile with:
 
 ```
-CRTUSRPRF  USRPRF(POSTGRES)  PASSWORD(...) HOMEDIR('/postgres')
+CRTUSRPRF  USRPRF(POSTGRES)  PASSWORD(...)
 ```
+***NOTE:*** Creating a user profile requires `*ALLOBJ` authority.
 
-Next create the `/postgres` directory and change ownership to the ***POSTGRES*** user. From SSH or QSH session run:
+Next create the `postgres` home directory and change ownership to the ***POSTGRES*** user. From SSH or QSH session run:
 
 ```sh
-$ mkdir /postgres
-$ chown postgres /postgres
+$ mkdir /home/postgres
+$ chown postgres /home/postgres
 ```
-
-***NOTE:*** Creating a directory under `/` requires a user with `*ALLOBJ` authority.
+***NOTE:*** Creating a user profile requires `*ALLOBJ` authority.
 
 Log in to your IBM i via SSH as the **POSTGRES** user.
 
 If not started, start the bash shell by typing ***bash*** unless bash is already your default shell.
 
-Run the following commands to initialize PostgreSQL database in the `/postgres` IFS directory location
+Run the following commands to initialize PostgreSQL database in the `/home/postgres` IFS directory location
 
 ```bash
 
-$ export PGDATA=/postgres
+$ export PGDATA=/home/postgres
 
-$ initdb -E UTF-8 -D /postgres -W -A scram-sha-256
+$ initdb -E UTF-8 -D /home/postgres -W -A scram-sha-256
 ```
 
 You will be prompted to `Enter new superuser password` for the **POSTGRES** user.
 
+***NOTE:*** This password is for the database and distinct from the **POSTGRES** user profile.
+
 After running `initdb` you should see the following message:
 ```
 Success. You can now start the database server using:
-    pg_ctl -D /postgres -l logfile start
+    pg_ctl -D /home/postgres -l logfile start
 ```
-***Do not start server yet until if you want to enable remote connections***
-
-## Enable Remote Connections
-
-By default Postgresql only listens for client connections from localhost. To allow remote connection we need to configure some files. Use nano, vim or some other editor to edit ***/postgres/postgresql.conf*** file so the server will listen on TCP/IP addresses. We will enable access on all IP addresses
-
-```
-# listen_addresses = 'localhost'
-listen_addresses = '*'
-```
-***NOTE:*** This will allow Postgresql server to listen for all IP addresses.
-
-Read the [docs](https://www.postgresql.org/docs/12/runtime-config-connection.html) for more details on Connection configuration.
-
-edit the `IPv4 local connections` line in ***/postgres/pg_hba.conf***
-
-```
-# IPv4 local connections:
-# TYPE    DATABASE        USER            ADDRESS                 METHOD
-# host    all             all             127.0.0.1/32            scram-sha-256
-  host    all             all             0.0.0.0/0               scram-sha-256
-```
-
-Read the [docs](https://www.postgresql.org/docs/12/auth-pg-hba-conf.html) for more
-details on ***pg_hba.conf*** configuration.
-
-***NOTE:*** This will allow clients from any IPv4 address to authenticate.
-
-
-Run the following command to start PostgreSQL database server.
 
 ## Server Startup
 
+Run the following command to start PostgreSQL database server.
+
 ```bash
-$ pg_ctl -D /postgres -l logfile start
+$ pg_ctl -D /home/postgres -l logfile start
 ```
 
 You should see the following messages:
@@ -92,7 +66,7 @@ server started
 
 The following command can be used to stop the server.
 ```bash
-$ pg_ctl -D /postgres -l logfile stop
+$ pg_ctl -D /home/postgres -l logfile stop
 ```
 
 From a 5250 session, run WRKACTJOB and you should see the active server jobs and threads in the QUSRWRK subsystem
@@ -154,7 +128,7 @@ us_states=# SELECT * FROM States;
 us_states=# \q
 ```
 
-If you enabled remote connections, the same can be done using `psql` from remote machine with:
+If you enabled remote connections, the same can be done using `psql` from a remote machine with:
 
 ```
 $ psql -h myhost.example.com -U postgres -d us_states
@@ -182,4 +156,46 @@ Password: Your password
 Database: us_states
 ```
 
-Now refer to the standard [PostgreSQL documentation](https://www.postgresql.org/docs/) as needed.
+## Enable Remote Connections
+
+By default PostgreSQL only listens for client connections from localhost. To allow remote connection we need to configure some files.
+
+***NOTE:*** [Secure connections with SSL](https://www.postgresql.org/docs/12/ssl-tcp.html#SSL-SETUP) if your server is accessible publicly. In this example the server protected behind a firewall.
+
+Before editing the configuration files make sure the PostgreSQL server is stopped with
+
+```bash
+$ pg_ctl -D /home/postgres -l logfile stop
+```
+
+Use nano, vim or some other editor to edit ***/home/postgres/postgresql.conf*** file so the server will listen on TCP/IP addresses. We will enable access on all IP addresses
+
+```
+# listen_addresses = 'localhost'
+listen_addresses = '*'
+```
+***NOTE:*** This will allow PostgreSQL server to listen for all IP addresses.
+
+Read the [docs](https://www.postgresql.org/docs/12/runtime-config-connection.html) for more details on Connection configuration.
+
+Edit the `IPv4 local connections` line in ***/home/postgres/pg_hba.conf***
+
+```
+# IPv4 local connections:
+# TYPE    DATABASE        USER            ADDRESS                 METHOD
+# host    all             all             127.0.0.1/32            scram-sha-256
+  host    all             all             0.0.0.0/0               scram-sha-256
+```
+
+Read the [docs](https://www.postgresql.org/docs/12/auth-pg-hba-conf.html) for more
+details on ***pg_hba.conf*** configuration.
+
+***NOTE:*** This will allow clients from any IPv4 address to authenticate.
+
+Start the PostgreSQL server with:
+
+```bash
+$ pg_ctl -D /home/postgres -l logfile stop
+```
+
+Now that you have postgresql installed and setup refer to to the standard [PostgreSQL documentation](https://www.postgresql.org/docs/) as needed.
