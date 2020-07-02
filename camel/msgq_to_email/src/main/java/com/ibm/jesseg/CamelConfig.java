@@ -3,7 +3,6 @@ package com.ibm.jesseg;
 import java.util.Properties;
 import java.lang.System;
 
-
 import java.io.InputStream;
 import java.io.IOException;
 
@@ -82,6 +81,5 @@ class CamelConfig {
                 ".lib/" + 
                 this.getProperty("jt400.msgq", null, true) +
                 ".msgq?keyed=false&format=binary&guiAvailable=false";
-
     }
 }
