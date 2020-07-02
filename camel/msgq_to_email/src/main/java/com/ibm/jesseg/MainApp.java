@@ -14,13 +14,13 @@ public class MainApp {
         CamelConfig conf = new CamelConfig();
         CamelContext context = new DefaultCamelContext();
         System.out.println("Apache Camel version "+context.getVersion());
-        
+
         final String msgqUri = conf.getMsgQUri(); //something like -> jt400://username:password@localhost/qsys.lib/mylib.lib/myq.DTAQ?keyed=false&format=binary&guiAvailable=false
         final String smtpUri = conf.getSmtpUri(); //something like -> smtp://my.smtp.server.com?from=jgorzins@us.ibm.com&to=jgorzins@us.ibm.com&subject=Camel is Really Amazing!
         context.addRoutes(new RouteBuilder() {
             public void configure() {
-                from(msgqUri) 
-                .wireTap("log:kafka_camel?showAll=true&level=INFO")
+                from(msgqUri)
+                .wireTap("log:msgq_to_email?showAll=true&level=INFO") // This is just for debug data flowing through the route
                 .to(smtpUri); 
             }
         });
