@@ -2,7 +2,14 @@
 
 This example builds a simple Apache Camel route from an IBM i
 message queue to email. That is, any messages sent to the given queue
-will be sent in the body of an email. 
+will be sent in the body of an email.
+
+This example uses the [JT400](https://camel.apache.org/components/latest/jt400-component.html)
+and [Mail](https://camel.apache.org/components/latest/mail-component.html) components
+of [Apache Camel](https://camel.apache.org/), and uses the POJO ("plain old Java
+object") deployment technique. Apache Camel is the "swiss knife" of integration,
+and can be deployed in a number of ways. Please visit the [Apache Camel home page](https://camel.apache.org/)
+to learn more about this technology.
 
 ## How to install prerequisites, configure, and run this example
 #### 1. Install a Java runtime. 
