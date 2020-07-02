@@ -6,8 +6,10 @@ import java.lang.System;
 import java.io.InputStream;
 import java.io.IOException;
 /**
- * A convenience class centered around reading values from a configuration file
- * (config.properties) and providing URIs appropriate for establishing Apache 
+ * For main-line code, see the MainApp class.
+ *
+ * This is a convenience class centered around reading values from a configuration
+ * file (config.properties) and providing URIs appropriate for establishing Apache 
  * Camel routes. Properties can also be overridden by Java system properties,
  * for instance, specifying -Dprop=value on the command line.
  */
