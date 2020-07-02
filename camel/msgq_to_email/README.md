@@ -11,7 +11,10 @@ object") deployment technique. Apache Camel is the "swiss knife" of integration,
 and can be deployed in a number of ways. Please visit the [Apache Camel home page](https://camel.apache.org/)
 to learn more about this technology.
 
-## How to install prerequisites, configure, and run this example
+This README documents how to run this example on IBM i, but it can be run from any platform
+(assuming Java and maven knowledge).
+
+## How to install prerequisites, configure, and run this example on IBM i
 #### 1. Install a Java runtime. 
 
 Option 1: openjdk (cannot use the `*CURRENT` special value for jt400 authentication)
