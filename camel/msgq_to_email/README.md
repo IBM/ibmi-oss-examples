@@ -49,5 +49,7 @@ as well as an SMTP server to use for sending emails.
 ```
 mvn install && mvn exec:java
 ```
+The program will continue running until canceled.
+Test by sending a message to the queue!
 
 
