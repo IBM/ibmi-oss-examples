@@ -4,7 +4,9 @@ import java.util.Properties;
 import java.lang.System;
 
 import java.io.InputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
+
 /**
  * For main-line code, see the MainApp class.
  *
@@ -44,10 +46,15 @@ class CamelConfig {
     public synchronized String getProperty(final String _prop, final String _default, final boolean _abortIfNoValueOrDefault) throws IOException {
         if(null == m_props) {
             m_props = new Properties();
-            String propertyFile = System.getProperty("camelconfig", "config.properties");
-            InputStream inputStream = CamelConfig.class.getClassLoader().getResourceAsStream(propertyFile);
+            String propertyFile = System.getProperty("camelconfig");
+            final InputStream inputStream;
+            if (null == propertyFile || propertyFile.isEmpty()) {
+                inputStream = CamelConfig.class.getClassLoader().getResourceAsStream("config.properties");
+            } else {
+                inputStream = new FileInputStream(propertyFile);
+            }
             if (null == inputStream) {
-                System.err.println("ERROR: property file not found: " + propertyFile);
+                throw new RuntimeException("ERROR: property file not found: " + propertyFile);
             } else {
                 m_props.load(inputStream);
             }

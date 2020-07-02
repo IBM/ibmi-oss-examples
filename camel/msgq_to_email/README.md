@@ -52,4 +52,10 @@ mvn install && mvn exec:java
 The program will continue running until canceled.
 Test by sending a message to the queue!
 
+Since the `config.properties` file contains passwords, you may want to stash a copy
+in a secure location. If you want to do this, just set the `camelconfig` Java System
+property to the path of the file. For example:
+```
+mvn install && mvn exec:java -Dcamelconfig=/home/MYUSER/.private/config.properties
+```
 
