@@ -2,7 +2,7 @@ package com.ibm.jesseg;
 
 import java.util.Properties;
 import java.lang.System;
-
+import java.net.URLEncoder;
 import java.io.InputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -72,7 +72,7 @@ class CamelConfig {
             return _default;
         }
         System.out.println(""+_prop+"="+obfuscatePropertyValue(_prop,ret));
-        return ret.toString();
+        return URLEncoder.encode(ret.toString(), "UTF-8");
     }
 
     /**
