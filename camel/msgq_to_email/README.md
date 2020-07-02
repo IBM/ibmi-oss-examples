@@ -43,7 +43,8 @@ yum install maven
 ```
 #### 4. Edit the file `src/main/resources/config.properties` with appropriate values
 These values are relatively self-explanatory. You will need IBM i login credentials
-as well as an SMTP server to use for sending emails. 
+as well as an SMTP server to use for sending emails. The `smtp.username` and
+`smtp.password` lines can be deleted if your SMTP server doesn't require them.
 
 #### 5. Build and launch
 ```
