@@ -21,7 +21,7 @@ If using openjdk:
 JAVA_HOME=/QOpenSys/pkgs/lib/jvm/openjdk-11
 export JAVA_HOME
 ```
-If using 5770JV1
+If using 5770JV1:
 ```
 JAVA_HOME=/QOpenSys/QIBM/ProdData/JavaVM/jdk80/64bit
 export JAVA_HOME
