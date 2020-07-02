@@ -5,7 +5,12 @@ import java.lang.System;
 
 import java.io.InputStream;
 import java.io.IOException;
-
+/**
+ * A convenience class centered around reading values from a configuration file
+ * (config.properties) and providing URIs appropriate for establishing Apache 
+ * Camel routes. Properties can also be overridden by Java system properties,
+ * for instance, specifying -Dprop=value on the command line.
+ */
 class CamelConfig {
     private Properties m_props = null;
     private static Object obfuscatePropertyValue(final String _prop, final Object _value) {
@@ -14,12 +19,26 @@ class CamelConfig {
         }
         return _value;
     }
+
+    /**
+     * Returns the given property, or null if it doesn't exist
+     */
     public synchronized String getProperty(final String _prop) throws IOException {
         return getProperty(_prop, null, false);
     }
+
+    /**
+     * Returns the given property. If the property is not set, the given default is returned.
+     */
     public synchronized String getProperty(final String _prop, final String _default) throws IOException {
         return getProperty(_prop, _default, false);
     }
+
+    /**
+     * Returns the given property. If the property is not set, the given default is returned.
+     * If the _abortIfNoValueOrDefault parameter is true, then a RuntimeException will be thrown
+     * if the property is not set and the default value is null.
+     */
     public synchronized String getProperty(final String _prop, final String _default, final boolean _abortIfNoValueOrDefault) throws IOException {
         if(null == m_props) {
             m_props = new Properties();
@@ -46,6 +65,10 @@ class CamelConfig {
         System.out.println(""+_prop+"="+obfuscatePropertyValue(_prop,ret));
         return ret.toString();
     }
+
+    /**
+     * Get the URI for the SMTP (mail) route
+     */
     public String getSmtpUri() throws IOException {
         // something like:
         //    smtp://my.smtp.server.com?from=jgorzins@us.ibm.com&to=jgorzins@us.ibm.com&subject=Camel is Really Amazing!
@@ -67,6 +90,10 @@ class CamelConfig {
         }
         return smtpUri;
     }
+
+    /**
+     * Get the URI for the IBM i message queue route
+     */
     public String getMsgQUri() throws IOException {
         // something like:
         //    jt400://username:password@localhost/qsys.lib/mylib.lib/myq.DTAQ?keyed=false&format=binary&guiAvailable=false
