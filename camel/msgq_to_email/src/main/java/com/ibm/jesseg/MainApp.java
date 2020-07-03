@@ -15,7 +15,7 @@ public class MainApp {
         // This class simply reads values and creates URIs from the config.properties file.
         // This is not a standard Camel class, but is part of this example. You can feel free
         // to just write the URIs instead of using this class.
-        CamelConfig conf = new CamelConfig();
+        MsqQToEmailConfig conf = new MsqQToEmailConfig();
 
         // Standard for a Camel deployment. Start by getting a CamelContext object.
         CamelContext context = new DefaultCamelContext();

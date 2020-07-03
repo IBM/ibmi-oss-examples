@@ -14,7 +14,7 @@ import java.io.IOException;
  * For main-line code, see the MainApp class.
  * <br>
  * This is a convenience class centered around reading values from a configuration
- * file (config.properties) and providing URIs appropriate for establishing Apache 
+ * file (config.properties). Subclasses can provide URIs appropriate for establishing
  * Camel routes. Properties can also be overridden by Java system properties,
  * for instance, specifying -Dprop=value on the command line.
  * <br>
@@ -114,49 +114,5 @@ class CamelConfig {
         }
         System.out.println(""+_prop+"="+obfuscatePropertyValue(_prop,ret));
         return URLEncoder.encode(ret.toString(), "UTF-8");
-    }
-
-    /**
-     * Get the URI for the SMTP (mail) route
-     */
-    public String getSmtpUri() throws IOException {
-        // something like:
-        //    smtp://my.smtp.server.com?from=jgorzins@us.ibm.com&to=jgorzins@us.ibm.com&subject=Camel is Really Amazing!
-        String smtpUri = "smtp://"+
-               this.getProperty("smtp.server", null, true) +
-               "?from=" +
-               this.getProperty("smtp.from", null, true) +
-               "&to=" +
-               this.getProperty("smtp.to", null, true) + 
-               "&subject=" + 
-               this.getProperty("smtp.subject", null, true);
-        String username = this.getProperty("smtp.username");
-        if(null != username) {
-            smtpUri += ("&username=" + username);
-        }
-        String password = this.getProperty("smtp.password");
-        if(null != password) {
-            smtpUri += ("&password=" + password);
-        }
-        return smtpUri;
-    }
-
-    /**
-     * Get the URI for the IBM i message queue route
-     */
-    public String getMsgQUri() throws IOException {
-        // something like:
-        //    jt400://username:password@localhost/qsys.lib/mylib.lib/myq.DTAQ?keyed=false&format=binary&guiAvailable=false
-        return "jt400://" +
-                this.getProperty("jt400.username") +
-                ":" + 
-                this.getProperty("jt400.password") +
-                "@" +
-                this.getProperty("jt400.host", "localhost") + 
-                "/qsys.lib/" + 
-                this.getProperty("jt400.msg_library", null, true) +
-                ".lib/" + 
-                this.getProperty("jt400.msgq", null, true) +
-                ".msgq?keyed=false&format=binary&guiAvailable=false";
     }
 }
