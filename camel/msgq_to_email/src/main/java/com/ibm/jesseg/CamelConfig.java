@@ -12,11 +12,14 @@ import java.io.IOException;
 
 /**
  * For main-line code, see the MainApp class.
- *
+ * <br>
  * This is a convenience class centered around reading values from a configuration
  * file (config.properties) and providing URIs appropriate for establishing Apache 
  * Camel routes. Properties can also be overridden by Java system properties,
  * for instance, specifying -Dprop=value on the command line.
+ * <br>
+ * Also, the user can be prompted for any properties that are missing from the
+ * configuration file.
  */
 class CamelConfig {
     private Properties m_props = null;
