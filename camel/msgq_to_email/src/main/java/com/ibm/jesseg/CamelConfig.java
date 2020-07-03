@@ -55,6 +55,7 @@ class CamelConfig {
             }
         }
     }
+
     /**
      * Returns the given property, or null if it doesn't exist
      */
