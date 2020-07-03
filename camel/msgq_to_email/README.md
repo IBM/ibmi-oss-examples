@@ -46,6 +46,9 @@ These values are relatively self-explanatory. You will need IBM i login credenti
 as well as an SMTP server to use for sending emails. The `smtp.username` and
 `smtp.password` lines can be deleted if your SMTP server doesn't require them.
 
+You can also opt to remove any properties from this file, and you will be interactively
+prompted for these values. On IBM i, this may require an SSH terminal.
+
 #### 5. Build and launch
 ```
 mvn install && mvn exec:java
@@ -59,4 +62,5 @@ property to the path of the file. For example:
 ```
 mvn install && mvn exec:java -Dcamelconfig=/home/MYUSER/.private/config.properties
 ```
-
+Or, for interactive use, simply remove the properties from the `config.properties`
+file and let the program prompt you.

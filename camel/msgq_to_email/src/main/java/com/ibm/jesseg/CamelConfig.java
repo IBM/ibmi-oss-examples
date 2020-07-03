@@ -3,7 +3,10 @@ package com.ibm.jesseg;
 import java.util.Properties;
 import java.lang.System;
 import java.net.URLEncoder;
+import java.io.BufferedReader;
+import java.io.Console;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 
@@ -17,13 +20,41 @@ import java.io.IOException;
  */
 class CamelConfig {
     private Properties m_props = null;
+    private Console m_console = System.console();
+    private BufferedReader m_stdin = new BufferedReader(new InputStreamReader(System.in));
+
+    private static boolean looksLikePassword(final String _prop) {
+        if (null == _prop) {
+            return false;
+        }
+        final String lowercase = _prop.toLowerCase();
+        return lowercase.contains("pass") || lowercase.contains("pw");
+    }
     private static Object obfuscatePropertyValue(final String _prop, final Object _value) {
-        if(null != _prop && _prop.toLowerCase().contains("pass")) {
+        if(looksLikePassword(_prop)) {
             return "xxxxxxxxx";
         }
         return _value;
     }
 
+    private String askUser(final String _prop) throws IOException {
+        final String promptText = "Enter value for '" + _prop + "':";
+        if(null == m_console) {
+            if (looksLikePassword(_prop)) {
+                throw new RuntimeException("Can't properly ask for password ('" + _prop + "' property).");
+            } else {
+                System.out.print(promptText);
+                return m_stdin.readLine();
+            }
+        } else {
+            if (looksLikePassword(_prop)) {
+                char[] pw = m_console.readPassword(promptText);
+                return (null == pw) ? null : new String(pw);
+            } else {
+                return m_console.readLine(promptText);
+            }
+        }
+    }
     /**
      * Returns the given property, or null if it doesn't exist
      */
@@ -63,13 +94,19 @@ class CamelConfig {
         if(null == ret) {
             ret = m_props.getProperty(_prop);
         }
+        if(null == ret && null == _default) {
+            String userInput = askUser(_prop);
+            if(null != userInput && !userInput.trim().isEmpty()) {
+                ret = userInput.trim();
+            }
+        }
         if(null == ret) {
             if(_abortIfNoValueOrDefault) {
                 System.err.println("ERROR: Required configuration property not set: " + _prop);
                 throw new RuntimeException("ERROR: Required configuration property not set: " + _prop);
             }
             System.out.println(""+_prop+"="+obfuscatePropertyValue(_prop, _default) + " (default)");
-            return _default;
+            return URLEncoder.encode(_default, "UTF-8");
         }
         System.out.println(""+_prop+"="+obfuscatePropertyValue(_prop,ret));
         return URLEncoder.encode(ret.toString(), "UTF-8");
@@ -107,9 +144,9 @@ class CamelConfig {
         // something like:
         //    jt400://username:password@localhost/qsys.lib/mylib.lib/myq.DTAQ?keyed=false&format=binary&guiAvailable=false
         return "jt400://" +
-                this.getProperty("jt400.username", "*CURRENT") +
+                this.getProperty("jt400.username") +
                 ":" + 
-                this.getProperty("jt400.password", "*CURRENT") +
+                this.getProperty("jt400.password") +
                 "@" +
                 this.getProperty("jt400.host", "localhost") + 
                 "/qsys.lib/" + 
