@@ -38,7 +38,7 @@ class CamelConfig {
     }
 
     private String askUser(final String _prop) throws IOException {
-        final String promptText = "Enter value for '" + _prop + "':";
+        final String promptText = "Enter value for '" + _prop + "': ";
         if(null == m_console) {
             if (looksLikePassword(_prop)) {
                 throw new RuntimeException("Can't properly ask for password ('" + _prop + "' property).");
