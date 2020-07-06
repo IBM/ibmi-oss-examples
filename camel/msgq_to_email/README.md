@@ -15,6 +15,12 @@ This README documents how to run this example on IBM i, but it can be run from a
 (assuming Java and maven knowledge).
 
 ## How to install prerequisites, configure, and run this example on IBM i
+
+This example requires an SMTP server for sending email. Be sure to have one handy.
+Your organization probably already has an SMTP server, and there are several
+free (or trial) services available online, including Gmail. You can also run
+your own free mail server, like hMailServer.
+
 #### 1. Install a Java runtime. 
 
 Option 1: openjdk (cannot use the `*CURRENT` special value for jt400 authentication)
