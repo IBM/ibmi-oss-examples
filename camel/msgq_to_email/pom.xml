@@ -7,9 +7,8 @@
   <groupId>com.ibm.jesseg</groupId>
   <artifactId>camel-start-java</artifactId>
   <packaging>jar</packaging>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0</version>
 
-  <name>A Camel Route</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -119,4 +118,5 @@
     </plugins>
   </build>
 
+  <name>IBM i MSGQ to Email bridge</name>
 </project>
