@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.ibm.jesseg</groupId>
-  <artifactId>camel-start-java</artifactId>
+  <artifactId>ibmi-msgq-to-email</artifactId>
   <packaging>jar</packaging>
   <version>1.0</version>
 
