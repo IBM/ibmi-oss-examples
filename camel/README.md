@@ -1,4 +1,4 @@
-# Camel Example (Message Queue to Email)
+# Camel Example
 
 This example builds a simple Apache Camel route from an IBM i
 message queue to email. That is, any messages sent to the given queue
