@@ -1,14 +1,19 @@
-# Camel Example
+# Camel Examples
 
-This example builds a simple Apache Camel route from an IBM i
-message queue to email. That is, any messages sent to the given queue
-will be sent in the body of an email.
+These examples build simple Apache Camel routes from IBM i to other technologies. 
 
-This example uses the [JT400](https://camel.apache.org/components/latest/jt400-component.html)
-and [Mail](https://camel.apache.org/components/latest/mail-component.html) components
-of [Apache Camel](https://camel.apache.org/), and uses the POJO ("plain old Java
-object") deployment technique. Apache Camel is the "swiss knife" of integration,
-and can be deployed in a number of ways. Please visit the [Apache Camel home page](https://camel.apache.org/)
+So far, these examples are included:
+- msgq_to_email: A route from a message queue to email. That is, any messages sent 
+to the given queue will be sent in the body of an email.
+- dtaq_to_kafka: A route from a data queue to Apache Kafka. Any entry placed on the
+data queue will be sent to a Kafka bootstrap server.
+
+These examples use the following [Apache Camel](https://camel.apache.org/) components:
+- [JT400](https://camel.apache.org/components/latest/jt400-component.html)
+- [Mail](https://camel.apache.org/components/latest/mail-component.html)
+- [Kafka](https://camel.apache.org/components/latest/kafka-component.html)
+While these examples use the POJO ("plain old Java object") deployment technique. Apache Camel
+can be deployed in a number of ways. Please visit the [Apache Camel home page](https://camel.apache.org/)
 to learn more about this technology.
 
 This README documents how to run this example on IBM i, but it can be run from any platform
@@ -16,10 +21,12 @@ This README documents how to run this example on IBM i, but it can be run from a
 
 ## How to install prerequisites, configure, and run this example on IBM i
 
-This example requires an SMTP server for sending email. Be sure to have one handy.
+Naturally, the email example requires an SMTP server for sending email. Be sure to have one handy.
 Your organization probably already has an SMTP server, and there are several
 free (or trial) services available online, including Gmail, or MailJet. You can also run
 your own free mail server, like hMailServer.
+
+Similarly, the Kafka example requires you to have a Kafka bootstrap server available.
 
 #### 1. Install a Java runtime. 
 
@@ -47,15 +54,19 @@ export JAVA_HOME
 ```
 yum install maven
 ```
-#### 4. Edit the file `src/main/resources/config.properties` with appropriate values
-These values are relatively self-explanatory. You will need IBM i login credentials
-as well as an SMTP server to use for sending emails. The `smtp.username` and
+#### 4. Change to the appropriate directory
+For instance, if you're starting inside the `ibmi-oss-examples` directory where you cloned this repository:
+```
+cd camel/msgq_to_email
+```
+#### 5. Edit the file `src/main/resources/config.properties` with appropriate values
+These values are relatively self-explanatory. For the email example, the `smtp.username` and
 `smtp.password` lines can be deleted if your SMTP server doesn't require them.
 
 You can also opt to remove any properties from this file, and you will be interactively
 prompted for these values. On IBM i, this may require an SSH terminal.
 
-#### 5. Build and launch
+#### 6. Build and launch
 ```
 mvn install && mvn exec:java
 ```
