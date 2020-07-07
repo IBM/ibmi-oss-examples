@@ -12,6 +12,7 @@ These examples use the following [Apache Camel](https://camel.apache.org/) compo
 - [JT400](https://camel.apache.org/components/latest/jt400-component.html)
 - [Mail](https://camel.apache.org/components/latest/mail-component.html)
 - [Kafka](https://camel.apache.org/components/latest/kafka-component.html)
+
 While these examples use the POJO ("plain old Java object") deployment technique. Apache Camel
 can be deployed in a number of ways. Please visit the [Apache Camel home page](https://camel.apache.org/)
 to learn more about this technology.
