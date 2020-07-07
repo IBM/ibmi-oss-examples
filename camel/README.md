@@ -6,7 +6,11 @@ So far, these examples are included:
 - msgq_to_email: A route from a message queue to email. That is, any messages sent 
 to the given queue will be sent in the body of an email.
 - dtaq_to_kafka: A route from a data queue to Apache Kafka. Any entry placed on the
-data queue will be sent to a Kafka bootstrap server.
+data queue will be sent to a Kafka bootstrap server. For an example of how this might
+be leveraged with database capabilities, please see
+[dtaq_to_kafka/banking_kafka_example.sql](dtaq_to_kafka/banking_kafka_example.sql),
+which demonstrates how a bank might use this technology to publish changes to
+a customer database to a Kafka topic.
 
 These examples use the following [Apache Camel](https://camel.apache.org/) components:
 - [JT400](https://camel.apache.org/components/latest/jt400-component.html)
