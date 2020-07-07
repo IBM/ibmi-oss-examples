@@ -5,7 +5,7 @@ import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.impl.DefaultCamelContext;
 
 /**
- * A Camel Application that routes messages from an IBM i message queue to email.
+ * A Camel Application that routes messages from an IBM i data queue to a Kafka server.
  */
 public class MainApp { 
     public static void main(final String... args) throws Exception {
