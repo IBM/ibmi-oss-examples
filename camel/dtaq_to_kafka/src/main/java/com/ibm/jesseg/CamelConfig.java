@@ -10,7 +10,8 @@ import java.net.URLEncoder;
 import java.util.Properties;
 
 /**
- * For main-line code, see the {@link MainApp} class.
+ * For mainline code, see the {@link MainApp} class.
+
  * <br>
  * This is a convenience class centered around reading values from a configuration
  * file (config.properties). Subclasses can provide URIs appropriate for establishing
