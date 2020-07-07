@@ -20,7 +20,7 @@ public class MainApp {
         System.out.println("Apache Camel version "+context.getVersion());
 
         // Now, it's pretty simple to define a Camel route!!
-        final String msgqUri = conf.getMsgQUri(); //something like -> jt400://username:password@localhost/qsys.lib/mylib.lib/myq.DTAQ?keyed=false&format=binary&guiAvailable=false
+        final String msgqUri = conf.getMsgQUri(); //something like -> jt400://username:password@localhost/qsys.lib/mylib.lib/myq.MSGQ?format=binary&guiAvailable=false
         final String smtpUri = conf.getSmtpUri(); //something like -> smtp://my.smtp.server.com?from=jgorzins@us.ibm.com&to=jgorzins@us.ibm.com&subject=Camel is Really Amazing!
         context.addRoutes(new RouteBuilder() {
             @Override

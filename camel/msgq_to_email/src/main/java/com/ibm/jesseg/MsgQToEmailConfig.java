@@ -40,7 +40,7 @@ class MsqQToEmailConfig extends CamelConfig {
      */
     public String getMsgQUri() throws IOException {
         // something like:
-        //    jt400://username:password@localhost/qsys.lib/mylib.lib/myq.DTAQ?keyed=false&format=binary&guiAvailable=false
+        //    jt400://username:password@localhost/qsys.lib/mylib.lib/myq.MSGQ?format=binary&guiAvailable=false
         return "jt400://" +
                 this.getProperty("jt400.username") +
                 ":" + 
@@ -48,7 +48,7 @@ class MsqQToEmailConfig extends CamelConfig {
                 "@" +
                 this.getProperty("jt400.host", "localhost") + 
                 "/qsys.lib/" + 
-                this.getProperty("jt400.msg_library", null, true) +
+                this.getProperty("jt400.msgq_library", null, true) +
                 ".lib/" + 
                 this.getProperty("jt400.msgq", null, true) +
                 ".msgq?keyed=false&format=binary&guiAvailable=false";
