@@ -6,7 +6,7 @@ import java.io.IOException;
  * For main-line code, see the MainApp class.
  * <br>
  * This is class provides URIs appropriate for establishing Apache 
- * Camel routes for the message queue to email example.
+ * Camel routes for this example.
  */
 class DtaQToKafkaConfig extends CamelConfig {
 
