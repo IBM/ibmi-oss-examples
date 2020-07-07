@@ -18,7 +18,7 @@ This README documents how to run this example on IBM i, but it can be run from a
 
 This example requires an SMTP server for sending email. Be sure to have one handy.
 Your organization probably already has an SMTP server, and there are several
-free (or trial) services available online, including Gmail. You can also run
+free (or trial) services available online, including Gmail, or MailJet. You can also run
 your own free mail server, like hMailServer.
 
 #### 1. Install a Java runtime. 
