@@ -31,7 +31,8 @@ Similarly, the Kafka example requires you to have a Kafka bootstrap server avail
 
 #### 1. Install a Java runtime. 
 
-Option 1: openjdk (cannot use the `*CURRENT` special value for jt400 authentication)
+Option 1: OpenJDK (cannot use the `*CURRENT` special value for jt400 authentication)
+
 ```
 yum install openjdk-11
 PATH=/QOpenSys/pkgs/lib/jvm/openjdk-11/bin:$PATH
