@@ -42,7 +42,7 @@ Option 2: Install 5770-JV1 option 17 (this is likely already installed)
 
 
 #### 2. Set the `JAVA_HOME` environment variable to the JRE of your choosing
-If using openjdk:
+If using OpenJDK:
 ```
 JAVA_HOME=/QOpenSys/pkgs/lib/jvm/openjdk-11
 export JAVA_HOME
@@ -72,7 +72,8 @@ prompted for these values. On IBM i, this may require an SSH terminal.
 
 #### 6. Build and launch
 ```
-mvn install && mvn exec:java
+mvn install
+mvn exec:java
 ```
 The program will continue running until canceled.
 Test by sending a message to the queue!
@@ -81,7 +82,8 @@ Since the `config.properties` file contains passwords, you may want to stash a c
 in a secure location. If you want to do this, just set the `camelconfig` Java System
 property to the path of the file. For example:
 ```
-mvn install && mvn exec:java -Dcamelconfig=/home/MYUSER/.private/config.properties
+mvn install
+mvn exec:java -Dcamelconfig=/home/MYUSER/.private/config.properties
 ```
 Or, for interactive use, simply remove the properties from the `config.properties`
 file and let the program prompt you.
