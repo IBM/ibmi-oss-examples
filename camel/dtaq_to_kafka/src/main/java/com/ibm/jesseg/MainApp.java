@@ -21,7 +21,7 @@ public class MainApp {
 
         // Now, it's pretty simple to define a Camel route!!
         final String dtaqUri = conf.getDtaQUri(); //something like -> jt400://username:password@localhost/qsys.lib/mylib.lib/myq.DTAQ?keyed=false&format=binary&guiAvailable=false
-        final String smtpUri = conf.getKafkaUri(); //something like -> smtp://my.smtp.server.com?from=jgorzins@us.ibm.com&to=jgorzins@us.ibm.com&subject=Camel is Really Amazing!
+        final String smtpUri = conf.getKafkaUri(); //something like -> kafka:mytopic?brokers=mybroker:9092
         context.addRoutes(new RouteBuilder() {
             @Override
             public void configure() {
