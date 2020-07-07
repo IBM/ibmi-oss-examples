@@ -37,7 +37,8 @@ yum install openjdk-11
 PATH=/QOpenSys/pkgs/lib/jvm/openjdk-11/bin:$PATH
 export PATH
 ```
-Option 2: Install 5770JV1 option 17 (this is likely already installed)
+Option 2: Install 5770-JV1 option 17 (this is likely already installed)
+
 
 #### 2. Set the `JAVA_HOME` environment variable to the JRE of your choosing
 If using openjdk:
