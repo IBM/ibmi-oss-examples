@@ -91,3 +91,37 @@ mvn exec:java -Dcamelconfig=/home/MYUSER/.private/config.properties
 ```
 Or, for interactive use, simply remove the properties from the `config.properties`
 file and let the program prompt you.
+
+## Understanding the code and learning more
+
+To learn how to use Apache Camel, it would be good to start with the
+[Apache Camel user manual](https://camel.apache.org/manual/latest/index.html),
+and in particular [this walkthrough of a simple example](https://camel.apache.org/manual/latest/walk-through-an-example.html).
+
+Currently, these examples don't demonstrate the more powerful capabilities of Camel.
+Future enhancements might demostrate the implementation of [Enterprise Integration Patterns](https://camel.apache.org/components/latest/eips/enterprise-integration-patterns.html).
+
+However, the base functionality of camel is based on the notion of routes. In fact, [the Camel documentation on routes](https://camel.apache.org/manual/latest/routes.html)
+is the best resource for extending and customizing one of these simple examples to suit your needs!
+
+That being said, most of the code in these examples is built to create a user-friendly
+way to create URIs driven by user interaction and a configuration file. 
+All the actual work is done simply by using the proper URIs to define a route.
+This is shown in the few lines of Java pseudocode below!
+
+```java
+final String sourceUri = // some URI of an endpoint that produces data
+final String targetUri = // some URI of an endpoint to receive data
+context.addRoutes(new RouteBuilder() {
+    @Override
+    public void configure() {
+        from(sourceUri)
+        .to(targetUri); 
+    }
+});
+```
+As you can see, route definitions are defined by implementation of a `RouteBuilder` object.
+If you're a hands-on learner, go straight to [the Javadoc](https://www.javadoc.io/doc/org.apache.camel/camel-core/3.0.0-RC1/org/apache/camel/builder/RouteBuilder.html)
+for this class! Its `configure()` method is called on initialization, and the `from()`
+method creates a `RouteDefinition` object. The `RouteDefinition` object can then be tied
+to choices, custom processing, or in this case, a simple endpoint.
