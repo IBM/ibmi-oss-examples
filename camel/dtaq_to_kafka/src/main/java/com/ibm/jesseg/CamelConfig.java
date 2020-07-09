@@ -143,9 +143,9 @@ class CamelConfig {
                 throw new RuntimeException("ERROR: Required configuration property not set: " + _prop);
             }
             System.out.println("" + _prop + "=" + obfuscatePropertyValue(_prop, _default) + " (default)");
-            return URLEncoder.encode(_default, "UTF-8");
+            return (null == _default) ? null : URLEncoder.encode(_default, "UTF-8");
         }
         System.out.println("" + _prop + "=" + obfuscatePropertyValue(_prop, ret));
-        return URLEncoder.encode(ret.toString(), "UTF-8");
+        return (null == ret) ? null : URLEncoder.encode(ret.toString(), "UTF-8");
     }
 }
