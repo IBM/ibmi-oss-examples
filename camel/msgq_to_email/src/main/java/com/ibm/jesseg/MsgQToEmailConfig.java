@@ -24,12 +24,12 @@ class MsqQToEmailConfig extends CamelConfig {
                this.getProperty("smtp.to", null, true) + 
                "&subject=" + 
                this.getProperty("smtp.subject", null, true);
-        String username = this.getProperty("smtp.username");
-        if(null != username) {
+        String username = this.getProperty("smtp.username", "");
+        if(null != username && !username.isEmpty()) {
             smtpUri += ("&username=" + username);
         }
-        String password = this.getProperty("smtp.password");
-        if(null != password) {
+        String password = this.getProperty("smtp.password", "");
+        if(null != password && !password.isEmpty()) {
             smtpUri += ("&password=" + password);
         }
         return smtpUri;
