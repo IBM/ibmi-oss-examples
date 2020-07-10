@@ -22,13 +22,13 @@ public class MainApp {
         // Now, it's pretty simple to define a Camel route!!
         // All the real work is done here. See the README.md for more information.
         final String dtaqUri = conf.getDtaQUri(); //something like -> jt400://username:password@localhost/qsys.lib/mylib.lib/myq.DTAQ?keyed=false&format=binary&guiAvailable=false
-        final String smtpUri = conf.getKafkaUri(); //something like -> kafka:mytopic?brokers=mybroker:9092
+        final String kafkaUri = conf.getKafkaUri(); //something like -> kafka:mytopic?brokers=mybroker:9092
         context.addRoutes(new RouteBuilder() {
             @Override
             public void configure() {
                 from(dtaqUri)
                 .wireTap("log:msgq_to_email?showAll=true&level=INFO") // This is just for debugging data flowing through the route
-                .to(smtpUri); 
+                .to(kafkaUri); 
             }
         });
 
