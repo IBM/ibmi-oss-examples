@@ -1,0 +1,17 @@
+{
+  "name": "exceljs-example",
+  "version": "1.0.0",
+  "description": "Show how to create Excel sheets with data from Db2",
+  "main": "createExcelSheet,js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node createExcelSheet.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "exceljs": "^4.1.1",
+    "odbc": "^2.3.0"
+  }
+}
