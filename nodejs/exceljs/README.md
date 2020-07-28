@@ -33,7 +33,7 @@ with data from Db2 for i table.
    $ npm install
    ```
 
-3) Configure `DB_HOST`, `DB_USER`, and `DB_PASS` enviorment variables within the [.env](.env) file.
+3) Configure `DB_HOST`, `DB_USER`, and `DB_PASS` enviorment variables within the [.env](.env) file. Or configure `DB_DSN` environment variable to use a [DSN](https://github.com/IBM/ibmi-oss-examples/blob/master/odbc/odbc.md#dsns) to connect.
 
 4) Run the app
    
