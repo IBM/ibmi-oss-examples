@@ -1,0 +1,16 @@
+{
+  "name": "db2util-ssh-example",
+  "version": "1.0.0",
+  "description": "Call db2 from cloud native application using ssh and db2util",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "ssh2": "^0.8.9"
+  }
+}
