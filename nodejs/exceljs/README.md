@@ -22,9 +22,9 @@ with data from Db2 for i table.
 1) Clone the IBM i OSS examples repo and change directory into `ibmi-oss-example/nodejs/exceljs`
 
     ```bash
-    git clone https://github.com/IBM/ibmi-oss-examples.git
+    $ git clone https://github.com/IBM/ibmi-oss-examples.git
 
-    cd ibmi-oss-examples/nodejs/exceljs
+    $ cd ibmi-oss-examples/nodejs/exceljs
     ```
 
 2) Install dependencies
@@ -38,7 +38,7 @@ with data from Db2 for i table.
 4) Run the app
    
    ```bash
-   npm start
+   $ npm start
    ```
 
 ![ExcelJS gif](exceljs.gif)
