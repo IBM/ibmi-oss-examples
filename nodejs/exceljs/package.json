@@ -2,7 +2,7 @@
   "name": "exceljs-example",
   "version": "1.0.0",
   "description": "Show how to create Excel sheets with data from Db2",
-  "main": "createExcelSheet,js",
+  "main": "createExcelSheet.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node createExcelSheet.js"
