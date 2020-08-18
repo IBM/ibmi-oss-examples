@@ -39,7 +39,7 @@ public class App
       ResultSet results = statement.executeQuery(query);
       // create excel sheets
       Workbook workbook = WorkbookFactory.create(true);
-      Sheet sheet = workbook.createSheet("Sheet1");
+      Sheet sheet = workbook.createSheet("Customers");
 
       // Add the header
       Row header = sheet.createRow(0);
