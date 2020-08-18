@@ -11,10 +11,10 @@ async function createExcelSheet() {
   const worksheet = workbook.addWorksheet('Customers');
 
   worksheet.columns = [
-    { header: 'id', key: 'CUSNUM' },
-    { header: 'Last Name', key: 'LSTNAM' },
-    { header: 'Balance Due', key: 'BALDUE' },
-    { header: 'Credit Limit', key: 'CDTLMT' },
+    { header: 'id', key: 'CUSNUM', width: 10 },
+    { header: 'Last Name', key: 'LSTNAM', width: 10 },
+    { header: 'Balance Due', key: 'BALDUE', width: 11 },
+    { header: 'Credit Limit', key: 'CDTLMT', width: 10 },
   ]
 
   for (const row of resultSet) {

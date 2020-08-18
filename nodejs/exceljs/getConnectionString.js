@@ -4,7 +4,7 @@ function getConnectionString() {
     let connectionString = 'DSN=*LOCAL;';
 
     if (process.env.DSN) { // using DSN to connect
-      connectionString = `DSN=${process.env.DB_DSN};`
+      connectionString = `DSN=${process.env.DSN};`
     }
 
     if (process.env.DB_USER) { // using uid/password to connect
