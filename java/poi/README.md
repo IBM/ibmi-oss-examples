@@ -18,9 +18,9 @@ with data from Db2 for i table.
 1) Clone this project and change directory into `ibmi-oss-example/java/poi`
 
     ```bash
-    git clone https://github.com/IBM/ibmi-oss-examples.git
+    $ git clone https://github.com/IBM/ibmi-oss-examples.git
 
-    cd ibmi-oss-examples/java/poi
+    $ cd ibmi-oss-examples/java/poi
     ```
 
 2) Compile and install dependencies
