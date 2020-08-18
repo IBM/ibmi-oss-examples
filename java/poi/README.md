@@ -15,7 +15,7 @@ with data from Db2 for i table.
 
 ## Getting Started
 
-1) Clone this project and change directory into `ibmi-oss-example/java/poi`
+1) Clone the IBM i OSS examples repo and change directory into `ibmi-oss-example/java/poi`
 
     ```bash
     $ git clone https://github.com/IBM/ibmi-oss-examples.git
