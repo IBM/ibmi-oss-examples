@@ -10,7 +10,7 @@ Python application that creates Excel worksheet with data from Db2 for i table.
     On IBM i this can be installed via yum from an SSH terminal with:
 
     ```bash
-    $ yum install python3 pip3
+    $ yum install python3 python3-pip
     ```
 
 - Install ODBC driver and required dependencies.
