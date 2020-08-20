@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Posts</title>
+
+    <style>
+
+        .card {
+          background-color: #f1f1f1;
+          padding: 20px;
+          margin-top: 20px
+        }
+
+        input
+        {
+            border:#ccc solid 1px;
+            height:30px;
+            width: 500px;
+        }
+
+        input[type="submit"]
+        {
+            margin:1em;
+            width:120px
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="create">
+        <form name="input" action="create_post" method="post">
+            <input type="text" name="title" placeholder="TITLE"/>
+            <br>
+            <br>
+            <textarea rows="8" cols="60" name="post">Enter post here...</textarea>
+            <br>
+            <input type="submit" value="Post">
+        </form>
+    </div>
+
+    {% for i in range(titles | length): %}
+        <div class="card">
+            <h2>{{titles[i]}}</h2>
+            <h5>{{authors[i]}}</h5>
+            <p>{{blog_posts[i]}}</p>
+        </div>
+    {% endfor %}
+
+</body>
+
+
+</html>
