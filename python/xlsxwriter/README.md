@@ -21,9 +21,9 @@ Python application that creates Excel worksheet with data from Db2 for i table.
 1) Clone the IBM i OSS examples repo and change directory into `ibmi-oss-example/python/xlsxwriter`
 
     ```bash
-    git clone https://github.com/IBM/ibmi-oss-examples.git
+    $ git clone https://github.com/IBM/ibmi-oss-examples.git
 
-    cd ibmi-oss-examples/python/xlsxwriter
+    $ cd ibmi-oss-examples/python/xlsxwriter
     ```
 
 2) Install dependencies
