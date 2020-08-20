@@ -29,7 +29,7 @@ Python application that creates Excel worksheet with data from Db2 for i table.
 2) Install dependencies
 
    ```bash
-   $ pip install -r requirements.txt
+   $ pip3 install -r requirements.txt
    ```
 
 3) Configure `DB_HOST`, `DB_USER`, and `DB_PASS` enviorment variables within the [.env](.env) file. Or configure `DSN` environment variable to use a [DSN](https://github.com/IBM/ibmi-oss-examples/blob/master/odbc/odbc.md#dsns) to connect.
