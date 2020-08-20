@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <style>
+        input
+        {
+            display: block;
+            height:30px;
+            border:#ccc solid 1px
+        }
+
+        input[type="text"]
+        {
+            width:500px
+        }
+        input[type="password"]
+        {
+            width:500px
+        }
+
+        input[type="submit"]
+        {
+            margin:1em;
+            width:120px
+        }
+    </style>
+</head>
+<body>
+    <form name="input" action="login" method="post">
+        <input type="text" name="uname" placeholder="username"/>
+        <br>
+        <input type="password" name="pwd" placeholder="password"/>
+        <br>
+        <input type="submit" value="Login">
+    </form>
+</body>
+</html>

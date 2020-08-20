@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign in</title>
+    <style>
+        input
+        {
+            display: block;
+            height:30px;
+            border:#ccc solid 1px
+        }
+
+        input[type="text"]
+        {
+            width:500px;
+        }
+        input[type="password"]
+        {
+            width:500px
+        }
+
+        input[type="submit"]
+        {
+            margin:1em;
+            width:120px
+        }
+    </style>
+</head>
+<body>
+    <form name="input" action="gotologin">
+        <input type="submit" value="Sign in"/>
+    </form>
+
+    <form name="input" action="create_user" method="post">
+        <div> Create user </div>
+        <input type="text" name="name" placeholder="Name"/>
+        <br>
+        <input type="text" name="uname" placeholder="username"/>
+        <br>
+        <input type="password" name="pwd" placeholder="password"/>
+        <br>
+        <input type="submit" value="Create User"/>
+    </form>
+
+</body>
+</html>
