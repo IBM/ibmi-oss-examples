@@ -2,6 +2,14 @@
 # "DBTOXLSX" using Python 3 and ibm_db_dbi
 
 # Installing requisites
+  
+  Run the setup script:
+
+  ```bash
+  $ ./setup.sh
+  ```
+  This installs the following:
+
   - **ibm_db:** `yum install python3-ibm_db`
   - **xlsxwriter** `pip3 install xlsxwriter`
 
