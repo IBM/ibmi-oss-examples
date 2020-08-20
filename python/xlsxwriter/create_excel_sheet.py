@@ -1,5 +1,4 @@
 import pyodbc
-import argparse
 import os
 
 from xlsxwriter import Workbook
