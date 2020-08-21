@@ -10,24 +10,25 @@ from xlsxwriter import Workbook
 import ibm_db_dbi as dbi
 import argparse
 
-parser = argparse.ArgumentParser(description="Implement SQL from IBM i \n\
-                                 command line and direct output to an \n\
-                                 Excel spreadsheet.")
-parser.add_argument('-c', '--c',
-                    help='SQL command to execute. If left empty you must \n\
+parser = argparse.ArgumentParser(description="Command line tool to create an \
+                                XLSX file with data from Db2 for i table.")
+
+parser.add_argument("-c", "--command",
+                    help="SQL command to execute. If left empty you must \n\
                     specify a library and source file to execute the \n\
-                    default command: Select * from <library>.<file>')
-parser.add_argument('-l', '--l',
-                    help='Name of the library that contains the database \n\
-                    source file(s) that you wish to query')
-parser.add_argument('-f', '--f', action='store', dest='fNames', type=str,
-                    nargs='*', help='One or more database source files')
-parser.add_argument('-o', '--o', default="IBMiSQL",
-                    help='Name of the excel file to contain the output')
-parser.add_argument('-b', '--b', type=bool, default=False,
-                    help='Turn on bold for column headings')
-parser.add_argument('-i', '--i', type=bool, default=False,
-                    help='Turn on italic for column headings')
+                    default command: Select * from <library>.<file>")
+parser.add_argument("-l", "--library",
+                    help="Name of the library that contains the database \n\
+                    source file(s) that you wish to query")
+parser.add_argument("-f", "--files", action="store", dest="fNames", type=str,
+                    nargs="*", help="One or more database source files")
+parser.add_argument("-o", "--output", default="IBMiSQL",
+                    help="Name of the excel file to contain the output. \
+                    Defaults to IBMiSQL")
+parser.add_argument("-b", "--bold", action="store_true", default=False,
+                    help="Turn on bold for column headings")
+parser.add_argument("-i", "--italic", action="store_true", default=False,
+                    help="Turn on italic for column headings")
 
 args = parser.parse_args()
 
