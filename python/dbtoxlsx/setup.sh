@@ -2,5 +2,5 @@
 
 ## install required deps
 yum install python3-ibm_db
-pip3 install xlsxwriter
+pip3 install -r requirements.txt
 
