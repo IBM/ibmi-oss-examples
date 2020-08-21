@@ -16,6 +16,14 @@ Python application that creates Excel worksheet with data from Db2 for i table.
 - Install ODBC driver and required dependencies.
     Refer to the [odbc setup guide](https://github.com/IBM/ibmi-oss-examples/blob/master/odbc/odbc.md#odbc) for platform specific instrctions.
 
+- When installing pyodbc on IBM i, pip will download and compile the pyodbc source code. This requires that some related components and source files be available for the compile to succeed.
+
+    ```bash
+    $ yum groupinstall "Development Tools"
+
+    $ yum install python3-devel unixODBC-devel
+    ```
+
 ## Getting Started
 
 1) Clone the IBM i OSS examples repo and change directory into `ibmi-oss-example/python/xlsxwriter`
