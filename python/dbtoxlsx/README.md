@@ -31,21 +31,25 @@ Command line tool to create an XLSX file with data from Db2 for i table.
 
 ## Usage
 ```
-dbtoxlsx.py [-h] [-c C] [-l L] [-f [FNAMES [FNAMES ...]]] [-o O] [-b B] [-i I]
+usage: dbtoxlsx.py [-h] [-c COMMAND] [-l LIBRARY] [-f [FNAMES [FNAMES ...]]]
+                   [-o OUTPUT] [-b] [-i]
 
-Implement SQL from IBM i command line and direct output to an Excel
-spreadsheet.
+Command line tool to create an XLSX file with data from Db2 for i table.
 
 optional arguments:
   -h, --help            show this help message and exit
-  -c C, --c C           SQL command to execute. If left empty you must specify
+  -c COMMAND, --command COMMAND
+                        SQL command to execute. If left empty you must specify
                         a library and source file to execute the default
                         command: Select * from <library>.<file>
-  -l L, --l L           Name of the library that contains the database source
+  -l LIBRARY, --library LIBRARY
+                        Name of the library that contains the database source
                         file(s) that you wish to query
-  -f [FNAMES [FNAMES ...]], --f [FNAMES [FNAMES ...]]
+  -f [FNAMES [FNAMES ...]], --files [FNAMES [FNAMES ...]]
                         One or more database source files
-  -o O, --o O           Name of the excel file to contain the output
-  -b B, --b B           Turn on bold for column headings
-  -i I, --i I           Turn on italic for column headings
+  -o OUTPUT, --output OUTPUT
+                        Name of the excel file to contain the output. Defaults
+                        to IBMiSQL
+  -b, --bold            Turn on bold for column headings
+  -i, --italic          Turn on italic for column headings
 ```
