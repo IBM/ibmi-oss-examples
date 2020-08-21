@@ -3,7 +3,7 @@
 
 Command line tool to create an XLSX file with data from Db2 for i table.
 
-***NOTE*** This utility uses the native `ibm_db` connector to access Db2 therfore will only run locally on an IBM i System
+***NOTE*** This utility uses the native `ibm_db` connector to access Db2 therefore will only run locally on IBM i
 
 ## Getting Started
 
