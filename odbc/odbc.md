@@ -17,11 +17,14 @@ Open Database Connectivity (ODBC) is a standardized API for connecting to databa
   * [Installation on Windows](#installation-on-windows)
     * [Driver Manager](#driver-manager-2)
     * [Driver](#driver-2)
+  * [Installation on macOS](#installation-on-macos)
+    * [Driver Manager](#driver-manager-3)
+    * [Driver](#driver-3)
 * [Using ODBC](#using-odbc)
   * [Connection Strings](#connection-strings)
   * [DSNs](#dsns)
     * [Configuration on Windows](#configuration-on-windows)
-    * [Configuration with UnixODBC (IBM i, Linux)](#configuration-with-unixodbc-ibm-i-linux)
+    * [Configuration with UnixODBC (IBM i, Linux, macOS)](#configuration-with-unixodbc-ibm-i-linux-macos)
     * [Using Your DSN](#using-your-dsn)
 * [Node.js Example](#nodejs-example)
   * [Setting Up Your Development Environment](#setting-up-your-development-environment)
@@ -47,6 +50,7 @@ The instructions for installing and ODBC driver and manager and the IBM i ODBC d
 * [Installation on IBM i](#installation-on-ibm-i)
 * [Installation on Linux](#installation-on-linux)
 * [Installation on Windows](#installation-on-windows)
+* [Installation on macOS](#installation-on-macOS)
 
 ## **Installation on IBM i**
 
@@ -56,7 +60,7 @@ On IBM i, we will be using unixODBC as our driver manager. Fortunately, unixODBC
 
 ### **Driver**
 
-To get both the unixODBC driver manager and the driver that allows ODBC to talk to Db2 for i, you will have to install the ODBC driver that allows your IBM i machine to use unixODBC to talk to Db2. To get the driver, visit [the IBM i Access - Client Solutions page](https://www-01.ibm.com/support/docview.wss?uid=isg3T1026805) and select **Downloads for IBM i Access Client Solutions**. After logging in and redirected to the IBM I Access Client Solutions download page, select the `Download using http` tab then scroll down and download the **ODBC driver for IBM i 7.2 or later**.  More complete instructions on how to download this driver can be found at [this TechNote on the ODBC Driver for the IBM i PASE environment](https://www-01.ibm.com/support/docview.wss?uid=ibm10885929).
+To get both the unixODBC driver manager and the driver that allows ODBC to talk to Db2 for i, you will have to install the ODBC driver that allows your IBM i machine to use unixODBC to talk to Db2. To get the driver, visit [the IBM i Access - Client Solutions page](https://www-01.ibm.com/support/docview.wss?uid=isg3T1026805) and select **Downloads for IBM i Access Client Solutions**. After logging in and redirected to the IBM I Access Client Solutions download page, select the `Download using http` tab then scroll down and download the **ACS PASE App Pkg**.  More complete instructions on how to download this driver can be found at [this TechNote on the ODBC Driver for the IBM i PASE environment](https://www-01.ibm.com/support/docview.wss?uid=ibm10885929).
 
 When the driver has been downloaded and unzipped and transferred to your IBM i system, you can run the rpm with yum the same way you would otherwise, but giving it the location of the file instead of the name of the package:
 
@@ -92,6 +96,20 @@ You will have to install the ODBC driver that allows Windows ODBC driver manager
 
 When the package has been downloaded and has been installed on your system, it should be available to see on your ODBC Data Source Administrator application.
 
+## **Installation on macOS**
+
+### **Driver Manager**
+
+On macOS, you will need unixODBC as your ODBC driver manager. Many macOS ODBC programs use another driver manager called **iodbc**, but *the IBM i ODBC driver will not work with iodbc*. unixODBC is available on `homebrew`, and can be installed running the following command:
+
+```
+brew install unixodbc
+```
+
+### **Driver**
+
+You will also have to install the macOS ODBC driver that allows unixODBC to talk to Db2 on i. To get the driver, visit [the IBM i Access - Client Solutions page](https://www-01.ibm.com/support/docview.wss?uid=isg3T1026805) and select **Downloads for IBM i Access Client Solutions**. After logging in and redirected to the IBM I Access Client Solutions download page, scroll down and download the **ACS Mac App Pkg**. The package will include a standard macOS installer package, which can be installed by double clicking orby running the `pkgutil` command.
+
 # **Using ODBC**
 
 Now that you have the IBM i Access ODBC Driver installed on your system, you are ready to connect to Db2 on i.
@@ -116,9 +134,9 @@ These are only some of the over 70 connection options you can use when connectin
 
 As you add more and more options to your connection string, your connection string can become quite cumbersome. Luckily, ODBC offers another way of defining connection options called a DSN (datasource name). Where you define your DSN will depend on whether you are using Windows ODBC driver manager or unixODBC on Linux or IBM i.
 
-### **Configuration with UnixODBC (IBM i, Linux)**
+### **Configuration with UnixODBC (IBM i, Linux, macOS)**
 
-Both IBM i and Linux distributions use unixODBC and have nearly identical methods of setting up your drivers and your DSNs.
+IBM i, Linux distributions, and macOS use unixODBC and have nearly identical methods of setting up your drivers and your DSNs.
 
 **`odbc.ini` and `.odbc.ini`**
 
