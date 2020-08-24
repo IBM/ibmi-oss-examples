@@ -24,7 +24,7 @@ Open Database Connectivity (ODBC) is a standardized API for connecting to databa
   * [Connection Strings](#connection-strings)
   * [DSNs](#dsns)
     * [Configuration on Windows](#configuration-on-windows)
-    * [Configuration with UnixODBC (IBM i, Linux, macOS)](#configuration-with-unixodbc-ibm-i-linux)
+    * [Configuration with UnixODBC (IBM i, Linux, macOS)](#configuration-with-unixodbc-ibm-i-linux-macos)
     * [Using Your DSN](#using-your-dsn)
 * [Node.js Example](#nodejs-example)
   * [Setting Up Your Development Environment](#setting-up-your-development-environment)
