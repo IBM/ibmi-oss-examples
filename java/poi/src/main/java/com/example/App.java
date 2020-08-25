@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.Types;
 
 import com.ibm.as400.access.AS400JDBCDriver;
+import com.ibm.as400.access.AS400;
 
 import java.util.Properties;
 import java.io.FileInputStream;
@@ -27,28 +28,29 @@ public class App
       Properties props = new Properties();
       props.load(new FileInputStream(".env"));
 
-      String URL = "jdbc:as400://" + props.getProperty("DB_HOST");
+      String HOST = props.getProperty("DB_HOST");
       String USER = props.getProperty("DB_USER");
       String PASS = props.getProperty("DB_PASS");
       String query = "SELECT CUSNUM, LSTNAM, BALDUE, CDTLMT FROM QIWS.QCUSTCDT";
 
-      Class.forName("com.ibm.as400.access.AS400JDBCDriver");
+      AS400JDBCDriver driver = new AS400JDBCDriver();
+      AS400 as400 = new AS400(HOST, USER, PASS);
 
-      Connection connection = DriverManager.getConnection(URL, USER, PASS);
+      Connection connection = driver.connect(as400);
       Statement statement = connection.createStatement();
       ResultSet results = statement.executeQuery(query);
       ResultSetMetaData metadata = results.getMetaData();
 
-      // create excel sheets
+      // create workbook and workshee
       Workbook workbook = WorkbookFactory.create(true);
       Sheet sheet = workbook.createSheet("Customers");
 
-      // Add the header
+      // add the header
       Row header = sheet.createRow(0);
-
-      // fill in the headers
       int columnCount = metadata.getColumnCount();
+
       for (int i = 0; i < columnCount; i++) {
+        // column name start with index 1
         header.createCell(i).setCellValue(metadata.getColumnName(i + 1));
       }
 
