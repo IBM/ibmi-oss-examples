@@ -33,17 +33,12 @@ your own free mail server, like hMailServer.
 
 Similarly, the Kafka example requires you to have a Kafka bootstrap server available.
 
-#### 1. Install a Java runtime. 
-
-Option 1: OpenJDK (cannot use the `*CURRENT` special value for jt400 authentication)
-
+#### 1. Install OpenJDK. 
 ```
 yum install openjdk-11
 PATH=/QOpenSys/pkgs/lib/jvm/openjdk-11/bin:$PATH
 export PATH
 ```
-Option 2: Install 5770-JV1 option 17 (this is likely already installed)
-
 
 #### 2. Set the `JAVA_HOME` environment variable to the JRE of your choosing
 If using OpenJDK:
@@ -51,28 +46,25 @@ If using OpenJDK:
 JAVA_HOME=/QOpenSys/pkgs/lib/jvm/openjdk-11
 export JAVA_HOME
 ```
-If using 5770-JV1:
-
-```
-JAVA_HOME=/QOpenSys/QIBM/ProdData/JavaVM/jdk80/64bit
-export JAVA_HOME
-```
 
 #### 3. Install maven
 ```
 yum install maven
 ```
+
 #### 4. Change to the appropriate directory
 For instance, if you're starting inside the `ibmi-oss-examples` directory where you cloned this repository:
 ```
 cd camel/msgq_to_email
 ```
+
 #### 5. Edit the file `src/main/resources/config.properties` with appropriate values
 These values are relatively self-explanatory. For the email example, the `smtp.username` and
 `smtp.password` lines can be deleted if your SMTP server doesn't require them.
 
 You can also opt to remove any properties from this file, and you will be interactively
-prompted for these values. On IBM i, this may require an SSH terminal.
+prompted for these values. On IBM i, this may require an SSH terminal. Note that the
+`*CURRENT` special value cannot be used with OpenJDK.
 
 #### 6. Build and launch
 ```
