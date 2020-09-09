@@ -2,8 +2,8 @@ const {
   Connection, IN, CHAR,
 } = require('idb-pconnector');
 
-const Hapi = require('hapi');
-const basicAuth = require('hapi-auth-basic');
+const Hapi = require('@hapi/hapi');
+const basicAuth = require('@hapi/basic');
 
 const port = process.env.PORT || 4000;
 const verbose = process.env.DEBUG;

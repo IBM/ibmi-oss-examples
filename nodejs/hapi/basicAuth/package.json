@@ -7,8 +7,8 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "hapi": "^18.1.0",
-    "hapi-auth-basic": "^5.0.0",
+    "@hapi/hapi": "^20.0.0",
+    "@hapi/basic": "^6.0.0",
     "idb-pconnector": "^1.0.4"
   },
   "devDependencies": {
