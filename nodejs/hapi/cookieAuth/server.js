@@ -1,5 +1,5 @@
-const Hapi = require('hapi');
-const cookie = require('hapi-auth-cookie');
+const Hapi = require('@hapi/hapi');
+const cookie = require('@hapi/cookie');
 const pug = require('pug'); // Template engine
 const vision = require('vision'); // Templates rendering plugin support for hapi.js.
 const inert = require('inert'); // Static file and directory handlers plugin for hapi.js.
