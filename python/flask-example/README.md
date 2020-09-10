@@ -15,7 +15,7 @@ python3 ./sample.py
 ##  Using *odbc*
 
 ### Installing requisites for itoolkit access
- - **pyodbc** `pip3 install pyodbc`
+ - **pyodbc** `yum install python3-pyodbc`
  - **flask:** `pip3 install flask`
 
 ### Starting the server 
