@@ -2,7 +2,7 @@ const odbc = require('odbc');
 
 async function test() {
   try {
-    const connection = await odbc.connect('DSN=LUGDEMO;DRIVER=IBM i Access ODBC Driver');
+    const connection = await odbc.connect('DSN=LUGDEMO');
     const result = await connection.query('SELECT * FROM QIWS.QCUSTCDT');
     console.log(result);
     await connection.close();
@@ -12,3 +12,4 @@ async function test() {
 }
 
 test();
+

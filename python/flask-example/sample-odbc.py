@@ -3,13 +3,9 @@
 
 from flask import Flask, render_template, request
 app = Flask(__name__)
-import ibm_db_dbi as dbi
+import pyodbc
 from itoolkit import *
-from itoolkit.db2.idb2call import *     #for local jobs
-
-version = tuple(map(int, dbi.__version__.split('.')))
-if version < (2, 0, 5, 5):
-    raise Exception("Need ibm_db_dbi 2.0.5.5 or higher to run, you have " + dbi.__version__)
+from itoolkit.transport import DatabaseTransport     #for local jobs
 
 @app.route('/sample')
 def sample():
@@ -19,7 +15,7 @@ def sample():
 def query_ibm_db():
 
     statement = request.form.get('sql')
-    conn = dbi.connect()
+    conn = pyodbc.connect('DSN=LUGDEMO')
     cur = conn.cursor()
     cur.execute(statement)
     
@@ -33,7 +29,8 @@ def cmd_toolkit():
     cl_statement = request.form.get('cl')
     # xmlservice
     itool = iToolKit()
-    itransport = iDB2Call()
+    conn = pyodbc.connect('DSN=LUGDEMO')
+    itransport = DatabaseTransport(conn)
     itool.add(iCmd5250(cl_statement, cl_statement))
     itool.call(itransport)
    
