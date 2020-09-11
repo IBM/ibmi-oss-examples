@@ -1,15 +1,35 @@
 
-# "DBTOXLSX" using Python 3 and ibm_db_dbi
+# DBTOXLSX
 
-# Installing requisites
-  - **ibm_db:** `yum install python3-ibm_db`
-  - **xlsxwriter** `pip3 install xlsxwriter`
+Command line tool to create an XLSX file with data from Db2 for i table.
 
-# Example
-- `python3 dbtoxlsx.py -h`
-- `python3 dbtoxlsx.py -c "select * From QSYS2.USER_INFO WHERE STATUS = '*ENABLED'" -o /home/test.xlsx `
+***NOTE*** This utility uses the native `ibm_db` connector to access Db2 therefore will only run locally on IBM i
 
-# Usage
+## Getting Started
+
+1) Clone the IBM i OSS examples repo and change directory into `ibmi-oss-example/python/dbtoxlsx`
+
+    ```bash
+    $ git clone https://github.com/IBM/ibmi-oss-examples.git
+
+    $ cd ibmi-oss-examples/python/dbtoxlsx
+    ```
+
+2) Install dependencies
+
+    ```bash
+    $ ./setup.sh
+    ```
+    This installs the following:
+
+    - **ibm_db:** `yum install python3-ibm_db`
+    - **xlsxwriter** `pip3 install xlsxwriter`
+
+## Example
+
+- `./dbtoxlsx.py -c "select * From QSYS2.USER_INFO WHERE STATUS = '*ENABLED'" -o /home/test.xlsx`
+
+## Usage
 ```
 dbtoxlsx.py [-h] [-c C] [-l L] [-f [FNAMES [FNAMES ...]]] [-o O] [-b B] [-i I]
 
