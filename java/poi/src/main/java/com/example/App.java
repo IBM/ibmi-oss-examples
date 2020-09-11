@@ -72,6 +72,7 @@ public class App
             break;
             default:
               row.createCell(c).setCellValue(results.getString(columnName));
+            break;
           }
         }
       }
