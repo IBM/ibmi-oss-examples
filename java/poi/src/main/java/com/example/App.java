@@ -34,6 +34,8 @@ public class App
 
       AS400JDBCDriver driver = new AS400JDBCDriver();
       AS400 as400 = new AS400(HOST, USER, PASS);
+      // disable prompting with a GUI window
+      as400.setGuiAvailable(false);
 
       Connection connection = driver.connect(as400);
       Statement statement = connection.createStatement();
@@ -61,14 +63,15 @@ public class App
           // column name and type start with index 1
           String columnName = metadata.getColumnName(c + 1);
           int columnType = metadata.getColumnType(c + 1);
-
+          // in this example column type is either NUMERIC or CHAR type
+          // if you require other sql types add a case with the correct get method
+          // the default is to get a string representation of the column
           switch (columnType) {
             case Types.NUMERIC:
               row.createCell(c).setCellValue(results.getDouble(columnName));
             break;
-            case Types.CHAR:
+            default:
               row.createCell(c).setCellValue(results.getString(columnName));
-            break;
           }
         }
       }
@@ -77,6 +80,5 @@ public class App
       workbook.write(new FileOutputStream("Customers.xlsx"));
       System.out.println("Succesfully created Customers.xlsx!");
       connection.close();
-      System.exit(0);
     }
 }
