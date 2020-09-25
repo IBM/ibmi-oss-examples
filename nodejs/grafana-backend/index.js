@@ -49,13 +49,13 @@ function updateJSON() {
   if(timeserie[3].datapoints.length > 500)
     timeserie[3].datapoints.shift();
   timeserie[3].datapoints.push([
-    parseInt(sys_usage[0].SYSTEM_ASP_USED), now)
+    parseInt(sys_usage[0].SYSTEM_ASP_USED), now
   ]);
 
   if(timeserie[4].datapoints.length > 500)
     timeserie[4].datapoints.shift();
   timeserie[4].datapoints.push([
-    parseInt(sys_usage[0].ATTENTION_LIGHT), now)
+    parseInt(sys_usage[0].ATTENTION_LIGHT), now
   ]);
 }
 
