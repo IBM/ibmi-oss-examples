@@ -1,7 +1,7 @@
 # Node.js SSH Db2 Example
 
-Node.js application that calls Db2 from a cloud-native application, using SSH
-and [db2util](https://github.com/IBM/ibmi-db2util).
+Node.js application that uses an SSH connection
+and [db2util](https://github.com/IBM/ibmi-db2util) to run Db2 queries. Since no platform-specific modules are required, this technique can be used from any operating system, including Windows, Linux, Mac, IBM i, or even cloud-native applications.
 
 ## Prerequisites
 
@@ -37,7 +37,7 @@ and [db2util](https://github.com/IBM/ibmi-db2util).
    $ npm install
    ```
 
-3) Configure `SSH_HOST`, `SSH_USER`, and `SSH_PASSWORD` enviorment variables within the [.env](.env) file. To use key based authentication configure `SSH_PRIVATE_KEY` environment variable with path to your private key file.
+3) Configure `SSH_HOST`, `SSH_USER`, and `SSH_PASSWORD` environment variables within the .env file. Or, to use key based authentication instead, configure `SSH_HOST`, `SSH_USER`, and `SSH_PRIVATE_KEY` environment variables, with `SSH_PRIVATE_KEY` being the path to your private key file.
 
 4) Run the app
    
