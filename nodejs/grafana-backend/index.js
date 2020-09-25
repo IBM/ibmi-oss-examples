@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const _ = require('lodash');
 const {dbconn, dbstmt} = require('idb-connector');
 
-const sSql = 'SELECT AVERAGE_CPU_UTILIZATION, ACTIVE_JOBS_IN_SYSTEM, CURRENT_TEMPORARY_STORAGE FROM QSYS2.SYSTEM_STATUS_INFO';
+const sSql = "select AVERAGE_CPU_UTILIZATION, ACTIVE_JOBS_IN_SYSTEM, CURRENT_TEMPORARY_STORAGE, SYSTEM_ASP_USED, case when ATTENTION_LIGHT = 'OFF' then 0 else 1 end ATTENTION_LIGHT from QSYS2.SYSTEM_STATUS_INFO";
 
 const connection = new dbconn();
 connection.conn('*LOCAL');
@@ -18,6 +18,8 @@ const timeserie = [];
 timeserie[0] = { target: "CPU Usage", datapoints: []};
 timeserie[1] = { target: "Active Jobs", datapoints: []};
 timeserie[2] = { target: "Temp Storage Usage", datapoints: []};
+timeserie[3] = { target: "System ASP Used", datapoints: []};
+timeserie[4] = { target: "Attention Light", datapoints: []};
 
 function updateJSON() {
   const sys_usage = statement.execSync(sSql);
@@ -42,6 +44,18 @@ function updateJSON() {
     timeserie[2].datapoints.shift();
   timeserie[2].datapoints.push([
     parseInt(sys_usage[0].CURRENT_TEMPORARY_STORAGE), now
+  ]);
+
+  if(timeserie[3].datapoints.length > 500)
+    timeserie[3].datapoints.shift();
+  timeserie[3].datapoints.push([
+    parseInt(sys_usage[0].SYSTEM_ASP_USED), now)
+  ]);
+
+  if(timeserie[4].datapoints.length > 500)
+    timeserie[4].datapoints.shift();
+  timeserie[4].datapoints.push([
+    parseInt(sys_usage[0].ATTENTION_LIGHT), now)
   ]);
 }
 
