@@ -6,7 +6,7 @@ function callDb2util(config, done) {
     } = config;
   
     const client = new Client();
-    const command = `/QOpenSys/pkgs/bin/db2util "${config.query}"`;
+    const command = `/QOpenSys/pkgs/bin/db2util '${config.query}'`;
   
     let output = '';
 
