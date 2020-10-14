@@ -29,7 +29,7 @@ with data from Db2 for i table.
    $ mvn compile
    ```
 
-3) Configure `DB_HOST`, `DB_USER`, and `DB_PASS` enviorment variables within the [.env](.env) file. Or enter credentials interactively when prompted.
+3) Configure `DB_HOST`, `DB_USER`, and `DB_PASS` enviorment variables within the [.env](src/main/resources/.env) file. Or enter credentials interactively when prompted.
 
 4) Run the app
    

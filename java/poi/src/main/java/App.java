@@ -8,8 +8,8 @@ import com.ibm.as400.access.AS400JDBCDriver;
 import com.ibm.as400.access.AS400;
 
 import java.util.Properties;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 
 import java.lang.Exception;
 
@@ -25,7 +25,9 @@ public class App
     public static void main( String[] args ) throws Exception
     {
       Properties props = new Properties();
-      props.load(new FileInputStream(".env"));
+      ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+      InputStream is = classloader.getResourceAsStream(".env");
+      props.load(is);
 
       String HOST = props.getProperty("DB_HOST");
       String USER = props.getProperty("DB_USER");
