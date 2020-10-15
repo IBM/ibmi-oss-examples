@@ -25,7 +25,7 @@ Next create the `postgres` home directory and change ownership to the ***POSTGRE
 $ mkdir /home/postgres
 $ chown postgres /home/postgres
 ```
-***NOTE:*** Creating a user profile requires `*ALLOBJ` authority.
+***NOTE:*** Creating a directory under `/` requires `*ALLOBJ` authority.
 
 Log in to your IBM i via SSH as the **POSTGRES** user.
 
