@@ -1,54 +1,61 @@
-# Install and configure Postgresql DB Server on IBM i 
+# PostgreSQL Installation and Basic Configuration on IBM i
 
-Install postgres yum packages from IBM i ACS Open Source Package Management
-```
-Package list:
-postgresql12 ***(This item may be the only one you need to select to include all packages)***
-postgresql12-contrib
-postgresql12-devel
-postgresql12-docs
-postgresql12-libecpg
-postgresql12-libpgtypes
-postgresql12-libpq
-postgresql12-server
+The purpose of this document is to summarize PostgreSQL installation and basic configuration on IBM i. The following topics are outlined below: initial setup, enabling remote connections, server startup, and connecting with a client.
+
+## Initital Setup
+
+Install the `postgres12-server` and `postgresql-contrib` rpm packages using the [IBM i ACS Open Source Package Management](https://www.ibm.com/support/pages/node/706903) wizard or an SSH shell session with:
+:w
+```bash
+$ yum install postgresql12-server postgresql12-contrib
 ```
 
-Create IBM i user: ***POSTGRES*** and give it a password. It's important the user is named POSTGRES because the Postgresql server needs a default user of POSTGRES. At least that was my experience with it. (Also give it *ALLOBJ access for now. You can probably remove later and possibly even disable the IBM i POSTGRES user. ***Not tested.***)
+According to the [PostgreSQL docs](https://www.postgresql.org/docs/12/postgres-user.html), "It is advisable to run PostgreSQL under a separate user account. This user account should only own the data that is managed by the server, and should not be shared with other daemons. The user name postgres is often used but you can use another name if you like."
 
-Log in to SSH as IBM i user ***POSTGRES*** to do server setup.
+From a 5250 session create a ***POSTGRES*** user profile with:
 
-If not started, start the bash shell by typing ***bash*** unless bash is already your default shell. 
-
-Run the following shell command line sequence to initialize postgres database in the /postgres IFS directory location
 ```
-cd /
+CRTUSRPRF  USRPRF(POSTGRES)  PASSWORD(...)
+```
+***NOTE:*** Creating a user profile requires `*ALLOBJ` authority.
 
-mkdir postgres
+Next create the `postgres` home directory and change ownership to the ***POSTGRES*** user. From SSH or QSH session run:
 
-export PGDATA=/postgres
+```sh
+$ mkdir /home/postgres
+$ chown postgres /home/postgres
+```
+***NOTE:*** Creating a directory under `/` requires `*ALLOBJ` authority.
 
-initdb -E UTF-8 -D /postgres
+Log in to your IBM i via SSH as the **POSTGRES** user.
+
+If not started, start the bash shell by typing ***bash*** unless bash is already your default shell.
+
+Run the following commands to initialize PostgreSQL database in the `/home/postgres` IFS directory location
+
+```bash
+
+$ export PGDATA=/home/postgres
+
+$ initdb -E UTF-8 -D /home/postgres -W -A scram-sha-256
 ```
 
-After initdb you should see the following message:
+You will be prompted to `Enter new superuser password` for the **POSTGRES** user.
+
+***NOTE:*** This password is for the database and distinct from the **POSTGRES** user profile.
+
+After running `initdb` you should see the following message:
 ```
 Success. You can now start the database server using:
-    pg_ctl -D /postgres -l logfile start
+    pg_ctl -D /home/postgres -l logfile start
 ```
 
-***Do not start server yet until after you modify /postgres/postgresql.conf***
-	
-Use nano editor, vim or other editor to edit ***/postgres/postgresql.conf*** file so the server will listen on TCP/IP addresses. We will enable access on all IP addresses
-```
-edit /postgres/postgresql.conf
-uncomment listen_addresses and and change to: listen_addresses = '*' 
-uncomment the port = 5432 entry. 
-save postgresql.conf
-```
-	
-Run the following command to start postgres database server.
-```
-pg_ctl -D /postgres -l logfile start
+## Server Startup
+
+Run the following command to start PostgreSQL database server.
+
+```bash
+$ pg_ctl -D /home/postgres -l logfile start
 ```
 
 You should see the following messages:
@@ -57,9 +64,9 @@ waiting for server to start.... done
 server started
 ```
 
-This following command can be used to stop the server.
-```
-pg_ctl -D /postgres -l logfile stop
+The following command can be used to stop the server.
+```bash
+$ pg_ctl -D /home/postgres -l logfile stop
 ```
 
 From a 5250 session, run WRKACTJOB and you should see the active server jobs and threads in the QUSRWRK subsystem
@@ -75,7 +82,7 @@ QP0ZSPWP     POSTGRES    BCI      .0  PGM-postgres     SELW
 --------------------------------------------------------------------------------
 ```
 
-From a 5250 session, run "NETSTAT *CNN" to verify the server is listening on port 5432. You should see an entry for Local Port 5432 which tells you the server is listening for connections. 
+From a 5250 session, run `NETSTAT *CNN` to verify the server is listening on port 5432. You should see an entry for Local Port 5432 which tells you the server is listening for connections.
 ```
 --------------------------------------------------------------------------------
                         Work with IPv4 Connection Status                   
@@ -90,78 +97,105 @@ From a 5250 session, run "NETSTAT *CNN" to verify the server is listening on por
 --------------------------------------------------------------------------------
 ```
 
-Allow remote access to server. You can change this by editing ***/postgres/pg_hba.conf*** 
+From shell command line, create example pdatabase with the following command:
 
-Add following entry to the pg_hba.conf file:
+## Connect Client To the Server
+
+The `psql` command line client is a frontend to interact with PostgreSQL server backend.
+Lets use `psql` to connect to the server, create a database, create a table, insert data, and view the data.
+
 ```
-host   all   all   0.0.0.0/0     password
-```
-Note: This will enable password checking. You'll need to set a new password for the ***postgres*** user on the Postgresql server. See below.
+$ psql
+Password for user postgres:
+postgres=# CREATE DATABASE us_states;
+CREATE DATABASE
 
-Save pg_hba.conf. 
+postgres=# \c us_states;
+You are now connected to database "us_states" as user "postgres".
 
-Stop and then start Postgresql server as described previously. 
+us_states=# CREATE TABLE States(id SERIAL, name varchar(50));
+CREATE TABLE
 
-From shell command line, create demo postgres database using the following command line command:
-```
-createdb ibmidemo
-```
+us_states=# INSERT INTO States(name) VALUES('Alabama');
+INSERT 0 1
 
-The psql command utility can be used to provide permissions and do other server related maintenance. 
+us_states=# SELECT * FROM States;
+ id |  name   
+----+---------
+  1 | Alabama
+(1 row)
 
-For now we will just allow access for the postgres user to our new database as an example.
-We will also set a password for the postgres user. This sample uses 'postgres2020' for the password. 
-You should use a more secure password. 
-***NOTE: You should also review the Postgres site for appropriate Postgres security measures.***
-
-Start psql utility
-```
-psql 
-```
-
-Type the following sql and press Enter to set database access for postgres database user:
-```
-grant all privileges on database ibmidemo to postgres;
+us_states=# \q
 ```
 
-Type the following sql and press Enter to set the database server password for the postgres database user:
+If you enabled remote connections, the same can be done using `psql` from a remote machine with:
+
 ```
-alter user postgres with password 'postgres2020';
+$ psql -h myhost.example.com -U postgres -d us_states
+Password for user postgres: 
+
+us_states=# INSERT INTO States(name) VALUES('Alaska');
+INSERT 0 1
+us_states=# SELECT * FROM States;
+ id |  name   
+----+---------
+  1 | Alabama
+  2 | Alaska
+(2 rows)
+
+us_states=# \q
 ```
 
-Type: ***quit*** and press enter to exit the psql utility.
+Alternatively you can use a GUI client like pgAdmin, Heidi, DBeaver, etc to connect to Postgres server instead of `psql`.
 
-
-Use Heidi, DBeaver or other Postgresql client to connect to Postgres database. 
 ```
 Host: IBMi host name or IP
 Port: 5432
 User: postgres
-Password: postgres2020
-Database: ibmidemo
+Password: Your password
+Database: us_states
 ```
 
-If desired, change the port that Postgresql server listens on to something other than 5432.
+## Enable Remote Connections
 
-use nano editor, vim or other editor to edit ***/postgres/postgresql.conf*** file 
+By default PostgreSQL only listens for client connections from localhost. To allow remote connection we need to configure some files.
+
+***NOTE:*** [Secure connections with SSL](https://www.postgresql.org/docs/12/ssl-tcp.html#SSL-SETUP) if your server is accessible publicly. In this example the server protected behind a firewall.
+
+Before editing the configuration files make sure the PostgreSQL server is stopped with
+
+```bash
+$ pg_ctl -D /home/postgres -l logfile stop
+```
+
+Use nano, vim or some other editor to edit ***/home/postgres/postgresql.conf*** file so the server will listen on TCP/IP addresses. We will enable access on all IP addresses
 
 ```
-Change port number. 
-Ex: port = 60432 
+# listen_addresses = 'localhost'
+listen_addresses = '*'
+```
+***NOTE:*** This will allow PostgreSQL server to listen for all IP addresses.
+
+Read the [docs](https://www.postgresql.org/docs/12/runtime-config-connection.html) for more details on Connection configuration.
+
+Edit the `IPv4 local connections` line in ***/home/postgres/pg_hba.conf***
+
+```
+# IPv4 local connections:
+# TYPE    DATABASE        USER            ADDRESS                 METHOD
+# host    all             all             127.0.0.1/32            scram-sha-256
+  host    all             all             0.0.0.0/0               scram-sha-256
 ```
 
-save postgresql.conf
+Read the [docs](https://www.postgresql.org/docs/12/auth-pg-hba-conf.html) for more
+details on ***pg_hba.conf*** configuration.
 
-Stop and restart Postgres server
+***NOTE:*** This will allow clients from any IPv4 address to authenticate.
 
-Now refer to standard Postgresql documentation as needed. 
+Start the PostgreSQL server with:
 
-# Links
+```bash
+$ pg_ctl -D /home/postgres -l logfile stop
+```
 
-Postgresql Site
-
-https://www.postgresql.org
-
-Role postgres does not exist error
-
-https://dba.stackexchange.com/questions/221663/psql-fatal-role-postgres-does-not-exist
+Now that you have postgresql installed and setup refer to to the standard [PostgreSQL documentation](https://www.postgresql.org/docs/) as needed.
