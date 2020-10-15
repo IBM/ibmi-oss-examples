@@ -5,7 +5,7 @@ The purpose of this document is to summarize PostgreSQL installation and basic c
 ## Initital Setup
 
 Install the `postgres12-server` and `postgresql-contrib` rpm packages using the [IBM i ACS Open Source Package Management](https://www.ibm.com/support/pages/node/706903) wizard or an SSH shell session with:
-:w
+
 ```bash
 $ yum install postgresql12-server postgresql12-contrib
 ```
