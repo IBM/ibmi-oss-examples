@@ -5,6 +5,8 @@ const connection = require('./db');
 
 let pool;
 
+// create an HTML template for the books that exist in the table.
+// The books are cleared every time the server is started up
 async function generateBooksTable() {
 
   let tableHTML = '<table><tr><th>Title</th><th>Author</th></tr>';
@@ -21,10 +23,12 @@ async function generateBooksTable() {
   return tableHTML;
 }
 
+// query used to insert book values into our tables
 async function insertBook(title, author) {
   await pool.query("INSERT INTO KOA_BOOKS(TITLE, AUTHOR) VALUES(?, ?)", [title, author]);
 }
 
+// The root view, which has a simple login form
 router.get('/', async (ctx) => {
   ctx.type = 'html';
   ctx.body = `
@@ -42,6 +46,8 @@ router.get('/', async (ctx) => {
   `;
 });
 
+// Our login route, that redirects depending on whether our credentials were
+// valid;
 router.post('/login',
   passport.authenticate('local', {
     successRedirect: '/app',
@@ -49,6 +55,7 @@ router.post('/login',
   })
 )
 
+// Log out of the session
 router.get('/logout', async (ctx) => {
   if (ctx.isAuthenticated()) {
     ctx.logout();
@@ -59,6 +66,7 @@ router.get('/logout', async (ctx) => {
   }
 })
 
+// Our dashboard route that displays all of the books in our table.
 router.get('/app', async (ctx) => {
   if (ctx.isAuthenticated()) {
     ctx.type = 'html';
@@ -90,10 +98,13 @@ router.post('/books', async (ctx) => {
   ctx.redirect('/app');
 });
 
+// load the pool exported from db.js file. This isn't GREAT, since it just fires
+// and doesn't resolve to anything. But it _should_ resolve before any
+// query is fired off in this file, since the server doesn't start until the
+// connection has been resolved in app.js
 async function loadPool () {
   pool = await connection;
 }
-
 loadPool();
 
 

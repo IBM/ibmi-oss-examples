@@ -1,8 +1,10 @@
 const { Connection, ProgramCall } = require('itoolkit');
 const { parseString } = require('xml2js');
 
-//consider converting to promise based.
-async function QSYSGETPH(username, password) {
+// Function using itoolkit/XMLSERVICE that calls the QSYGETPH (get profile
+// handle) API to determine if a username/password combination is valid. With
+// this function, we can authenticate against IBM i credentials.
+async function QSYGETPH(username, password) {
   return new Promise(
     (resolve, reject) => {
       const connection = new Connection({
@@ -83,4 +85,4 @@ async function QSYSGETPH(username, password) {
   )
 };
 
-exports.QSYSGETPH = QSYSGETPH;
+exports.QSYGETPH = QSYGETPH;
