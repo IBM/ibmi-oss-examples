@@ -16,6 +16,7 @@ python3|Python3 support|
 python3-devel|python3 development package|
 python3-ibm_db|DBAPI support package for IBM i|
 python3-numpy|numpy package|
+python3-pandas|pandas package|
 python3-scipy|scipy package|
 python3-scikit-learn|scikit-learn package|
 libzmq-devel|Zero MQ library|
