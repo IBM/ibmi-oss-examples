@@ -1,13 +1,16 @@
 const Router     = require('koa-router');
 const router     = new Router();
 const passport   = require('koa-passport');
-const connection = require('./db');
+const poolPromise  = require('./db').pool;
 
 let pool;
 
 // create an HTML template for the books that exist in the table.
 // The books are cleared every time the server is started up
 async function generateBooksTable() {
+
+  // we know this is the first called, so put this here for now
+  pool = await poolPromise;
 
   let tableHTML = '<table><tr><th>Title</th><th>Author</th></tr>';
 
@@ -97,15 +100,6 @@ router.post('/books', async (ctx) => {
   await insertBook(title, author);
   ctx.redirect('/app');
 });
-
-// load the pool exported from db.js file. This isn't GREAT, since it just fires
-// and doesn't resolve to anything. But it _should_ resolve before any
-// query is fired off in this file, since the server doesn't start until the
-// connection has been resolved in app.js
-async function loadPool () {
-  pool = await connection;
-}
-loadPool();
 
 
 module.exports = router;
