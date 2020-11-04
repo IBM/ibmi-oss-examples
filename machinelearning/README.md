@@ -17,6 +17,7 @@ python3-devel|python3 development package|
 python3-ibm_db|DBAPI support package for IBM i|
 python3-numpy|numpy package|
 python3-pandas|pandas package|
+python3-pip|pip package|
 python3-scipy|scipy package|
 python3-scikit-learn|scikit-learn package|
 libzmq-devel|Zero MQ library|
@@ -24,6 +25,10 @@ freetype-devel|Freetype library|
 libjpeg-turbo-devel|JPEG library|
 zlib-devel|zlib development package|
 libffi-devel|FFI development package|
+pkg-config|pkg-config package|
+gcc-aix|gcc package|
+gcc-cplusplus-aix|gcc c++ package|
+libstdcplusplus-devel|c++ package|
 + After yum packages are installed, the following Python packages need to be installed by pip3: `pip3 install <package name>`.
 ---
 Package|Description|Comments
