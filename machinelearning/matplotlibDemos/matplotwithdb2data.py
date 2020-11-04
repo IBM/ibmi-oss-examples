@@ -1,5 +1,8 @@
+import matplotlib
 import matplotlib.pyplot as plt
 import ibm_db_dbi as dbi
+
+matplotlib.use('AGG')
 
 # Generate a plot from Db2 data and save it as matplotwithdb2data.png
 # The plot will contain two subplots showing different Db2 data with
