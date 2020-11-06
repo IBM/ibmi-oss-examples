@@ -16,6 +16,19 @@ passport.deserializeUser(async (user, done) => {
 // make sure the credentials were valid
 passport.use(new LocalStrategy(async (username, password, done) => {
   try {
+    // verify the username isn't empty
+    if (username.length == 0)
+    {
+      done(new Error("username cannot be empty!"));
+    }
+
+    // verify the format of the username to prevent malicious use of *CURRENT
+    const trimmedUsername = username.trim();
+    if (trimmedUsername.startsWith('*') || trimmedUsername.startsWith('{*'))
+    {
+      done(new Error("username cannot begin with a * character!"));
+    }
+
     // connect to the database to check our credentials! The profile will
     // also be used to handle authority lists for running Db2 queries
     pool = await odbc.pool(`DSN=*LOCAL;UID=${username};PWD=${password};`);
