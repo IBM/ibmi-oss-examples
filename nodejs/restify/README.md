@@ -18,16 +18,16 @@ Use [odbc](https://www.npmjs.com/package/odbc) to access Db2 and using JSON Web 
 
 ## Getting Started
 
-1. clone this project
+1. Clone this project
 
-2. install dependencies
+2. Install dependencies
 
   `npm install`
 
-3. start the server
+3. Start the server
 
   `npm start`
 
-4. once the server is started, run the client
+4. Once the server is started, run the client
 
   `node client.js`

@@ -1,5 +1,7 @@
 const bcrypt     = require('bcrypt');
 const odbc       = require('odbc');
+
+// For more on salting rounds, see https://www.npmjs.com/package/bcrypt#a-note-on-rounds
 const saltRounds = 12;
 
 // This example runs on IBM i using *LOCAL credentials. This will use the 
@@ -20,7 +22,7 @@ async function setupDatabase() {
 
     await localPool.query("CREATE OR REPLACE TABLE BOOKS(ID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1), TITLE VARCHAR(32) NOT NULL, AUTHOR VARCHAR(32), PRIMARY KEY (ID))");
 
-    await localPool.query("CREATE OR REPLACE TABLE USERS(USERNAME VARCHAR(32) NOT NULL, PASSWORD_HASH VARCHAR(128) NOT NULL)");
+    await localPool.query("CREATE OR REPLACE TABLE USERS(USERNAME VARCHAR(32) NOT NULL, PASSWORD_HASH VARCHAR(60) NOT NULL)");
 
     // For this example, we seed our users table with a user. We DON'T EVER
     // STORE THE PASSWORD IN PLAIN TEXT! Instead we store the hash.

@@ -41,7 +41,9 @@ async function authenticate(username, password) {
     // compare the password the client gave against the hash in the table
     const validPassword = await bcrypt.compare(password, result[0]['PASSWORD_HASH']);
     if (validPassword) {
-      // if the password was valid, return the username
+      // if the password was valid, return the username. Normally you would
+      // likely pass a larger object, for for the simplicity of this example,
+      // only need the username.
       return { username: username };
     } else {
       // error will get overwritten in authorize function, just need to throw
