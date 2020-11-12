@@ -1,5 +1,5 @@
 # Sample Google Maps with DB2 Data Application 
-This example shows how to use DB2 customer data with Google Maps APIs.
+This example shows how to use Db2 customer data with Google Maps APIs.
 
 In the example, a list of customers and their addresses are retrieved from DB2. 
 For each customer's address, the latitude and longitude are determined from their
