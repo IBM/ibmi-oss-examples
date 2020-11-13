@@ -4,7 +4,7 @@
 from PIL import Image
 
 img = Image.open('rabbit.jpg')
-logo = Image.open('ibmi.png')
+logo = Image.open('ibmi.png').convert("RGBA")
 
 # Resize the image to exactly half its width and height
 half_size = [ dim//2 for dim in img.size ]
