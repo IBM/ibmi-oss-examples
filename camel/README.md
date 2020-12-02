@@ -31,7 +31,10 @@ Your organization probably already has an SMTP server, and there are several
 free (or trial) services available online, including Gmail, or MailJet. You can also run
 your own free mail server, like hMailServer.
 
-Similarly, the Kafka example requires you to have a Kafka bootstrap server available.
+Similarly, the Kafka example requires you to have a Kafka bootstrap server available. If
+you would like to deploy Kafka on your IBM i system, see [this documentation](dtaq_to_kafka/KAFKA_DEPLOY.md)
+for guidance, but of course you may deploy your bootstrap server wherever it makes the
+most sense. Some deploy on a local laptop for bringup/testing. 
 
 #### 1. Install OpenJDK. 
 ```
