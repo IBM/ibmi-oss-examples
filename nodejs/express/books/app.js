@@ -5,9 +5,6 @@
   Purpose: Create a Restful API with authentication using passport.js
 */
 
-// appmetrics
-require('appmetrics-dash').attach();
-
 // express
 const express = require('express');
 

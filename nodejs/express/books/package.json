@@ -18,8 +18,7 @@
     "express-session": "^1.15.6",
     "idb-pconnector": "^1.0.2",
     "passport": "^0.4.0",
-    "passport-local": "^1.0.0",
-    "appmetrics-dash": "^4.0.0"
+    "passport-local": "^1.0.0"
   },
   "devDependencies": {
     "eslint": "^5.12.1",
