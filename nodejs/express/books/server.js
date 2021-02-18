@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const crypto = require('crypto');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const ibmi = require('./ibmi_utils.js');
 
 //
 // config
@@ -15,10 +16,8 @@ const SECRET = crypto.randomBytes(32).toString('hex');
 //
 // helpers
 //
-function processUserSignIn(username, password, server) {
-    // returns user object; username is primary key; conn is open connection to
-    // ibmi server
-    return {username: username, password: password, server: server, connection: null};
+function getUserProfile(req) {
+    return req.session.passport ? req.session.passport.user : null;
 }
 
 // opens connection to specified server with given credentials; creates BOOKS
@@ -63,7 +62,7 @@ app.use(passport.session());
 
 passport.use(new LocalStrategy(function(username, password, done) {
     // stores entire user object in session
-    let user = processUserSignIn(username, password, null);
+    let user = ibmi.processUserSignIn(username, password, null);
     //done('BAD SIGNIN', false);
     done(null, user);
 }));
@@ -98,6 +97,7 @@ app.post('/signout', isLoggedIn, function(req, res, next) {
 //
 
 app.get('/', isLoggedIn, function(req, res, next) {
+    console.log(`=====> ${JSON.stringify(getUserProfile(req))}`);
     return res.status(201).end('+++ INDEX +++');
 });
 
