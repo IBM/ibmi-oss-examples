@@ -61,10 +61,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 passport.use(new LocalStrategy(function(username, password, done) {
-    // stores entire user object in session
-    let user = ibmi.processUserSignIn(username, password, null);
-    //done('BAD SIGNIN', false);
-    done(null, user);
+    ibmi.processUserSignIn(username, password, 'oss72dev', function(err, user) {
+        if (err) return done(`Error from ibmi signin: ${err}`, null);
+        // store entire user object in session
+        done(null, user);
+    });
 }));
 
 passport.serializeUser(function(user, done) {
@@ -97,7 +98,7 @@ app.post('/signout', isLoggedIn, function(req, res, next) {
 //
 
 app.get('/', isLoggedIn, function(req, res, next) {
-    console.log(`=====> ${JSON.stringify(getUserProfile(req))}`);
+    console.log(`=> ${JSON.stringify(getUserProfile(req))}`);
     return res.status(201).end('+++ INDEX +++');
 });
 

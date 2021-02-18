@@ -1,22 +1,32 @@
 const odbc = require('odbc');
-const itoolkit = require('itoolkit');
+const {Connection, CommandCall, ProgramCall} = require('itoolkit');
 
 let ibmi = (function() {
     let module = {};
 
-    module.qwe = function() {
-        console.log('qwe');
-    };
+    // cb format: err, result
+    module.testConnection = function(user, cb) {};
 
-    module.processUserSignIn = function(username, password, server) {
-        // returns user object; username is primary key; conn is open connection to
-        // ibmi server
-        return {
-            username: username,
-            password: password,
-            server: server,
-            connection: null
-        };
+    // creates a user object that includes an open connection to specified ibmi
+    // server
+    // cb format: err, user
+    module.processUserSignIn = function(username, password, server, cb) {
+        odbc.connect(`DSN=${server};UID=${username};PWD=${password}`, function(err, conn) {
+            if (err) {
+                console.log(`=> ODBC connection failed(username=${username}): ${err}`);
+                cb(err, null);
+            } else {
+                console.log(`=> ODBC connection succeeded(username=${username}): ${JSON.stringify(conn)}`);
+                // pass user to callback
+                let user = {
+                    username: username,
+                    password: password,
+                    server: server,
+                    conn: conn
+                };
+                cb(null, user);
+            }
+        });
     };
 
     return module;
