@@ -22,5 +22,4 @@ RUN cp /app/.odbc.ini $HOME
 RUN npm install
 
 # start app
-CMD ["npm", "run", "setup"]
 CMD ["npm", "start"]
