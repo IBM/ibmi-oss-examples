@@ -106,6 +106,11 @@ app.get('/login', function(req, res, next) {
     return res.render('login');
 });
 
+// display 404 for any mismatch routes
+app.use(function(req, res, next) {
+    return res.status(404).sendFile('404.html', {root: `${__dirname}/public/html`});
+});
+
 app.listen(PORT, function() {
     console.log(`\nServer listening @ port ${PORT}\n`);
 });
