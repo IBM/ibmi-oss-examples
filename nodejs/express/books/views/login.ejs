@@ -1,12 +1,14 @@
-<%- include('includes/header') %>
-
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('includes/header') %>
+    <body>
         <div class="container">
             <% if (locals.error){ %>
                 <div class="alert alert-danger" role="alert">
                     <strong><%= error %></strong>
-                  </div>
+                </div>
             <%}%>
-            <form method="POST" action="/signin">
+            <form action="javascript:void(0);">
                 <div class="form-group">
                     <label for="username">Username:</label>
                     <input class="form-control form-inline" id="username" type="text" name="username" placeholder="Enter Username"
@@ -17,9 +19,18 @@
                     <input class="form-control form-inline" id="password" type="password" name="password" placeholder="Enter Password"
                         maxlength="20" required/>
                 </div>
-                <button class="btn btn-primary" type="submit" name="submit">Login</button>
+                <button id="signin_btn" class="btn btn-primary" type="submit" name="submit">Sign In</button>
             </form>
         </div>
-
     </body>
+    <script type="text/javascript">
+        // hide top nav bar so user have to log in
+        document.querySelector('#top_nav').style.visibility = 'hidden';
+        // attach event to sign in btn
+        document.querySelector('#signin_btn').addEventListener('click', function() {
+            let username = document.querySelector('#username').value;
+            let password = document.querySelector('#password').value;
+            api.signIn(username, password);
+        });
+    </script>
 </html>

@@ -1,23 +1,23 @@
 const express = require('express');
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const crypto = require('crypto');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
 
 //
 // config
 //
 const PORT = 4000;
-
-//
-// globals
-//
-
-// Dictionary username -> user
-let Users = {};
+const SECRET = crypto.randomBytes(32).toString('hex');
 
 //
 // helpers
 //
-function newUser(username, password, server) {
-    // username is primary key
-    // conn is connection to ibmi server
+function processUserSignIn(username, password, server) {
+    // returns user object; username is primary key; conn is open connection to
+    // ibmi server
     return {username: username, password: password, server: server, connection: null};
 }
 
@@ -27,10 +27,23 @@ function openConnection(username, password, server) {
     return null;
 }
 
+function isLoggedIn(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    } else {
+        res.redirect('/login');
+    }
+}
+
 //
 // app setup
 //
 let app = express();
+
+//parse req body & cookies
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
+app.use(cookieParser());
 
 // view engine
 app.set('view engine', 'ejs');
@@ -38,36 +51,60 @@ app.set('views', `${__dirname}/views`);
 app.use('/assets', express.static(`${__dirname}/public`));
 
 //
+// security
+//
+app.use(session({
+    secret: SECRET,
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(new LocalStrategy(function(username, password, done) {
+    // stores entire user object in session
+    let user = processUserSignIn(username, password, null);
+    //done('BAD SIGNIN', false);
+    done(null, user);
+}));
+
+passport.serializeUser(function(user, done) {
+    done(null, user);
+});
+
+passport.deserializeUser(function(username, done) {
+    return done(null, username);
+});
+
+//
 // auth urls
 //
 
-app.post('/signup', function(req, res, next) {
-    // on success api will redirect to /signin
-    return res.status(201).end('/signup');
+app.post('/signin', passport.authenticate('local'), function(req, res, next) {
+    // Api will redirect to main page
+    res.status(201).end('Signin success');
 });
 
-app.post('/login', function(req, res, next) {
-    // on success api will redirect to main page
-    return res.status(201).end('/signin');
-});
-
-app.post('/signout', function(req, res, next) {
+app.post('/signout', isLoggedIn, function(req, res, next) {
     // when we are done redirect to /login
-    return res.status(201).end('/signout');
+    res.clearCookie('username');
+    req.logOut();
+    req.session.destroy();
+    res.redirect('/login');
 });
 
 //
 // app urls
 //
 
-app.get('/', function(req, res, next) {
+app.get('/', isLoggedIn, function(req, res, next) {
     return res.status(201).end('+++ INDEX +++');
 });
 
 app.get('/login', function(req, res, next) {
-    return res.render('/login');
+    return res.render('login');
 });
 
 app.listen(PORT, function() {
-    console.log(`\nServer listening @ port ${port}\n`);
+    console.log(`\nServer listening @ port ${PORT}\n`);
 });
