@@ -60,13 +60,20 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-passport.use(new LocalStrategy(function(username, password, done) {
-    ibmi.processUserSignIn(username, password, 'oss72dev', function(err, user) {
-        if (err) return done(`Error from ibmi signin: ${err}`, null);
-        // store entire user object in session
-        done(null, user);
-    });
-}));
+passport.use(new LocalStrategy(
+    {
+        usernameField: 'username',
+        passwordField: 'password',
+        passReqToCallback: true
+    },
+    function(req, username, password, done) {
+        ibmi.processUserSignIn(username, password, server, function(err, user) {
+            if (err) return done(`Error from ibmi signin: ${err}`, null);
+            // store entire user object in session
+            done(null, user);
+        });
+    }
+));
 
 passport.serializeUser(function(user, done) {
     done(null, user);

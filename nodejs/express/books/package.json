@@ -20,7 +20,8 @@
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "odbc": "alpha",
-    "itoolkit": "^1.0.0"
+    "itoolkit": "^1.0.0",
+    "xml2js": "^0.4.23"
   },
   "devDependencies": {
     "eslint": "^5.12.1",

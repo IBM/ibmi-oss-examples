@@ -10,6 +10,18 @@
             <%}%>
             <form action="javascript:void(0);">
                 <div class="form-group">
+                    <label for="username">Server:</label>
+                    <div class="btn-group">
+                        <button id="server_selection" type="button" class="btn btn-secondary dropdown-toggle"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">oss72dev</button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <button id="server_oss72dev" class="dropdown-item" type="button">oss72dev</button>
+                            <button id="server_oss73dev" class="dropdown-item" type="button">oss73dev</button>
+                            <button id="server_oss74dev" class="dropdown-item" type="button">oss74dev</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label for="username">Username:</label>
                     <input class="form-control form-inline" id="username" type="text" name="username" placeholder="Enter Username"
                         maxlength="20" required/>
@@ -26,11 +38,18 @@
     <script type="text/javascript">
         // hide top nav bar so user have to log in
         document.querySelector('#top_nav').style.visibility = 'hidden';
+        // attach events to dropdown
+        ['#server_oss72dev', '#server_oss73dev', '#server_oss74dev'].forEach(function(item) {
+            document.querySelector(item).onclick = function() {
+                document.querySelector('#server_selection').innerHTML = document.querySelector(item).innerHTML;
+            };
+        });
         // attach event to sign in btn
         document.querySelector('#signin_btn').addEventListener('click', function() {
-            let username = document.querySelector('#username').value;
+            let username = document.querySelector('#username').value.toUpperCase();
             let password = document.querySelector('#password').value;
-            api.signIn(username, password);
+            let server = document.querySelector('#server_selection').innerHTML;
+            api.signIn(server, username, password);
         });
     </script>
 </html>
