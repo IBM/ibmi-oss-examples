@@ -1,6 +1,4 @@
 const odbc = require('odbc');
-const {Connection, CommandCall, ProgramCall} = require('itoolkit');
-const {parseString} = require('xml2js');
 
 let ibmi = (function() {
     let module = {};
@@ -24,7 +22,7 @@ let ibmi = (function() {
         } catch (err) {
             console.log(`=> Sql query ${sql} thrown error: ${err}`);
             console.log('###############');
-            cb(error, null);
+            cb(err, null);
         }
     };
 
@@ -37,7 +35,11 @@ let ibmi = (function() {
                        amount DECIMAL(10 , 2) NOT NULL, PRIMARY KEY (bookId))`;
         module.runSql(user.conn, createSchema, function(err, result) {
             // if error happens here schema already exists; ignore
-            module.runSql(user.conn, createTable, cb);
+            module.runSql(user.conn, createTable, function(err, result) {
+                // after createTable concluded and there is no error call passport callback
+                if (err) cb(err, null);
+                else cb(null, user);
+            });
         });
     };
 

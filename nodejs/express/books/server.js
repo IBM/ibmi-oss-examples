@@ -6,6 +6,8 @@ const crypto = require('crypto');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const ibmi = require('./ibmi_utils.js');
+const users = require('./users.js');
+const flash = require('connect-flash');
 
 //
 // config
@@ -16,15 +18,6 @@ const SECRET = crypto.randomBytes(32).toString('hex');
 //
 // helpers
 //
-function getUserProfile(req) {
-    return req.session.passport ? req.session.passport.user : null;
-}
-
-// opens connection to specified server with given credentials; creates BOOKS
-// table (if not already present). Returns connection object
-function openConnection(username, password, server) {
-    return null;
-}
 
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {
@@ -59,6 +52,7 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 
 passport.use(new LocalStrategy(
     {
@@ -67,20 +61,23 @@ passport.use(new LocalStrategy(
         passReqToCallback: true
     },
     function(req, username, password, done) {
+        let server = req.body.server;
         ibmi.processUserSignIn(username, password, server, function(err, user) {
             if (err) return done(`Error from ibmi signin: ${err}`, null);
-            // store entire user object in session
+            // save user record
+            users.List[user.username] = user;
+            // call passport callback
             done(null, user);
         });
     }
 ));
 
 passport.serializeUser(function(user, done) {
-    done(null, user);
+    done(null, user.username);
 });
 
 passport.deserializeUser(function(username, done) {
-    return done(null, username);
+    return done(null, users.List[username]);
 });
 
 //
@@ -104,10 +101,9 @@ app.post('/signout', isLoggedIn, function(req, res, next) {
 // app urls
 //
 
-app.get('/', isLoggedIn, function(req, res, next) {
-    console.log(`=> ${JSON.stringify(getUserProfile(req))}`);
-    return res.status(201).end('+++ INDEX +++');
-});
+const indexRouter = require('./routes/index');
+
+app.get('/', isLoggedIn, indexRouter);
 
 app.get('/login', function(req, res, next) {
     return res.render('login');
