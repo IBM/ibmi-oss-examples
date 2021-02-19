@@ -2,21 +2,44 @@ const odbc = require('odbc');
 const {Connection, CommandCall, ProgramCall} = require('itoolkit');
 const {parseString} = require('xml2js');
 
-// cb format: err, result
-function runSql(conn, sql, cb) {
-    try {
-        console.log('Running sql ' + sql);
-        conn.query(sql, function(error, results) {
-            if (error) cb(error, null);
-            else cb(null, results);
-        });
-    } catch (err) {
-        console.log(`Error ${error} from running sql query ${sql}`);
-    }
-}
-
 let ibmi = (function() {
     let module = {};
+
+    // cb format: err, result
+    module.runSql = function(conn, sql, cb) {
+        try {
+            console.log('###############');
+            console.log('Running sql ' + sql);
+            conn.query(sql, function(error, results) {
+                if (error) {
+                    console.log(`=> Error ${error} from sql query ${sql}`);
+                    console.log('###############');
+                    cb(error, null);
+                } else {
+                    console.log(`=> Results ${results} from sql query ${sql}`);
+                    console.log('###############');
+                    cb(null, results);
+                }
+            });
+        } catch (err) {
+            console.log(`=> Sql query ${sql} thrown error: ${err}`);
+            console.log('###############');
+            cb(error, null);
+        }
+    };
+
+    module.createBooksTable = function(user, cb) {
+        const createSchema = 'CREATE SCHEMA BOOKSTORE';
+        const createTable = `CREATE OR REPLACE TABLE
+                       BOOKSTORE.Books(bookId INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY(START WITH 1, INCREMENT BY 1),
+                       title VARCHAR(30) NOT NULL,
+                       isbn VARCHAR(20) NOT NULL,
+                       amount DECIMAL(10 , 2) NOT NULL, PRIMARY KEY (bookId))`;
+        module.runSql(user.conn, createSchema, function(err, result) {
+            // if error happens here schema already exists; ignore
+            module.runSql(user.conn, createTable, cb);
+        });
+    };
 
     // creates a user object that includes an open connection to specified ibmi
     // server
@@ -35,7 +58,8 @@ let ibmi = (function() {
                     server: server,
                     conn: conn
                 };
-                cb(null, user);
+                // create schema and books table if they don't already exist
+                module.createBooksTable(user, cb);
             }
         });
     };
