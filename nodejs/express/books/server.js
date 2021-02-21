@@ -80,6 +80,12 @@ passport.deserializeUser(function(username, done) {
     return done(null, users.List[username]);
 });
 
+// middleware function so that views can check if authenticated with locals
+app.use(function(req, res, next) {
+  res.locals.isAuthenticated = req.isAuthenticated();
+  next();
+});
+
 //
 // auth urls
 //
@@ -102,8 +108,11 @@ app.post('/signout', isLoggedIn, function(req, res, next) {
 //
 
 const indexRouter = require('./routes/index');
+const editRouter = require('./routes/edit');
 
 app.get('/', isLoggedIn, indexRouter);
+app.use('/books', isLoggedIn, indexRouter);
+app.use('/edit', isLoggedIn, editRouter);
 
 app.get('/login', function(req, res, next) {
     return res.render('login');
