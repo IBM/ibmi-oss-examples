@@ -112,6 +112,7 @@ const editRouter = require('./routes/edit');
 const addBookRouter = require('./routes/addBook');
 const getBookRouter = require('./routes/getBook');
 const deleteBookRouter = require('./routes/deleteBook');
+const updateBookRouter = require('./routes/updateBook');
 
 app.get('/', isLoggedIn, indexRouter);
 app.use('/books', isLoggedIn, indexRouter);
@@ -119,6 +120,7 @@ app.use('/edit', isLoggedIn, editRouter);
 app.use('/addbook', addBookRouter);
 app.use('/getbook', getBookRouter);
 app.use('/deletebook', deleteBookRouter);
+app.use('/updatebook', updateBookRouter);
 
 app.get('/login', function(req, res, next) {
     return res.render('login');
