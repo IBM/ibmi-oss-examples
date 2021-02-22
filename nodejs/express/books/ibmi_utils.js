@@ -5,21 +5,16 @@ let ibmi = (function() {
 
     // cb format: err, result
     module.runSql = function(conn, sql, cb) {
-        try {
-            console.log('Running sql ' + sql);
-            conn.query(sql, function(error, results) {
-                if (error) {
-                    console.log(`=> Error ${error} from sql query ${sql}`);
-                    cb(error, null);
-                } else {
-                    console.log(`=> Results ${results} from sql query ${sql}`);
-                    cb(null, results);
-                }
-            });
-        } catch (err) {
-            console.log(`=> Sql query ${sql} thrown error: ${err}`);
-            cb(err, null);
-        }
+        console.log('Running sql ' + sql);
+        conn.query(sql, function(error, results) {
+            if (error) {
+                console.log(`=> Error ${error} from sql query ${sql}`);
+                cb(error, null);
+            } else {
+                console.log(`=> Results ${results} from sql query ${sql}`);
+                cb(null, results);
+            }
+        });
     };
 
     module.createBooksTable = function(user, cb) {

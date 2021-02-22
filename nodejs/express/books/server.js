@@ -78,8 +78,8 @@ passport.deserializeUser(function(username, done) {
 
 // middleware function so that views can check if authenticated with locals
 app.use(function(req, res, next) {
-  res.locals.isAuthenticated = req.isAuthenticated();
-  next();
+    res.locals.isAuthenticated = req.isAuthenticated();
+    next();
 });
 
 //
