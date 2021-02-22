@@ -8,7 +8,7 @@ const users = require('../users.js');
 router.use(urlencodedParser);
 
 //add a new book
-router.post('/', async (req, res) =>{
+router.post('/', async (req, res) => {
     //TODO validate form inputs
     let title = req.body.title,
         isbn = req.body.isbn,
