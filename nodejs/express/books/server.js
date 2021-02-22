@@ -109,10 +109,12 @@ app.get('/signout', isLoggedIn, function(req, res, next) {
 
 const indexRouter = require('./routes/index');
 const editRouter = require('./routes/edit');
+const addBookRouter = require('./routes/addBook');
 
 app.get('/', isLoggedIn, indexRouter);
 app.use('/books', isLoggedIn, indexRouter);
 app.use('/edit', isLoggedIn, editRouter);
+app.use('/addbook', addBookRouter);
 
 app.get('/login', function(req, res, next) {
     return res.render('login');
