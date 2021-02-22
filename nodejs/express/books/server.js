@@ -95,7 +95,7 @@ app.post('/signin', passport.authenticate('local'), function(req, res, next) {
     res.status(201).end('Signin success');
 });
 
-app.post('/signout', isLoggedIn, function(req, res, next) {
+app.get('/signout', isLoggedIn, function(req, res, next) {
     // when we are done redirect to /login
     res.clearCookie('username');
     req.logOut();
