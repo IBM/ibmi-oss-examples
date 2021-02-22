@@ -16,9 +16,8 @@ const PORT = 4000;
 const SECRET = crypto.randomBytes(32).toString('hex');
 
 //
-// helpers
+// app setup
 //
-
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
@@ -27,9 +26,6 @@ function isLoggedIn(req, res, next) {
     }
 }
 
-//
-// app setup
-//
 let app = express();
 
 //parse req body & cookies

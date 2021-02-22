@@ -36,8 +36,3 @@ let api = (function() {
 
     return module;
 })();
-
-// used on every page
-window.onload = function() {
-
-};

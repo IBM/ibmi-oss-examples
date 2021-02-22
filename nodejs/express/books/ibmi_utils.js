@@ -6,22 +6,18 @@ let ibmi = (function() {
     // cb format: err, result
     module.runSql = function(conn, sql, cb) {
         try {
-            console.log('###############');
             console.log('Running sql ' + sql);
             conn.query(sql, function(error, results) {
                 if (error) {
                     console.log(`=> Error ${error} from sql query ${sql}`);
-                    console.log('###############');
                     cb(error, null);
                 } else {
                     console.log(`=> Results ${results} from sql query ${sql}`);
-                    console.log('###############');
                     cb(null, results);
                 }
             });
         } catch (err) {
             console.log(`=> Sql query ${sql} thrown error: ${err}`);
-            console.log('###############');
             cb(err, null);
         }
     };
