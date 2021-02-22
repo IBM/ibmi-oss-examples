@@ -113,10 +113,10 @@ const updateBookRouter = require('./routes/updateBook');
 app.get('/', isLoggedIn, indexRouter);
 app.use('/books', isLoggedIn, indexRouter);
 app.use('/edit', isLoggedIn, editRouter);
-app.use('/addbook', addBookRouter);
-app.use('/getbook', getBookRouter);
-app.use('/deletebook', deleteBookRouter);
-app.use('/updatebook', updateBookRouter);
+app.use('/addbook', isLoggedIn, addBookRouter);
+app.use('/getbook', isLoggedIn, getBookRouter);
+app.use('/deletebook', isLoggedIn, deleteBookRouter);
+app.use('/updatebook', isLoggedIn, updateBookRouter);
 
 app.get('/login', function(req, res, next) {
     return res.render('login');
