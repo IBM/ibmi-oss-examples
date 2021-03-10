@@ -11,11 +11,15 @@ be leveraged with database capabilities, please see
 [dtaq_to_kafka/banking_kafka_example.sql](dtaq_to_kafka/banking_kafka_example.sql),
 which demonstrates how a bank might use this technology to publish changes to
 a customer database to a Kafka topic.
+- disk_monitor: A route that uses Db2 queries and IBM i services to monitor disk usage
+and send an email when disk usage exceeds 90%
 
 These examples use the following [Apache Camel](https://camel.apache.org/) components:
 - [JT400](https://camel.apache.org/components/latest/jt400-component.html)
 - [Mail](https://camel.apache.org/components/latest/mail-component.html)
 - [Kafka](https://camel.apache.org/components/latest/kafka-component.html)
+- [JDBC](https://camel.apache.org/components/latest/jdbc-component.html)
+- [Log](https://camel.apache.org/components/latest/log-component.html)
 
 While these examples use the POJO ("plain old Java object") deployment technique. Apache Camel
 can be deployed in a number of ways. Please visit the [Apache Camel home page](https://camel.apache.org/)
