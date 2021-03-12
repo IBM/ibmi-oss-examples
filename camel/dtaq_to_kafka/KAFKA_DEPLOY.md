@@ -91,3 +91,6 @@ export PATH
 cd kafka_2.13-2.6.0/config
 ../bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic mytopic
 ```
+
+# (Optional) Configure to run via Service Commander
+The [Service Commander](https://github.com/ThePrez/ServiceCommander-IBMi) utility can be used for easily managing Zookeeper and Kafka jobs. See its project page for example configurations and documentation.
