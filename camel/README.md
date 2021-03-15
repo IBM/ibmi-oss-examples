@@ -13,6 +13,12 @@ which demonstrates how a bank might use this technology to publish changes to
 a customer database to a Kafka topic.
 - disk_monitor: A route that uses Db2 queries and IBM i services to monitor disk usage
 and send an email when disk usage exceeds 90%
+- disk_monitor_msgq: A route that uses Db2 queries and IBM i services to monitor disk usage
+and sends a message to the *SYSOPR message queue when disk usage exceeds 90%. This 
+example is for largely illustrative purposes since the system has this capability 
+built in. But this example should work "out of the box" without any extra configuration,
+and the Camel route provides the disk usage in the message itself, unlike the built-in
+disk monitoring capabilities
 
 These examples use the following [Apache Camel](https://camel.apache.org/) components:
 - [JT400](https://camel.apache.org/components/latest/jt400-component.html)
