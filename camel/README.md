@@ -4,7 +4,8 @@ These examples build simple Apache Camel routes from IBM i to other technologies
 
 So far, these examples are included:
 - msgq_to_email: A route from a message queue to email. That is, any messages sent 
-to the given queue will be sent in the body of an email.
+to the given queue will be sent in the body of an email. This can be used, for instance,
+to receive an email whenever a message is sent to the *SYSOPR message queue.
 - dtaq_to_kafka: A route from a data queue to Apache Kafka. Any entry placed on the
 data queue will be sent to a Kafka bootstrap server. For an example of how this might
 be leveraged with database capabilities, please see
