@@ -59,11 +59,13 @@ If using OpenJDK:
 ```
 JAVA_HOME=/QOpenSys/pkgs/lib/jvm/openjdk-11
 export JAVA_HOME
+JAVA_TOOL_OPTIONS=-Djava.net.preferIPv4Stack=true
+export JAVA_TOOL_OPTIONS
 ```
 
-#### 3. Install maven
+#### 3. Install maven and ca-certificates-mozilla
 ```
-yum install maven
+yum install maven ca-certificates-mozilla
 ```
 
 #### 4. Change to the appropriate directory
