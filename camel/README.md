@@ -47,19 +47,41 @@ you would like to deploy Kafka on your IBM i system, see [this documentation](dt
 for guidance, but of course you may deploy your bootstrap server wherever it makes the
 most sense. Some deploy on a local laptop for bringup/testing. 
 
-#### 1. Install OpenJDK. 
+#### Before you get started: determine which Java to use
+System Java (JV1) allows the use of `*CURRENT` as userid/password.
+OpenJDK allows you to run your applications from within a chroot container. 
+Either should work fine for these samples, but if using OpenJDK, change
+any `*CURRENT` login references to a legitimate userid/password. 
+
+#### 1. Install Java
+If using OpenJDK:
 ```
 yum install openjdk-11
 PATH=/QOpenSys/pkgs/lib/jvm/openjdk-11/bin:$PATH
 export PATH
 ```
+If using system Java:
 
-#### 2. Set the `JAVA_HOME` environment variable to the JRE of your choosing
+Just make sure the appropriate JV1 option is installed. 
+You will need at least Java 8 or newer. See https://www.ibm.com/support/pages/node/1117869
+
+#### 2. Set the environment variables to the JRE of your choosing
+If using System Java:
+```
+JAVA_HOME=/QOpenSys/QIBM/ProdData/JavaVM/jdk8bit0/64
+export JAVA_HOME
+PATH=$JAVA_HOME/bin:$PATH
+export PATH
+JAVA_TOOL_OPTIONS=-Djava.awt.headless=true
+export JAVA_TOOL_OPTIONS
+```
 If using OpenJDK:
 ```
 JAVA_HOME=/QOpenSys/pkgs/lib/jvm/openjdk-11
 export JAVA_HOME
-JAVA_TOOL_OPTIONS=-Djava.net.preferIPv4Stack=true
+PATH=$JAVA_HOME/bin:$PATH
+export PATH
+JAVA_TOOL_OPTIONS=-Djava.net.preferIPv4Stack=true -Djava.awt.headless=true
 export JAVA_TOOL_OPTIONS
 ```
 
