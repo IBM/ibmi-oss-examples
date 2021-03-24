@@ -68,7 +68,7 @@ You will need at least Java 8 or newer. See https://www.ibm.com/support/pages/no
 #### 2. Set the environment variables to the JRE of your choosing
 If using System Java:
 ```
-JAVA_HOME=/QOpenSys/QIBM/ProdData/JavaVM/jdk8bit0/64
+JAVA_HOME=/QOpenSys/QIBM/ProdData/JavaVM/jdk80/64bit
 export JAVA_HOME
 PATH=$JAVA_HOME/bin:$PATH
 export PATH
