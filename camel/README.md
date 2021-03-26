@@ -81,7 +81,7 @@ JAVA_HOME=/QOpenSys/pkgs/lib/jvm/openjdk-11
 export JAVA_HOME
 PATH=$JAVA_HOME/bin:$PATH
 export PATH
-JAVA_TOOL_OPTIONS=-Djava.net.preferIPv4Stack=true -Djava.awt.headless=true
+JAVA_TOOL_OPTIONS="-Djava.net.preferIPv4Stack=true -Djava.awt.headless=true"
 export JAVA_TOOL_OPTIONS
 ```
 
