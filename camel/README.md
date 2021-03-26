@@ -106,13 +106,13 @@ prompted for these values. On IBM i, this may require an SSH terminal. Note that
 
 #### 6. Build and launch
 ```
-mvn install
+mvn compile
 mvn exec:java
 ```
 The program will continue running until canceled.
 Test by sending a message to the queue!
 
-Since the `config.properties` file contains passwords, you may want to stash a copy
+If the `config.properties` file contains passwords, you may want to stash a copy
 in a secure location. If you want to do this, just set the `camelconfig` Java System
 property to the path of the file. For example:
 ```
