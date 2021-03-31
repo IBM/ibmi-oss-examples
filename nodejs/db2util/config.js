@@ -1,4 +1,5 @@
 require('dotenv').config();
+const { readFileSync } = require('fs')
 
 function getConfig() {
     let config = {};
@@ -16,7 +17,10 @@ function getConfig() {
     if (process.env.SSH_PASSWORD) { // password auth
       config.password = process.env.SSH_PASSWORD;
     } else if (process.env.SSH_PRIVATE_KEY) { // using private key auth
-      config.privateKey = SSH_PRIVATE_KEY
+      config.privateKey = readFileSync(process.env.SSH_PRIVATE_KEY)
+      if (process.env.SSH_PASSPHRASE) {
+         config.passphrase = process.env.SSH_PASSPHRASE;
+      }
     }
 
    return config;
