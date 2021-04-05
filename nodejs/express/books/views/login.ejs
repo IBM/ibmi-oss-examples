@@ -9,47 +9,77 @@
                 </div>
             <%}%>
             <form action="javascript:void(0);">
+                <% if (dsns.length){ %>
                 <div class="form-group">
-                    <label for="username">Server:</label>
-                    <div class="btn-group">
-                        <button id="server_selection" type="button" class="btn btn-secondary dropdown-toggle"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">oss72dev</button>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <button id="server_oss72dev" class="dropdown-item" type="button">oss72dev</button>
-                            <button id="server_oss73dev" class="dropdown-item" type="button">oss73dev</button>
-                            <button id="server_oss74dev" class="dropdown-item" type="button">oss74dev</button>
+                    <div class="alert alert-info" role="alert">
+                        <strong>
+                        Found the following Host(s) in .odbc.ini file.
+                        <br>
+                        Enusre System value is configured in .odbc.ini
+                        <br>
+                        Enter the UserID and Password to sign in as below
+                        </strong>
+                        </div>
+                        <label for="select-server">System(s):</label>
+                        <select class="form-control form-inline" id="server_selection"  name="select-server">
+                            <% dsns.forEach(function(name , index , array){%>
+                                <option class="dsn-entry" value="<%= name%>"><%= name%></option>
+                            <% }); %>
+                        </select>
+                        <div class="form-group">
+                            <label for="username">UserID:</label>
+                            <input class="form-control form-inline" id="username" type="text" name="username" placeholder="Enter Username"
+                                    maxlength="20" required/>
+                            </div>
+                        <div class="form-group">
+                            <label for="password">Password:</label>
+                            <input class="form-control form-inline" id="password" type="password" name="password" placeholder="Enter Password"
+                                    maxlength="20" required/>
                         </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="username">Username:</label>
-                    <input class="form-control form-inline" id="username" type="text" name="username" placeholder="Enter Username"
-                        maxlength="20" required/>
-                </div>
-                <div class="form-group">
-                    <label for="password">Password:</label>
-                    <input class="form-control form-inline" id="password" type="password" name="password" placeholder="Enter Password"
-                        maxlength="20" required/>
-                </div>
+                    <% } else { %>
+                    <div class="form-group">
+                        <div class="alert alert-warning" role="alert">
+                            <strong>
+                            No Entries defined in .odbc.ini file.
+                            <br>
+                            Enter the System, UserID, and Password
+                            </strong>
+                        </div>
+                        <label for="host">System:</label>
+                        <input class="form-control form-inline" id="host" type="text" name="host" placeholder="Enter Hostname or IP Address"
+                            maxlength="50" required/>
+                    </div>
+                    <div class="form-group">
+                        <label for="username">UserID:</label>
+                        <input class="form-control form-inline" id="username" type="text" name="username" placeholder="Enter Username"
+                            maxlength="20" required/>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input class="form-control form-inline" id="password" type="password" name="password" placeholder="Enter Password"
+                            maxlength="20" required/>
+                    </div>
+                <% } %>
                 <button id="signin_btn" class="btn btn-primary" type="submit" name="submit">Sign In</button>
             </form>
         </div>
     </body>
     <script type="text/javascript">
+        let hasDsns = <%= dsns.length %>
         // hide top nav bar so user have to log in
         document.querySelector('#top_nav').style.visibility = 'hidden';
-        // attach events to dropdown
-        ['#server_oss72dev', '#server_oss73dev', '#server_oss74dev'].forEach(function(item) {
-            document.querySelector(item).onclick = function() {
-                document.querySelector('#server_selection').innerHTML = document.querySelector(item).innerHTML;
-            };
-        });
         // attach event to sign in btn
         document.querySelector('#signin_btn').addEventListener('click', function() {
-            let username = document.querySelector('#username').value.toUpperCase();
-            let password = document.querySelector('#password').value;
-            let server = document.querySelector('#server_selection').innerHTML;
-            api.signIn(server, username, password);
+            let host, dsn;
+            const username = document.querySelector('#username').value.toUpperCase();
+            const password = document.querySelector('#password').value;
+            if (hasDsns) {
+                dsn = document.querySelector('#server_selection').value;
+            } else {
+                host = document.querySelector('#host').value.toUpperCase();
+            }
+            api.signIn(dsn, host, username, password);
         });
     </script>
 </html>
