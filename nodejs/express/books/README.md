@@ -4,69 +4,58 @@ This project is an example Node.js application using express framework on IBM i.
 
 ## Purpose
 
-- Demo a RESTful web application and connect to DB2 for i from Node.js using the [idb-pconnector](https://bitbucket.org/litmis/nodejs-idb-pconnector) library.
+- Demo a RESTful web application and connect to DB2 for i from Node.js using the [node-odbc](https://github.com/markdirish/node-odbc) library.
 
 - Demo cookie based authentication routes with the help of [passport.js](http://www.passportjs.org/)
 
-- Demo appmetrics-dash
-
-## Prerequisites
-
-- node.js version 8 or newer
-
-- git to clone this example
-
-- g++ to build appmetrics
-
-- python required by appmetrics build process
-
-- curl to simulate requests with `demo.sh`
-
-`yum install nodejs10 git gcc-cplusplus python3 curl`
-
-## Setup
-
-**NOTE**
-
-The setup below is required when building appmetrics from source using `node-gyp`
-
-Set Path
-
-`export PATH=/QOpenSys/pkgs/bin:$PATH`
-
-Create `python` symlink to point to python3
-
-`ln -s /QOpenSys/pkgs/bin/python3 /QOpenSys/pkgs/bin/python`
-
-
 ## Getting Started
 
-1) clone this project and change directory to the project
+1) Clone this project and change directory to the project
 
-2) install dependencies
-   
-   `npm install`
+2) Optional:
+Configure systems by adding [DSN](https://ibmi-oss-docs.readthedocs.io/en/latest/odbc/using.html#dsns) entries to the [.odbc.ini file](.odbc.ini). Be sure to specify the System key value pair with the IP address or host name of your IBM i system.
 
-3) create schema and table
-   
-   `npm run setup`
+### Run in Docker Container
 
-4) start the server
-   
-   `npm start`
+1) Build the docker image
 
-5) access http://hostname:port/
+   ```bash
+   docker build -t books_app .
+   ```
 
-## Populate appmetrics-dash
+2) Run the docker container
 
-Simulate requests to the express books application with `demo.sh`
+   ```bash
+   docker run -d -p 4000:4000 books_app
+   ```
 
-`usage: demo.sh host [PORT=4000]`
+3) Access <http://hostname:4000/>
 
-`PORT=4000 demo.sh http://hostname.com`
+### Run Outside of container
 
-Access appmetrics-dash by visiting `http://hostname:port/appmetrics-dash`
+1) Install Node.js
 
-## Author
+   On IBM i run the following command:
 
-* [Abdirahim Musse](https://github.com/abmusse)
+   ```bash
+   yum install nodejs14
+   ```
+
+2) Install package dependencies
+
+   ```bash
+   npm install
+   ```
+
+3) Start the server
+
+   ```bash
+   npm start
+   ```
+
+4) Access <http://hostname:port/>
+
+## Authors
+
+- [Abdirahim Musse](https://github.com/abmusse)
+- [Vasili Skurydzin](https://github.com/V-for-Vasili)
