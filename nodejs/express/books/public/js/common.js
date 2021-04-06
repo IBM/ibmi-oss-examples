@@ -24,8 +24,8 @@ let api = (function() {
         document.querySelector('#error_message').innerHTML = `<b>${msg}</b>`;
     };
 
-    module.signIn = function(server, username, password) {
-        sendAjax('POST', '/signin', {server, username, password}, function(code, respText) {
+    module.signIn = function(dsn, host, username, password) {
+        sendAjax('POST', '/signin', {dsn, host, username, password}, function(code, respText) {
             // on success backend will redirect to /
             // handle error here
             if (code !== 201) return module.showError(`Error from sign in: [${code}], ${respText}`);
