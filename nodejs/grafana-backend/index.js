@@ -4,21 +4,19 @@ const _ = require('lodash');
 const {dbconn, dbstmt} = require('idb-connector');
 
 const sSql = "select AVERAGE_CPU_UTILIZATION, ACTIVE_JOBS_IN_SYSTEM, CURRENT_TEMPORARY_STORAGE, SYSTEM_ASP_USED from QSYS2.SYSTEM_STATUS_INFO";
+const hSql = "select * from QSYS2.HTTP_SERVER_INFO";
 
 const connection = new dbconn();
 connection.conn('*LOCAL');
 const statement = new dbstmt(connection);
 
-const app = express();
+const datapoints_limit = 500;
+const refresh_interval = 5000;   // query interval (ms)
 
+const app = express();
 app.use(bodyParser.json());
 
-// Let us build the fake timeserie data
 const timeserie = [];
-timeserie[0] = { target: "CPU Usage", datapoints: []};
-timeserie[1] = { target: "Active Jobs", datapoints: []};
-timeserie[2] = { target: "Temp Storage Usage", datapoints: []};
-timeserie[3] = { target: "System ASP Used", datapoints: []};
 
 function updateJSON() {
   const sys_usage = statement.execSync(sSql);
@@ -27,32 +25,23 @@ function updateJSON() {
 
   const now = Math.round(Date.now() / 1000) * 1000;
 
-  if(timeserie[0].datapoints.length > 500)
-    timeserie[0].datapoints.shift();
-  timeserie[0].datapoints.push([
-    parseFloat(sys_usage[0].AVERAGE_CPU_UTILIZATION), now
-  ]);
-
-  if(timeserie[1].datapoints.length > 500)
-    timeserie[1].datapoints.shift();
-  timeserie[1].datapoints.push([
-    parseInt(sys_usage[0].ACTIVE_JOBS_IN_SYSTEM), now
-  ]);
-
-  if(timeserie[2].datapoints.length > 500)
-    timeserie[2].datapoints.shift();
-  timeserie[2].datapoints.push([
-    parseInt(sys_usage[0].CURRENT_TEMPORARY_STORAGE), now
-  ]);
-
-  if(timeserie[3].datapoints.length > 500)
-    timeserie[3].datapoints.shift();
-  timeserie[3].datapoints.push([
-    parseInt(sys_usage[0].SYSTEM_ASP_USED), now
-  ]);
+  Object.keys(sys_usage[0]).forEach((key) => {
+    let found = false;
+    for (const item of timeserie) {
+      if (item.target == key) {
+        found = true;
+        if(item.datapoints.length > datapoints_limit)
+          item.datapoints.shift();
+        item.datapoints.push([parseFloat(sys_usage[0][key]), now]);
+        break;
+      }
+    }
+    if (found == false)
+      timeserie.push( { target: key, datapoints: []} );
+  });
 }
 
-setInterval(updateJSON, 5000); // Refresh every 5 sec
+setInterval(updateJSON, refresh_interval); // Refresh every 5 sec
 // console.log(JSON.stringify(timeserie));  // for debug
 
 // Let us build the fake annotations data
@@ -94,10 +83,9 @@ app.all('/', (req, res) => {
 app.all('/search', (req, res) => {
   setCORSHeaders(res);
   const result = [];
-  _.each(timeserie, (ts) => {
+  timeserie.forEach((ts) => {
     result.push(ts.target);
   });
-
   res.json(result);
   res.end();
 });
@@ -115,18 +103,16 @@ app.all('/annotations', (req, res) => {
 // /query should return metrics based on input.
 app.all('/query', (req, res) => {
   setCORSHeaders(res);
-  console.log(req.url);
-  console.log(req.body);
+  // console.log(req.url);
+  // console.log(req.body);
 
   const tsResult = [];
-  let fakeData = timeserie;
 
-  _.each(req.body.targets, (target) => {
-    const k = _.filter(fakeData, (t) => {
+  req.body.targets.forEach((target) => {
+    const k = timeserie.filter((t) => {
       return t.target === target.target;
     });
-
-    _.each(k, (kk) => {
+    k.forEach((kk) => {
       tsResult.push(kk);
     });
   });
