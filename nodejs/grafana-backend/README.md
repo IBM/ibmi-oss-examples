@@ -11,6 +11,15 @@ Server is listening to port 3333
  
 ## On Grafana server
 1) Install the SimpleJson plugin -> https://grafana.com/grafana/plugins/grafana-simple-json-datasource/
+
+Note: If you are using Docker, use this to run Grafana with the SimpleJson plugin 
+```
+docker run -d \
+  -p 3000:3000 \
+  --name=grafana \
+  -e "GF_INSTALL_PLUGINS=grafana-simple-json-datasource" \
+  grafana/grafana
+```
 2) Restart your Grafana server
 3) Add data source (type: SimpleJson) with the IP:port of your IBM i node.js server instance.
 4) Add a dashboard query
