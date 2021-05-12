@@ -21,8 +21,8 @@ docker run -d \
   grafana/grafana
 ```
 2) Restart your Grafana server
-3) Add data source (type: SimpleJson) with the IP:port of your IBM i node.js server instance.
-4) Add a dashboard query
-5) Select a serie of `timeserie` from the dropdown list.
+3) Open the grafana GUI from your browser (http://IP:3000 by default)
+4) Add data source (type: SimpleJson) with the IP:port of your IBM i node.js server instance.
+5) Import the SysStatus.json file from the grafana GUI
 
 ![screen shot](./screenshot.png?raw=true)
