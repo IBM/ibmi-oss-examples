@@ -23,20 +23,22 @@ function updateJSON() {
   const now = Math.round(Date.now() / 1000) * 1000;
   sys_usage = statement.execSync(sSql);
   statement.closeCursor();
-  Object.keys(sys_usage[0]).forEach((key) => {
-    let found = false;
-    for (const item of timeserie) {
-      if (item.target == key) {
-        found = true;
-        if(item.datapoints.length > datapoints_limit)
-          item.datapoints.shift();
-        item.datapoints.push([parseFloat(sys_usage[0][key]), now]);
-        break;
+  if (sys_usage && sys_usage.length >0) {
+    Object.keys(sys_usage[0]).forEach((key) => {
+      let found = false;
+      for (const item of timeserie) {
+        if (item.target == key) {
+          found = true;
+          if(item.datapoints.length > datapoints_limit)
+            item.datapoints.shift();
+          item.datapoints.push([parseFloat(sys_usage[0][key]), now]);
+          break;
+        }
       }
-    }
-    if (found == false)
-      timeserie.push( { target: key, datapoints: []} );
-  });
+      if (found == false)
+        timeserie.push( { target: key, datapoints: []} );
+    });
+  }
 
   table = statement.execSync(hSql);
   statement.closeCursor();
