@@ -21,7 +21,7 @@
       <dependency>
         <groupId>org.apache.camel</groupId>
         <artifactId>camel-parent</artifactId>
-        <version>3.7.0</version>
+        <version>3.9.0</version>
         <scope>import</scope>
         <type>pom</type>
       </dependency>
@@ -55,13 +55,13 @@
         <dependency>
         <groupId>org.apache.camel</groupId>
         <artifactId>camel-jt400</artifactId>
-        <version>3.7.0</version>
+        <version>3.9.0</version>
     </dependency>
 
     <dependency>
         <groupId>org.apache.camel</groupId>
         <artifactId>camel-stream</artifactId>
-            <version>3.7.0</version>
+            <version>3.9.0</version>
     </dependency>
 
 
