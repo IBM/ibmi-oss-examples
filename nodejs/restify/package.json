@@ -1,0 +1,23 @@
+{
+  "name": "restify-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "dotenv": "^8.2.0",
+    "jsonwebtoken": "^8.5.1",
+    "odbc": "^2.3.5",
+    "restify": "^8.5.1",
+    "restify-clients": "^4.0.0",
+    "restify-errors": "^8.0.2",
+    "restify-jwt-community": "^1.1.5"
+  }
+}
