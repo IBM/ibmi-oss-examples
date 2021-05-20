@@ -1,7 +1,6 @@
 FROM registry.access.redhat.com/ubi8/nodejs-14
 WORKDIR /app
 COPY . .
-
 USER 0
 # Install EPEL https://fedoraproject.org/wiki/EPEL for autossh
 RUN yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
@@ -12,7 +11,5 @@ RUN rm -f ibm-iaccess-32bit*.rpm
 RUN yum -y  install  ./ibm-iaccess-*.rpm
 # install deps
 RUN npm install
-RUN chown -R 1001:0 /app
-USER 1001
 # start app
 CMD ["/bin/bash", "-c", "./tunnel.sh $USER_AT_HOST node server.js"]
