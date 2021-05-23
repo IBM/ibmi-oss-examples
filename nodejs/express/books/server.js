@@ -12,7 +12,9 @@ const flash = require('connect-flash');
 //
 // config
 //
-const iniFile = require('./parse-ini')();
+const userAtHost = process.env.USER_AT_HOST;
+const iniFile = require('./parse-ini')({ tunneling: (!!userAtHost) });
+
 const dsns = Object.keys(iniFile);
 
 const PORT = 4000;
