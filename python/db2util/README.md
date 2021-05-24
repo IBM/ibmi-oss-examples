@@ -51,3 +51,7 @@ Checkout this [article](https://www.seidengroup.com/2020/11/16/getting-started-w
    ```bash
    docker run --env-file .env db2util_example
    ```
+
+## Demo
+
+[![Demo](https://asciinema.org/a/415656.svg)](https://asciinema.org/a/415656 "Demo")
