@@ -50,3 +50,7 @@ Checkout this [article](https://www.seidengroup.com/2020/11/16/getting-started-w
    ```bash
    docker run --env-file .env itoolkit_example
    ```
+
+## Demo
+
+[![Demo](https://asciinema.org/a/4QMRPSI4a9JYnvVYAkkNSitIT.svg)](https://asciinema.org/a/4QMRPSI4a9JYnvVYAkkNSitIT "Demo")
