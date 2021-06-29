@@ -45,7 +45,7 @@
     <dependency>
         <groupId>org.apache.camel</groupId>
         <artifactId>camel-mail</artifactId>
-        <version>3.9.0</version>
+        <version>3.11.0</version>
         <!-- use the same version as your Camel core version -->
     </dependency>
     <dependency>
