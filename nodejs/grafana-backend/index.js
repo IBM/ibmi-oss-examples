@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const _ = require('lodash');
 const {dbconn, dbstmt} = require('idb-connector');
+const os = require('os');
 
 const sSql = "select * from QSYS2.SYSTEM_STATUS_INFO";
 const hSql = "select SERVER_NAME,HTTP_FUNCTION,SERVER_NORMAL_CONNECTIONS,SERVER_ACTIVE_THREADS,SERVER_IDLE_THREADS,BYTES_RECEIVED,BYTES_SENT,NONCACHE_PROCESSING_TIME,CACHE_PROCESSING_TIME from QSYS2.HTTP_SERVER_INFO";
@@ -12,6 +13,8 @@ const statement = new dbstmt(connection);
 
 const datapoints_limit = 500;
 const refresh_interval = 5000;   // query interval (ms)
+
+const oslevel = Number(os.release());
 
 const app = express();
 app.use(bodyParser.json());
@@ -39,8 +42,8 @@ function updateJSON() {
         timeserie.push( { target: key, datapoints: []} );
     });
   }
-
-  table = statement.execSync(hSql);
+  if (oslevel >= 7.4)
+    table = statement.execSync(hSql);
   statement.closeCursor();
 }
 
@@ -108,7 +111,7 @@ app.all('/query', (req, res) => {
   const tsResult = [];
 
   req.body.targets.forEach((target) => {
-    if (target.target === 'HTTP') {
+    if (oslevel >= 7.4 && target.target === 'HTTP') {
       tsResult.push(table);
     } else {
       const k = timeserie.filter((t) => {
