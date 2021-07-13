@@ -1,6 +1,6 @@
 ## Grafana Backend Example
 
-## On IBM i (7.4 or above)
+## On IBM i
 ```
 git clone git@github.com:IBM/ibmi-oss-examples.git
 cd ibmi-oss-examples/nodejs/grafana-backend/
