@@ -12,7 +12,7 @@ connection.conn('*LOCAL');
 const statement = new dbstmt(connection);
 
 const datapoints_limit = 500;
-const refresh_interval = 5000;   // query interval (ms)
+const refresh_interval = 10000;   // query interval (ms)
 
 const oslevel = Number(os.release());
 
