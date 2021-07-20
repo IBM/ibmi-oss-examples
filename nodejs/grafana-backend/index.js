@@ -105,13 +105,13 @@ app.all('/annotations', (req, res) => {
 // /query should return metrics based on input.
 app.all('/query', (req, res) => {
   setCORSHeaders(res);
-  // console.log(req.url);
-  // console.log(req.body);
+  console.log(req.url);
+  console.log(req.body);
 
   const tsResult = [];
 
   req.body.targets.forEach((target) => {
-    if (oslevel >= 7.4 && target.target === 'HTTP') {
+    if (target.target === 'HTTP') {
       tsResult.push(table);
     } else {
       const k = timeserie.filter((t) => {
@@ -129,4 +129,4 @@ app.all('/query', (req, res) => {
 
 app.listen(3333);
 
-console.log('Server is listening to port 3333');
+console.log('OS Level %d. Server is listening to port 3333', oslevel);
