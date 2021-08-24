@@ -66,6 +66,9 @@ Just make sure the appropriate JV1 option is installed.
 You will need at least Java 8 or newer. See https://www.ibm.com/support/pages/node/1117869
 
 #### 2. Set the environment variables to the JRE of your choosing
+
+Cut and paste the values below into a terminal. Note this will not permanently adjust your environment variables. 
+
 If using System Java:
 ```
 JAVA_HOME=/QOpenSys/QIBM/ProdData/JavaVM/jdk80/64bit
