@@ -65,7 +65,17 @@ If using system Java:
 Just make sure the appropriate JV1 option is installed. 
 You will need at least Java 8 or newer. See https://www.ibm.com/support/pages/node/1117869
 
-#### 2. Set the environment variables to the JRE of your choosing
+#### 2. Install git and clone this repository
+```
+yum install git ca-certificates-mozilla
+git clone --depth 1 https://github.com/IBM/ibmi-oss-examples/
+```
+Now, `cd` into the newly-created directory
+```
+cd ibmi-oss-examples
+```
+
+#### 3. Set the environment variables to the JRE of your choosing
 
 Cut and paste the values below into a terminal. Note this will not permanently adjust your environment variables. 
 
@@ -88,18 +98,18 @@ JAVA_TOOL_OPTIONS="-Djava.net.preferIPv4Stack=true -Djava.awt.headless=true"
 export JAVA_TOOL_OPTIONS
 ```
 
-#### 3. Install maven and ca-certificates-mozilla
+#### 4. Install maven and ca-certificates-mozilla
 ```
 yum install maven ca-certificates-mozilla
 ```
 
-#### 4. Change to the appropriate directory
-For instance, if you're starting inside the `ibmi-oss-examples` directory where you cloned this repository:
+#### 5. Change to the appropriate directory
+For instance, if you're starting inside the `ibmi-oss-examples` directory from step 2 where you cloned this repository:
 ```
 cd camel/msgq_to_email
 ```
 
-#### 5. Edit the file `src/main/resources/config.properties` with appropriate values
+#### 6. Edit the file `src/main/resources/config.properties` with appropriate values
 These values are relatively self-explanatory. For the email example, the `smtp.username` and
 `smtp.password` lines can be deleted if your SMTP server doesn't require them.
 
@@ -107,7 +117,7 @@ You can also opt to remove any properties from this file, and you will be intera
 prompted for these values. On IBM i, this may require an SSH terminal. Note that the
 `*CURRENT` special value cannot be used with OpenJDK.
 
-#### 6. Build and launch
+#### 7. Build and launch
 ```
 mvn compile
 mvn exec:java
