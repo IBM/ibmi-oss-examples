@@ -71,6 +71,9 @@ Just make sure the appropriate JV1 option is installed.
 You will need at least Java 8 or newer. See https://www.ibm.com/support/pages/node/1117869
 
 #### 2. Install git and clone this repository
+
+Choose where you would like the examples to be installed. As a standard recomendation change directory to /QOpenSys and install from within there. 
+
 ```
 yum install git ca-certificates-mozilla
 git clone --depth 1 https://github.com/IBM/ibmi-oss-examples/
