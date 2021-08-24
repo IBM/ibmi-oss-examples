@@ -67,7 +67,7 @@ You will need at least Java 8 or newer. See https://www.ibm.com/support/pages/no
 
 #### 2. Set the environment variables to the JRE of your choosing
 
-Cut and paste the values below into a terminal. Note this will not permanently adjust your environment variables. 
+Cut and paste the values below into a terminal. Note this will not permanently adjust your environment variables and they will only be valid for this terminal session. 
 
 If using System Java:
 ```
