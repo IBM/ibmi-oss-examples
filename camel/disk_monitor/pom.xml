@@ -21,7 +21,7 @@
       <dependency>
         <groupId>org.apache.camel</groupId>
         <artifactId>camel-parent</artifactId>
-        <version>3.11.0</version>
+        <version>3.11.2</version>
         <scope>import</scope>
         <type>pom</type>
       </dependency>
