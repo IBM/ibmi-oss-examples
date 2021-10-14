@@ -89,7 +89,7 @@ public class CSVExample {
                          * Now we have queried some results! We want to send it to a CSV for output. 
                          */                
                         .to("direct:" + whatexample)
-                        .process((exchange) -> {new Thread(() -> { context.stop();}).start();});
+                        .to("direct:stopcontext");
             }
         });
 
@@ -149,6 +149,14 @@ public class CSVExample {
                     System.out.println("Local Port Name: " + exchange.getIn().getHeader("localportname"));
                     System.out.println("Round Trip Variance: " + exchange.getIn().getHeader("RoundTripVariance"));
                 });
+            }
+        });
+        
+        context.addRoutes(new RouteBuilder() {
+            @Override
+            public void configure() {
+                from("direct:stopcontext")
+                .process((exchange) -> {new Thread(() -> { context.stop();}).start();});
             }
         });
       
