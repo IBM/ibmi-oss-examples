@@ -8,6 +8,7 @@ import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.impl.DefaultCamelContext;
 import org.springframework.stereotype.Component;
 import org.apache.camel.dataformat.csv.CsvDataFormat;
+import org.apache.commons.csv.QuoteMode;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -39,7 +40,7 @@ public class CSVExample {
          * to the screen, no file written
          * 
          */
-        final String whatexample = "standardcsvexample";
+        final String whatexample = args.length > 0 ? args[0].trim() : "standardcsvexample";
 
         /**
          * This is the location we want our file stored in after it is created. Note that you can start from 
@@ -116,7 +117,10 @@ public class CSVExample {
             	.to("file:" + filelocation);
             }
         });
-      
+        final CsvDataFormat csvPipeDelimited = new CsvDataFormat();
+        csvPipeDelimited.setQuoteMode(QuoteMode.NONE);
+        csvPipeDelimited.setEscape('\\');
+        csvPipeDelimited.setDelimiter('|');
         /**
          * This will show how to adjust the pipe delimiter
          */
@@ -124,10 +128,9 @@ public class CSVExample {
             @Override
             public void configure() {
                 from("direct:pipedelimitedexample")
-                .marshal()
-                .csv()
-                .setHeader("CamelFileName", simple("${header.examplefilename}"))
-            	.to("file:" + filelocation);
+                .marshal(csvPipeDelimited)
+                .setHeader("CamelFileName", constant("CSVPipeDelimtedExample.csv"))
+                .to("file:" + filelocation);
             }
         });
       
