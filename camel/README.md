@@ -20,6 +20,9 @@ example is for largely illustrative purposes since the system has this capabilit
 built in. But this example should work "out of the box" without any extra configuration,
 and the Camel route provides the disk usage in the message itself, unlike the built-in
 disk monitoring capabilities
+- msgq_to_slack: A route that listens on the *SYSOPR message queue and posts a message
+to slack when the severity of the message is greater than 45. Can be tailored to other
+message queues and severity thresholds
 
 These examples use the following [Apache Camel](https://camel.apache.org/) components:
 - [JT400](https://camel.apache.org/components/latest/jt400-component.html)
