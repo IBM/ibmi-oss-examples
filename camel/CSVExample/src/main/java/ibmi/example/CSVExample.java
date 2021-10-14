@@ -47,7 +47,7 @@ public class CSVExample {
          * root with a leading forward slash, or a subdirectory of where the program is called like the example
          * below
          */
-        final String filelocation = "tmp/";
+        final String filelocation = "./tmp/";
 
 
         /**
