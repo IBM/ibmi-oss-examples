@@ -15,15 +15,10 @@ class MyCamelConfig extends CamelConfig {
      * Get the URI for the SMTP (mail) route
      */
     public String getSlackUri() throws IOException {
-        // something like:
-        //    smtp://my.smtp.server.com?from=jgorzins@us.ibm.com&to=jgorzins@us.ibm.com&subject=Camel is Really Amazing!
         String slackUri = "slack:#"+
                 this.getProperty("slack.channel", null, true) +
-            //    "?token=RAW" +
-            //   this.getProperty("slack.token", null, true)+")" +
                "?webhookUrl=" +
             this.getProperty("slack.webhook", null, true);
-        System.out.println("Slack URI="+slackUri);
         return slackUri;
     }
 
