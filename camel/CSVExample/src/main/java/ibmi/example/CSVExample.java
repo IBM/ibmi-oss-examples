@@ -6,15 +6,8 @@ package ibmi.example;
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.impl.DefaultCamelContext;
-import org.springframework.stereotype.Component;
 import org.apache.camel.dataformat.csv.CsvDataFormat;
 import org.apache.commons.csv.QuoteMode;
-
-import java.sql.Date;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /** 
  * IBM i specific imported libraries for connecting to the DB2 database
