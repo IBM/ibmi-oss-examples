@@ -46,7 +46,7 @@ public class CSVExample {
         /**
          * Standard for a Camel deployment. Start by getting a CamelContext object.
          */
-        CamelContext context = new DefaultCamelContext();
+        final CamelContext context = new DefaultCamelContext();
 
         /**
          * This sets up the connection for local IBM i Here is where we will store
@@ -75,7 +75,7 @@ public class CSVExample {
         context.addRoutes(new RouteBuilder() {
             @Override
             public void configure() {
-                from("timer://ibmiexamplecheckinterval?period=5000")
+                from("timer://ibmiexamplecheckinterval?repeatCount=1")
                         /**
                          * This is our example query. Here we are pulling results from the system.
                          * You set the body of our program (which is a mutable object used to contain the results throughout).
@@ -88,7 +88,8 @@ public class CSVExample {
                         /**
                          * Now we have queried some results! We want to send it to a CSV for output. 
                          */                
-                        .to("direct:" + whatexample);
+                        .to("direct:" + whatexample)
+                        .process((exchange) -> {new Thread(() -> { context.stop();}).start();});
             }
         });
 
