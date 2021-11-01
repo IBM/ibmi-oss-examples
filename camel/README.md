@@ -23,6 +23,8 @@ disk monitoring capabilities
 - msgq_to_slack: A route that listens on the *SYSOPR message queue and posts a message
 to slack when the severity of the message is greater than 45. Can be tailored to other
 message queues and severity thresholds
+- db2_bash: an SQL function (assumes `COOLSTUFF` schema) that allows you to call PASE
+commands in bash via an SQL table function.
 
 These examples use the following [Apache Camel](https://camel.apache.org/) components:
 - [JT400](https://camel.apache.org/components/latest/jt400-component.html)
@@ -121,12 +123,16 @@ prompted for these values. On IBM i, this may require an SSH terminal. Note that
 `*CURRENT` special value cannot be used with OpenJDK.
 
 #### 7. Build and launch
+If a `setup.sh` file exists, that is a setup script for this example. Examine its contents to
+ensure it is suitable to run in your environment, then run it to set up system resources:
 ```
-mvn compile
-mvn exec:java
+./setup.sh
+```
+Next, use Maven to compile and run
+```
+mvn compile && mvn exec:java
 ```
 The program will continue running until canceled.
-Test by sending a message to the queue!
 
 If the `config.properties` file contains passwords, you may want to stash a copy
 in a secure location. If you want to do this, just set the `camelconfig` Java System
@@ -171,3 +177,6 @@ If you're a hands-on learner, go straight to [the Javadoc](https://www.javadoc.i
 for this class! Its `configure()` method is called on initialization, and the `from()`
 method creates a `RouteDefinition` object. The `RouteDefinition` object can then be tied
 to choices, custom processing, or in this case, a simple endpoint.
+
+## What if I still don't understand the example?
+Please open an issue or post on our community channels documented [here](http://ibm.biz/ibmioss) and we will gladly help!
