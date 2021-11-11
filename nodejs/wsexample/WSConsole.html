@@ -1,0 +1,124 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Realtime Console</title>
+<style>
+html { height:100%; }
+body { margin:0; padding:0; width:100%; height:100%; text-align:center; }
+textarea { width: 100%; height: 100%; color: #0c0; background-color: #000; border: none; font-size: 0.8em; vertical-align: top; }
+input { width: 100%; margin:0px; padding:0px; border: 1px solid #CCC; height: 2em; }
+.top, .btm { background: #49e; color: #fff; }
+.top { top:0; }
+.btm { bottom:0; }
+.btn { background-color: #C30; color: #FFF; width: 20%; }
+.btnEnable { background-color: #C30; color: #FFF; width: 10em}
+.btnDisable { background-color: #888; color: #FFF; width: 10em}
+</style>
+<script>
+    
+var wsUri;
+var websocket;
+function openWSCon() {
+    websocket = new WebSocket(wsUri);
+    websocket.onopen = function(evt) { onOpen(evt) }; 
+    websocket.onclose = function(evt) { onClose(evt) }; 
+    websocket.onmessage = function(evt) { onMessage(evt) }; 
+    websocket.onerror = function(evt) { onError(evt) };  
+}
+function disWSCon() {
+    websocket.close();
+}
+function onOpen(evt) {
+    document.getElementById("btnRun").disabled=false;
+    document.getElementById("btnRun").className="btnEnable";
+    writeToScreen("Connected.");
+}
+function onClose(evt) { 
+    document.getElementById("btnRun").disabled=true;
+    document.getElementById("btnRun").className="btnDisable";
+    document.getElementById("btnCon").disabled=false;
+    document.getElementById("btnCon").className="btnEnable";
+    document.getElementById("btnDisCon").disabled=true;
+    document.getElementById("btnDisCon").className="btnDisable";
+    
+    writeToScreen("Disconnected."); 
+} 
+function onMessage(evt) {
+    writeToScreen(evt.data);
+} 
+function onError(evt) {
+    writeToScreen("Error happened when connected to " + wsUri); 
+}
+function doSend(message) {
+    writeToScreen(message);
+    websocket.send(message); 
+} 
+function writeToScreen(message) {
+    var ta=document.getElementById("outputArea");
+  ta.value=ta.value + "\r\n" + message;
+  ta.scrollTop=ta.scrollHeight;
+}
+function run() {
+    if (websocket.readyState == 1) {
+        cmd = document.getElementById("cmd").value.trim();
+        if ((cmd == null) || (cmd == "")) {
+            alert("Input a valid CL command.");
+            return;
+        }
+      doSend(cmd);
+  } else {
+    writeToScreen("Connect to a WebSocket server first.");
+  }
+}
+function connect() {
+    wsUri=document.getElementById("uri").value.trim();
+    if ((wsUri == null) || (wsUri == "") || ((wsUri.indexOf("ws:") != 0) && (wsUri.indexOf("wss:") != 0))) {
+      alert("Input a valid WebSocket URI.");
+      return;
+    }
+    
+    document.getElementById("btnCon").disabled=true;
+    document.getElementById("btnCon").className="btnDisable";
+    document.getElementById("btnDisCon").disabled=false;
+    document.getElementById("btnDisCon").className="btnEnable";
+    
+    writeToScreen("Connecting to " + wsUri);
+    openWSCon();
+}
+function disconnect() {
+    document.getElementById("btnCon").disabled=false;
+    document.getElementById("btnCon").className="btnEnable";
+    document.getElementById("btnDisCon").disabled=true;
+    document.getElementById("btnDisCon").className="btnDisable";
+    
+    disWSCon();
+}
+</script>
+</head>
+<body>
+    <table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr height="30"><td class="top">Realtime Console based on WebSocket</td></tr>
+    <tr height="100%"><td><textarea id="outputArea" readonly></textarea></td></tr>
+    <tr>
+        <td width="100%">
+          <table class="btm" width="100%">
+              <tr align="left">
+                  <td>URI:</td>
+                  <td width="100%"><input id="uri" type="text" size='100'/></td>
+            <td><input type="submit" id="btnCon" value="Connect"  class="btnEnable" onclick="connect()"/></td>
+              <td><input type="submit" id="btnDisCon" value="Disconnect" class="btnDisable" disabled="false" onclick="disconnect()"/></td>
+          </tr>
+              <tr align="left">
+                  <td>Command:</td>
+                  <td><input id="cmd" type="text" placeholder="WRKSYSSTS"/></td>
+            <td colspan="2"><input type="submit" id="btnRun" value="Run" disabled="true"  class="btnDisable" onclick="run()"/></td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
