@@ -10,7 +10,8 @@ Assumes you are running in an SSH terminal and [have PATH set correctly](https:/
   - **bottle:** `python3.9 -m pip install bottle`
 
 # Starting the server 
-python3 ./server.py
+
+`python3.9 ./server.py`
 
 Point your web browser to http://&lt;systemname&gt;:3333
 
