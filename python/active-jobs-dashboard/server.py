@@ -3,10 +3,12 @@ from bottle import route, run, template, request
 from string import capwords
 import ibm_db_dbi as dbi
 
-conn = dbi.connect(dsn=None, database='*LOCAL', \
-                       user=None, password=None)
+conn = None 
 @route('/', method=('GET', 'POST'))
 def root():
+    global conn
+    if conn is None:
+        conn = dbi.connect()
     reset = request.forms.get('reset') == 'true'
     reset_parm = 'YES' if reset else 'NO'
     sorting = request.forms.get('sorting') or '""'
@@ -27,14 +29,14 @@ def root():
 
     cur = conn.cursor()
     cur.execute(query, (reset_parm, ))
-    
+
     elapsed_time = 0
     row_data = []
     
     for row in cur:
         row_data.append(row[0 : len(show_cols)])
         elapsed_time = row[-1]
-    
+
     return template('root', rows=row_data, headers=headers, elapsed_time=elapsed_time, sorting=sorting)
 
 def titleize(column):
@@ -47,3 +49,6 @@ def static_assets(path):
         return f.read()
 
 run(host='0.0.0.0', port=3333, debug=True, reloader=True)
+
+# Example of running bottle with gunicorn:
+# run(host='0.0.0.0', port=3333, debug=True, reloader=True, server='gunicorn', workers=4)
