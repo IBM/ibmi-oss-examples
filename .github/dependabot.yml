@@ -1,27 +1,22 @@
-# To get started with Dependabot version updates, you'll need to specify which
-# package ecosystems to update and where the package manifests are located.
-# Please see the documentation for all configuration options:
-# https://help.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
-
 version: 2
+
+# Never send PRs as these are just examples
 updates:
   - package-ecosystem: "maven"
-    directory: "/java/poi"
+    directory: "/"
     schedule:
-      interval: "daily"
-  - package-ecosystem: "maven"
-    directory: "/camel/disk_monitor"
+      interval: "monthly"
+    open-pull-requests-limit: 0
+
+  - package-ecosystem: "pip"
+    directory: "/"
     schedule:
-      interval: "daily"
-  - package-ecosystem: "maven"
-    directory: "/camel/disk_monitor_msgq"
+      interval: "monthly"
+    open-pull-requests-limit: 0
+
+  - package-ecosystem: "npm"
+    directory: "/"
     schedule:
-      interval: "daily"
-  - package-ecosystem: "maven"
-    directory: "/camel/dtaq_to_kafka"
-    schedule:
-      interval: "daily"
-  - package-ecosystem: "maven"
-    directory: "/camel/msgq_to_email"
-    schedule:
-      interval: "daily"
+      interval: "monthly"
+    open-pull-requests-limit: 0
+
