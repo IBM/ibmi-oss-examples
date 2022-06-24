@@ -129,5 +129,4 @@ app.all('/query', (req, res) => {
 
 let port = process.env.PORT || 3333; 
 app.listen(port);
-
-console.log('OS Level %{oslevel}. Server is listening to port ${port}');
+console.log(`OS Level %{oslevel}. Server is listening to port ${port}`);
