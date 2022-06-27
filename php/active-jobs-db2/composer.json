@@ -16,6 +16,6 @@
         }
     },
     "scripts": {
-        "serve": "php -S 0.0.0.0:8090 -t public/"
+        "serve": "php -S 0.0.0.0:8080 -t public/"
     }
 }
