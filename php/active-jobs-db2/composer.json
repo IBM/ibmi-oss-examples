@@ -1,0 +1,21 @@
+{
+    "name": "jbh/active-jobs-db2",
+    "description": "An example of displaying IBM i active jobs using standard db2_* PHP methods.",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Yeshua Hall",
+            "email": "yeshua@sobo.red"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/App/src/"
+        }
+    },
+    "scripts": {
+        "serve": "php -S 0.0.0.0:8080 -t public/"
+    }
+}

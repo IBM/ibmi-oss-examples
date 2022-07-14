@@ -1,0 +1,13 @@
+<?php
+
+declare(strict_types=1);
+
+return [
+    'db' => [
+        'database' => '*LOCAL',
+        'username' => 'CHANGE_ME',
+        'password' => 'CHANGE_ME',
+        'platform_options' => [
+        ],
+    ],
+];
