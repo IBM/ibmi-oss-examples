@@ -1,0 +1,564 @@
+{
+    "annotations": {
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": {
+            "type": "datasource",
+            "uid": "grafana"
+          },
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "target": {
+            "limit": 100,
+            "matchAny": false,
+            "tags": [],
+            "type": "dashboard"
+          },
+          "type": "dashboard"
+        }
+      ]
+    },
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "graphTooltip": 0,
+    "id": 3,
+    "links": [],
+    "liveNow": false,
+    "panels": [
+      {
+        "collapsed": false,
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 0
+        },
+        "id": 10,
+        "panels": [],
+        "targets": [
+          {
+            "datasource": {
+              "type": "datasource",
+              "uid": "grafana"
+            },
+            "refId": "A"
+          }
+        ],
+        "title": "System Status",
+        "type": "row"
+      },
+      {
+        "datasource": {
+          "type": "grafana-simple-json-datasource",
+          "uid": "j83U2pZ4z"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "max": 100,
+            "min": 0,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green"
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "percent"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 5,
+          "x": 0,
+          "y": 1
+        },
+        "id": 8,
+        "maxDataPoints": 500,
+        "options": {
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "showThresholdLabels": false,
+          "showThresholdMarkers": true,
+          "text": {}
+        },
+        "pluginVersion": "9.0.7",
+        "targets": [
+          {
+            "datasource": {
+              "type": "grafana-simple-json-datasource",
+              "uid": "j83U2pZ4z"
+            },
+            "queryType": "randomWalk",
+            "refId": "A",
+            "target": "SYSTEM_ASP_USED",
+            "type": "timeserie"
+          }
+        ],
+        "title": "System ASP Used",
+        "transparent": true,
+        "type": "gauge"
+      },
+      {
+        "datasource": {
+          "type": "grafana-simple-json-datasource",
+          "uid": "j83U2pZ4z"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "percentage",
+              "steps": [
+                {
+                  "color": "green"
+                },
+                {
+                  "color": "blue",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 18,
+          "x": 6,
+          "y": 1
+        },
+        "id": 12,
+        "options": {
+          "displayMode": "gradient",
+          "minVizHeight": 10,
+          "minVizWidth": 0,
+          "orientation": "horizontal",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "showUnfilled": true,
+          "text": {}
+        },
+        "pluginVersion": "9.0.7",
+        "targets": [
+          {
+            "datasource": {
+              "type": "grafana-simple-json-datasource",
+              "uid": "j83U2pZ4z"
+            },
+            "refId": "A",
+            "target": "TOTAL_JOBS_IN_SYSTEM",
+            "type": "timeserie"
+          },
+          {
+            "datasource": {
+              "type": "grafana-simple-json-datasource",
+              "uid": "j83U2pZ4z"
+            },
+            "hide": false,
+            "refId": "B",
+            "target": "ACTIVE_JOBS_IN_SYSTEM",
+            "type": "timeserie"
+          },
+          {
+            "datasource": {
+              "type": "grafana-simple-json-datasource",
+              "uid": "j83U2pZ4z"
+            },
+            "hide": false,
+            "refId": "C",
+            "target": "INTERACTIVE_JOBS_IN_SYSTEM",
+            "type": "timeserie"
+          },
+          {
+            "datasource": {
+              "type": "grafana-simple-json-datasource",
+              "uid": "j83U2pZ4z"
+            },
+            "hide": false,
+            "refId": "D",
+            "target": "TEMPORARY_JOB_STRUCTURES_AVAILABLE",
+            "type": "timeserie"
+          },
+          {
+            "datasource": {
+              "type": "grafana-simple-json-datasource",
+              "uid": "j83U2pZ4z"
+            },
+            "hide": false,
+            "refId": "E",
+            "target": "PERMANENT_JOB_STRUCTURES_AVAILABLE",
+            "type": "timeserie"
+          }
+        ],
+        "title": "Jobs in System",
+        "transparent": true,
+        "type": "bargauge"
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": {
+          "type": "grafana-simple-json-datasource",
+          "uid": "j83U2pZ4z"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "unit": "decmbytes"
+          },
+          "overrides": []
+        },
+        "fill": 1,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 7,
+          "w": 12,
+          "x": 0,
+          "y": 9
+        },
+        "hiddenSeries": false,
+        "id": 6,
+        "legend": {
+          "avg": false,
+          "current": false,
+          "max": false,
+          "min": false,
+          "show": true,
+          "total": false,
+          "values": false
+        },
+        "lines": true,
+        "linewidth": 1,
+        "maxDataPoints": 500,
+        "nullPointMode": "null",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "9.0.7",
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "datasource": {
+              "type": "grafana-simple-json-datasource",
+              "uid": "j83U2pZ4z"
+            },
+            "queryType": "randomWalk",
+            "refId": "A",
+            "target": "CURRENT_TEMPORARY_STORAGE",
+            "type": "timeserie"
+          },
+          {
+            "datasource": {
+              "type": "grafana-simple-json-datasource",
+              "uid": "j83U2pZ4z"
+            },
+            "hide": false,
+            "refId": "B",
+            "target": "MAXIMUM_TEMPORARY_STORAGE_USED",
+            "type": "timeserie"
+          }
+        ],
+        "thresholds": [],
+        "timeRegions": [],
+        "title": "Temp Storage Usage",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "transparent": true,
+        "type": "graph",
+        "xaxis": {
+          "mode": "time",
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "$$hashKey": "object:1776",
+            "format": "decmbytes",
+            "logBase": 1,
+            "show": true
+          },
+          {
+            "$$hashKey": "object:1777",
+            "format": "short",
+            "logBase": 1,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false
+        }
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": {
+          "type": "grafana-simple-json-datasource",
+          "uid": "j83U2pZ4z"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "unit": "percentunit"
+          },
+          "overrides": []
+        },
+        "fill": 1,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 7,
+          "w": 12,
+          "x": 12,
+          "y": 9
+        },
+        "hiddenSeries": false,
+        "id": 2,
+        "legend": {
+          "avg": false,
+          "current": false,
+          "max": false,
+          "min": false,
+          "show": true,
+          "total": false,
+          "values": false
+        },
+        "lines": true,
+        "linewidth": 1,
+        "maxDataPoints": 500,
+        "nullPointMode": "null",
+        "options": {
+          "alertThreshold": false
+        },
+        "percentage": false,
+        "pluginVersion": "9.0.7",
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "datasource": {
+              "type": "grafana-simple-json-datasource",
+              "uid": "j83U2pZ4z"
+            },
+            "queryType": "randomWalk",
+            "refId": "CPU Usage",
+            "target": "AVERAGE_CPU_UTILIZATION",
+            "type": "timeserie"
+          },
+          {
+            "datasource": {
+              "type": "grafana-simple-json-datasource",
+              "uid": "j83U2pZ4z"
+            },
+            "hide": false,
+            "refId": "A",
+            "target": "ELAPSED_CPU_USED",
+            "type": "timeserie"
+          },
+          {
+            "datasource": {
+              "type": "grafana-simple-json-datasource",
+              "uid": "j83U2pZ4z"
+            },
+            "hide": false,
+            "refId": "B",
+            "target": "CONFIGURED_CPUS",
+            "type": "timeserie"
+          }
+        ],
+        "thresholds": [],
+        "timeRegions": [],
+        "title": "CPU Usage",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "transparent": true,
+        "type": "graph",
+        "xaxis": {
+          "mode": "time",
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "$$hashKey": "object:1542",
+            "format": "percentunit",
+            "logBase": 1,
+            "show": true
+          },
+          {
+            "$$hashKey": "object:1543",
+            "format": "short",
+            "logBase": 1,
+            "show": false
+          }
+        ],
+        "yaxis": {
+          "align": false
+        }
+      },
+      {
+        "collapsed": false,
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 16
+        },
+        "id": 14,
+        "panels": [],
+        "targets": [
+          {
+            "datasource": {
+              "type": "datasource",
+              "uid": "grafana"
+            },
+            "refId": "A"
+          }
+        ],
+        "title": "HTTP Servers",
+        "type": "row"
+      },
+      {
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "custom": {
+              "align": "auto",
+              "displayMode": "color-text",
+              "filterable": false,
+              "inspect": false
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green"
+                },
+                {
+                  "color": "purple",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 7,
+          "w": 24,
+          "x": 0,
+          "y": 17
+        },
+        "id": 16,
+        "maxDataPoints": 500,
+        "options": {
+          "footer": {
+            "fields": "",
+            "reducer": [
+              "sum"
+            ],
+            "show": false
+          },
+          "showHeader": true,
+          "sortBy": [
+            {
+              "desc": false,
+              "displayName": "SERVER_NAME"
+            }
+          ]
+        },
+        "pluginVersion": "9.0.7",
+        "targets": [
+          {
+            "datasource": {
+              "type": "datasource",
+              "uid": "grafana"
+            },
+            "refId": "A",
+            "target": "HTTP",
+            "type": "table"
+          }
+        ],
+        "title": "HTTP Server Status",
+        "transparent": true,
+        "type": "table"
+      }
+    ],
+    "refresh": "10s",
+    "schemaVersion": 36,
+    "style": "dark",
+    "tags": [],
+    "templating": {
+      "list": []
+    },
+    "time": {
+      "from": "now-30m",
+      "to": "now"
+    },
+    "timepicker": {},
+    "timezone": "",
+    "title": "SysStatus-master",
+    "uid": "luXjh4jMz1",
+    "version": 3,
+    "weekStart": ""
+  }

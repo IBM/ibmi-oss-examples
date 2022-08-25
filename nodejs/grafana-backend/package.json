@@ -13,6 +13,8 @@
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "idb-connector": "^1.1.9",
-    "lodash": "^4.17.11"
+    "lodash": "^4.17.11",
+    "config": "^3.3.7",
+    "js-yaml": "^4.1.0"
   }
 }
