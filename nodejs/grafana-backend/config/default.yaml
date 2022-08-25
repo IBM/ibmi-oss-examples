@@ -8,12 +8,12 @@ metrics:
     sys_info:
       include: true
       sql: "select * from QSYS2.system_status_info"
-      interval: 500
+      interval: 5000
     
     activity:
       include: true
       sql: SELECT * FROM TABLE(QSYS2.SYSTEM_ACTIVITY_INFO())
-      interval: 500
+      interval: 5000
 
     remote_connections:
       include: false
