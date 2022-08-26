@@ -28,7 +28,7 @@ let table = [];
 function setSqlInterval() {
   for (const [key, sql_config] of Object.entries(config.get('metrics'))) {
     if (sql_config.include) {
-      console.log("set interal for ", key);
+      console.log("set interval for ", key);
       setInterval(updateJSON, sql_config.interval, sql_config.sql);
     } else {
       console.log("skipping: ", key);
