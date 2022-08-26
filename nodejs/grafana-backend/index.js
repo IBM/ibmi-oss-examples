@@ -1,13 +1,13 @@
 const express = require('express');
 const config = require('config')
-console.log(config)
 const bodyParser = require('body-parser');
 const _ = require('lodash');
 const {dbconn, dbstmt} = require('idb-connector');
 const os = require('os');
 
-// const sSql = config.get('metrics.sSql')
-const hSql = "select SERVER_NAME,HTTP_FUNCTION,SERVER_NORMAL_CONNECTIONS,SERVER_ACTIVE_THREADS,SERVER_IDLE_THREADS,BYTES_RECEIVED,BYTES_SENT,NONCACHE_PROCESSING_TIME,CACHE_PROCESSING_TIME from QSYS2.HTTP_SERVER_INFO";
+console.log(config);
+
+const hSql = config.get('settings.hSql');
 
 const connection = new dbconn();
 connection.conn('*LOCAL');
@@ -24,16 +24,16 @@ app.use(bodyParser.json());
 const timeserie = [];
 let table = [];
 
+// set refresh interval given sql statement defined in config/default.yaml
 function setSqlInterval() {
   for (const [key, sql_config] of Object.entries(config.get('metrics'))) {
     if (sql_config.include) {
-      console.log("set interal for ", key)
-      setInterval(updateJSON, sql_config.interval, sql_config.sql)
+      console.log("set interal for ", key);
+      setInterval(updateJSON, sql_config.interval, sql_config.sql);
     } else {
-      console.log("skipping: ", key)
+      console.log("skipping: ", key);
     }
   }
-
 }
 
 function updateJSON(sql) {
@@ -61,8 +61,7 @@ function updateJSON(sql) {
   statement.closeCursor();
 }
 
-//setInterval(getSysUsage, refresh_interval); // Refresh every 5 sec
-setSqlInterval()
+setSqlInterval();
 
 function setCORSHeaders(res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
