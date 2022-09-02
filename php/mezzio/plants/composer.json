@@ -43,31 +43,23 @@
         }
     },
     "require": {
-        "php": "^7.4 || ~8.0.0 || ~8.1.0",
-        "composer/package-versions-deprecated": "^1.10.99",
-        "laminas/laminas-component-installer": "^2.6",
-        "laminas/laminas-config-aggregator": "^1.6",
+        "php": "^7.3 || ~8.0.0 || ~8.1.0",
+        "composer/package-versions-deprecated": "1.11.99.5",
+        "laminas/laminas-component-installer": "^2.5",
+        "laminas/laminas-config-aggregator": "^1.7",
         "laminas/laminas-db": "^2.15",
-        "laminas/laminas-diactoros": "^2.7",
-        "laminas/laminas-hydrator": "^4.5",
-        "laminas/laminas-paginator": "^2.13",
-        "laminas/laminas-serializer": "^2.13",
-        "laminas/laminas-servicemanager": "^3.4",
-        "laminas/laminas-stdlib": "^3.6",
-        "mezzio/mezzio": "^3.7",
-        "mezzio/mezzio-fastroute": "^3.0.3",
-        "mezzio/mezzio-hal": "^2.4",
+        "laminas/laminas-diactoros": "^2.14",
+        "laminas/laminas-hydrator": "^4.3",
+        "laminas/laminas-paginator": "^2.11",
+        "laminas/laminas-serializer": "^2.12",
+        "laminas/laminas-servicemanager": "^3.7",
+        "laminas/laminas-stdlib": "^3.11",
+        "mezzio/mezzio": "^3.6",
+        "mezzio/mezzio-fastroute": "^3.4",
+        "mezzio/mezzio-hal": "^2.2",
         "mezzio/mezzio-helpers": "^5.7",
-        "mezzio/mezzio-platesrenderer": "^2.2",
-        "mezzio/mezzio-problem-details": "^1.6"
-    },
-    "require-dev": {
-        "filp/whoops": "^2.7.1",
-        "laminas/laminas-cli": "^1.5",
-        "laminas/laminas-development-mode": "^3.3.0",
-        "mezzio/mezzio-tooling": "^2.6",
-        "phpunit/phpunit": "^9.5.11",
-        "roave/security-advisories": "dev-master"
+        "mezzio/mezzio-platesrenderer": "^2.4",
+        "mezzio/mezzio-problem-details": "^1.4"
     },
     "autoload": {
         "psr-4": {
@@ -99,5 +91,13 @@
         "serve": "php -S 0.0.0.0:8090 -t public/",
         "test": "phpunit --colors=always",
         "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
+    },
+    "require-dev": {
+        "filp/whoops": "^2.14",
+        "laminas/laminas-cli": "^1.2",
+        "laminas/laminas-development-mode": "^3.6",
+        "mezzio/mezzio-tooling": "^2.3",
+        "phpunit/phpunit": "^9.5",
+        "roave/security-advisories": "dev-master"
     }
 }

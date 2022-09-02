@@ -21,7 +21,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class SetupDataCommand extends Command
 {
-    private PlantTableGateway $plantModel;
+    private $plantModel;
     protected static $defaultName = 'plant:setup-data';
     protected static $defaultDescription = 'Setup example data for plant module.';
 
