@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title><?=$this->e($title)?> - mezzio</title>
+    <link rel="shortcut icon" href="https://getlaminas.org/images/favicon/favicon.ico" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" />
+    <link href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" rel="stylesheet" />
+    <style>
+        body { padding-top: 70px; }
+        .app { min-height: 100vh; }
+        .app-footer { padding-bottom: 1em; }
+        .mezzio-green, h2 a, h2 a:hover { color: #009655; }
+        .navbar-brand { padding: 0; }
+        .navbar-brand img { margin: -.5rem 0; filter: brightness(0) invert(1); }
+    </style>
+    <?=$this->section('stylesheets')?>
+</head>
+<body class="app">
+    <header class="app-header">
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="#navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <!-- Brand -->
+                    <a class="navbar-brand" href="/">
+                        <img src="https://docs.laminas.dev/img/laminas-mezzio-rgb.svg" alt="Laminas Mezzio" height="56" />
+                    </a>
+                </div>
+                <!-- Links -->
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a href="https://docs.mezzio.dev/mezzio" target="_blank" class="nav-link">
+                                <i class="fa fa-book"></i> Docs
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="https://github.com/mezzio/mezzio" target="_blank" class="nav-link">
+                                <i class="fa fa-wrench"></i> Contribute
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/api/ping" class="nav-link">
+                                Ping Test
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="app-content">
+        <main class="container">
+            <?=$this->section('content')?>
+        </main>
+    </div>
+
+    <footer class="app-footer">
+        <div class="container">
+            <hr />
+            <?php if ($this->section('footer')): ?>
+                <?=$this->section('footer')?>
+            <?php else: ?>
+                <p>
+                    &copy; <?=date('Y')?> <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
+                </p>
+            <?php endif ?>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <?=$this->section('javascript')?>
+</body>
+</html>
