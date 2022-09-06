@@ -16,7 +16,7 @@ To add a new "metric" under the metrics section of the config file, provide:
     name_of_metric:
       include: true  # false if metric should be ignored
       sql:           # the SQL statement to run
-      interval:      # interval for executing the  statement (in milliseconds) 
+      interval:      # interval for executing the SQL statement (in milliseconds) 
 
 ```
 Here are some of the defaults we provide
