@@ -1,18 +1,20 @@
 const express = require('express');
+const config = require('config')
 const bodyParser = require('body-parser');
 const _ = require('lodash');
 const {dbconn, dbstmt} = require('idb-connector');
 const os = require('os');
 
-const sSql = "select * from QSYS2.SYSTEM_STATUS_INFO";
-const hSql = "select SERVER_NAME,HTTP_FUNCTION,SERVER_NORMAL_CONNECTIONS,SERVER_ACTIVE_THREADS,SERVER_IDLE_THREADS,BYTES_RECEIVED,BYTES_SENT,NONCACHE_PROCESSING_TIME,CACHE_PROCESSING_TIME from QSYS2.HTTP_SERVER_INFO";
+console.log(config);
+
+const hSql = config.get('settings.hSql');
 
 const connection = new dbconn();
 connection.conn('*LOCAL');
 const statement = new dbstmt(connection);
 
-const datapoints_limit = 500;
-const refresh_interval = 10000;   // query interval (ms)
+const datapoints_limit = config.get('settings.datapoints_limit');
+
 
 const oslevel = Number(os.release());
 
@@ -22,9 +24,21 @@ app.use(bodyParser.json());
 const timeserie = [];
 let table = [];
 
-function updateJSON() {
+// set refresh interval given sql statement defined in config/default.yaml
+function setSqlInterval() {
+  for (const [key, sql_config] of Object.entries(config.get('metrics'))) {
+    if (sql_config.include) {
+      console.log("set interval for ", key);
+      setInterval(updateJSON, sql_config.interval, sql_config.sql);
+    } else {
+      console.log("skipping: ", key);
+    }
+  }
+}
+
+function updateJSON(sql) {
   const now = Math.round(Date.now() / 1000) * 1000;
-  sys_usage = statement.execSync(sSql);
+  sys_usage = statement.execSync(sql);
   statement.closeCursor();
   if (sys_usage && sys_usage.length >0) {
     Object.keys(sys_usage[0]).forEach((key) => {
@@ -47,7 +61,7 @@ function updateJSON() {
   statement.closeCursor();
 }
 
-setInterval(updateJSON, refresh_interval); // Refresh every 5 sec
+setSqlInterval();
 
 function setCORSHeaders(res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -127,6 +141,7 @@ app.all('/query', (req, res) => {
   res.end();
 });
 
-let port = process.env.PORT || 3333; 
+let port = process.env.PORT || config.get('app.port'); // 3333
 app.listen(port);
 console.log(`OS Level ${oslevel}. Server is listening to port ${port}`);
+

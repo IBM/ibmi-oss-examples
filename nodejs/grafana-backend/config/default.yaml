@@ -1,0 +1,27 @@
+app:
+  port: 3333
+
+settings:
+  datapoints_limit: 500
+  hSql: "select SERVER_NAME,HTTP_FUNCTION,SERVER_NORMAL_CONNECTIONS,SERVER_ACTIVE_THREADS,SERVER_IDLE_THREADS,BYTES_RECEIVED,BYTES_SENT,NONCACHE_PROCESSING_TIME,CACHE_PROCESSING_TIME from QSYS2.HTTP_SERVER_INFO"
+
+metrics:
+    sys_info:
+      include: true
+      sql: "select * from QSYS2.system_status_info"
+      interval: 5000
+    
+    activity:
+      include: true
+      sql: SELECT * FROM TABLE(QSYS2.SYSTEM_ACTIVITY_INFO())
+      interval: 5000
+
+    remote_connections:
+      include: false
+      sql: "select COUNT(REMOTE_ADDRESS) as REMOTE_CONNECTIONS from qsys2.netstat_info where TCP_STATE = 'ESTABLISHED' AND REMOTE_ADDRESS != '::1' AND REMOTE_ADDRESS != '127.0.0.1'"
+      interval: 60000
+
+    mem_pool_info:
+      include: false
+      sql: "SELECT POOL_NAME,CURRENT_SIZE,DEFINED_SIZE,MAXIMUM_ACTIVE_THREADS,CURRENT_THREADS,RESERVED_SIZE FROM TABLE(QSYS2.MEMORY_POOL(RESET_STATISTICS=>'YES')) X"
+      interval: 100000

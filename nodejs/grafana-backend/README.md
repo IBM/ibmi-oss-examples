@@ -1,10 +1,42 @@
 ## Grafana Backend Example
 
 ## On IBM i
+First clone this repository and setup the node project:
+
 ```
 git clone git@github.com:IBM/ibmi-oss-examples.git
 cd ibmi-oss-examples/nodejs/grafana-backend/
 npm i
+```
+
+Configure the Grafana backend server by specifying the IBM i system metrics in `config/default.yaml`.
+To add a new "metric" under the metrics section of the config file, provide:
+
+```
+    name_of_metric:
+      include: true  # false if metric should be ignored
+      sql:           # the SQL statement to run
+      interval:      # interval for executing the SQL statement (in milliseconds) 
+
+```
+Here are some of the defaults we provide
+
+```
+metrics:
+    sys_info:
+      include: true
+      sql: "select * from QSYS2.system_status_info"
+      interval: 5000  # milliseconds
+    
+    activity:
+      include: true
+      sql: SELECT * FROM TABLE(QSYS2.SYSTEM_ACTIVITY_INFO())
+      interval: 5000
+
+```
+Start the backend server by calling:
+
+```
 node index.js
 Server is listening to port 3333
 ```
