@@ -18,6 +18,23 @@ class PlantEntity
     public $nickname;
     public $wiki;
 
+    public static function create(
+        string $name,
+        string $wiki,
+        ?string $nickname = null,
+        ?int $id = null
+    ) : PlantEntity
+    {
+        $plant = new self();
+        $plant->exchangeArray([
+            'id' => $id,
+            'name' => $name,
+            'nickname' => $nickname,
+            'wiki' => $wiki,
+        ]);
+        return $plant;
+    }
+
     public function getArrayCopy() : array
     {
         return [
