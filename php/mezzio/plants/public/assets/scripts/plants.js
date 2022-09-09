@@ -56,10 +56,11 @@ app.plants.setupModals = (dataTable) => {
         const plantId = $button.data('plant-id');
 
         if (plantId !== undefined) {
+            // Edit mode
             $formLoading.removeClass('d-none');
             $formInputs.addClass('d-none');
             $modal.find('.modal-title').text(`Save Plant #${plantId}`);
-            // Edit mode
+
             $.ajax({
                 url: `/api/plants/${plantId}`,
                 type: 'GET',
