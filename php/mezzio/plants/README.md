@@ -12,7 +12,10 @@ An example of a reasonably complex Mezzio application using house plants, which 
 ```bash
 $ git clone git@github.com:IBM/ibmi-oss-examples.git
 $ cd ibmi-oss-examples/php/mezzio/plants
+$ cp config/autoload/db2.local.php.dist config/autoload/db2.local.php
+$ # Edit config/autoload/db2.local.php and add credentials 
 $ composer install
+$ composer development-enable # disable config cache while developing
 $ composer mezzio plant:setup-data
 $ composer run --timeout=0 serve
 ```
