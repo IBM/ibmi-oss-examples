@@ -4,34 +4,24 @@ declare(strict_types=1);
 
 namespace Plant\Handler;
 
-use Mezzio\Hal\HalResponseFactory;
-use Mezzio\Hal\ResourceGenerator;
+use Laminas\Diactoros\Response\EmptyResponse;
 use Plant\Entity\PlantEntity;
 use Plant\TableGateway\PlantTableGateway;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Rest\Exception\NoResourceFoundException;
-use Rest\RestDispatchTrait;
 
-class GetPlantHandler implements RequestHandlerInterface
+class DeletePlantHandler implements RequestHandlerInterface
 {
     /**
      * @var PlantTableGateway
      */
     private $plantTable;
 
-    use RestDispatchTrait;
-
-    public function __construct(
-        PlantTableGateway $plantModel,
-        ResourceGenerator $resourceGenerator,
-        HalResponseFactory $responseFactory
-    )
+    public function __construct(PlantTableGateway $plantModel)
     {
         $this->plantTable = $plantModel;
-        $this->resourceGenerator = $resourceGenerator;
-        $this->responseFactory = $responseFactory;
     }
 
     public function handle(ServerRequestInterface $request) : ResponseInterface
@@ -43,6 +33,8 @@ class GetPlantHandler implements RequestHandlerInterface
             throw NoResourceFoundException::create("Plant with id `{$id}` not found");
         }
 
-        return $this->createResponse($request, $plant);
+        $this->plantTable->delete(['id' => $id]);
+
+        return new EmptyResponse(204);
     }
 }

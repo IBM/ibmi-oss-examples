@@ -35,6 +35,13 @@ class PlantEntity
         return $plant;
     }
 
+    public static function createFromBody(array $body) : PlantEntity
+    {
+        $plant = new self();
+        $plant->exchangeArray($body);
+        return $plant;
+    }
+
     public function getArrayCopy() : array
     {
         return [

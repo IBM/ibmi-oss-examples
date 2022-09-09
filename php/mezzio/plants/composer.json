@@ -50,7 +50,9 @@
         "laminas/laminas-db": "^2.15",
         "laminas/laminas-diactoros": "^2.14",
         "laminas/laminas-hydrator": "^4.3",
+        "laminas/laminas-inputfilter": "^2.12",
         "laminas/laminas-paginator": "^2.11",
+        "laminas/laminas-paginator-adapter-laminasdb": "^1.0",
         "laminas/laminas-serializer": "^2.12",
         "laminas/laminas-servicemanager": "^3.7",
         "laminas/laminas-stdlib": "^3.11",
@@ -64,7 +66,8 @@
     "autoload": {
         "psr-4": {
             "App\\": "src/App/src/",
-            "Plant\\": "src/Plant/src/"
+            "Plant\\": "src/Plant/src/",
+            "Rest\\": "src/Rest/src/"
         }
     },
     "autoload-dev": {
@@ -88,7 +91,7 @@
         "enable-codestandard": "Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin::run",
         "cs-check": "phpcs",
         "cs-fix": "phpcbf",
-        "serve": "php -S 0.0.0.0:8090 -t public/",
+        "serve": "php -S 0.0.0.0:8080 -t public/",
         "test": "phpunit --colors=always",
         "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
     },

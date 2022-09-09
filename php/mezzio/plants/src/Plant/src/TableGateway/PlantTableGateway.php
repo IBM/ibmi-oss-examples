@@ -14,6 +14,7 @@ namespace Plant\TableGateway;
 use Exception;
 use Laminas\Db\ResultSet\ResultSetInterface;
 use Laminas\Db\TableGateway\TableGateway;
+use Laminas\Paginator\Adapter\LaminasDb\DbSelect;
 use Plant\Entity\PlantEntity;
 
 class PlantTableGateway extends TableGateway
@@ -31,6 +32,15 @@ class PlantTableGateway extends TableGateway
     public function get(int $id) : ResultSetInterface
     {
         return $this->select(['id' => $id]);
+    }
+
+    public function getForPagination(string $orderBy = '', string $order = '') : DbSelect
+    {
+        $select = $this->getSql()->select();
+        $select->columns($this->columns);
+        $select->order("{$orderBy} {$order}");
+
+        return new DbSelect($select, $this->getSql(), $this->getResultSetPrototype());
     }
 
     /**
