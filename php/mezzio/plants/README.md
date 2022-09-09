@@ -6,6 +6,7 @@ An example of a reasonably complex Mezzio application using house plants, which 
 - A REST API w/ standard Hal+Json and pagination,
 - A CLI to set up example data using the same connection and model as the API,
 - A web GUI for interacting with plant data.
+- DataTables, SweetAlert, and ajax calls in [plants.js](public/assets/scripts/plants.js).
 
 ## Getting Started
 
