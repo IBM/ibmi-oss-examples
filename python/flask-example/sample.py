@@ -5,7 +5,8 @@ from flask import Flask, render_template, request
 app = Flask(__name__)
 import ibm_db_dbi as dbi
 from itoolkit import *
-from itoolkit.db2.idb2call import *     #for local jobs
+from itoolkit.db2.idb2call import *
+import os     #for local jobs
 
 version = tuple(map(int, dbi.__version__.split('.')))
 if version < (2, 0, 5, 5):
@@ -46,4 +47,4 @@ def cmd_toolkit():
     return render_template('cmd.html', data=data)
 
 app.debug = True
-app.run(host='0.0.0.0', port=9000,)
+app.run(host='0.0.0.0', port=os.getenv('PORT', '9000'),)
