@@ -47,4 +47,4 @@ def cmd_toolkit():
     return render_template('cmd.html', data=data)
 
 app.debug = True
-app.run(host='0.0.0.0', port=os.getenv('PORT', '9000'),)
+app.run(host='0.0.0.0', port=int(os.getenv('PORT', 9000)),)
