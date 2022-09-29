@@ -2,15 +2,11 @@
 # -*- coding: utf-8 -*-
 
 from flask import Flask, render_template, request
-app = Flask(__name__)
-import ibm_db_dbi as dbi
+import pyodbc
 from itoolkit import *
-from itoolkit.db2.idb2call import *  #for local jobs
-import os     
+from itoolkit.transport import DatabaseTransport     
 
-version = tuple(map(int, dbi.__version__.split('.')))
-if version < (2, 0, 5, 5):
-    raise Exception("Need ibm_db_dbi 2.0.5.5 or higher to run, you have " + dbi.__version__)
+app = Flask(__name__)#for local jobs
 
 @app.route('/sample')
 def sample():
@@ -20,7 +16,7 @@ def sample():
 def query_ibm_db():
 
     statement = request.form.get('sql')
-    conn = dbi.connect()
+    conn = pyodbc.connect('DSN=LUGDEMO')
     cur = conn.cursor()
     cur.execute(statement)
     
@@ -34,7 +30,8 @@ def cmd_toolkit():
     cl_statement = request.form.get('cl')
     # xmlservice
     itool = iToolKit()
-    itransport = iDB2Call()
+    conn = pyodbc.connect('DSN=LUGDEMO')
+    itransport = DatabaseTransport(conn)
     itool.add(iCmd5250(cl_statement, cl_statement))
     itool.call(itransport)
    
@@ -47,4 +44,5 @@ def cmd_toolkit():
     return render_template('cmd.html', data=data)
 
 app.debug = True
-app.run(host='0.0.0.0', port=int(os.getenv('PORT', 9000)),)
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=int(os.getenv('PORT', 9000)),)
