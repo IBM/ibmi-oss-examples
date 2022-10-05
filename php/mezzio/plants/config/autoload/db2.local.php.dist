@@ -1,0 +1,18 @@
+<?php
+declare(strict_types=1);
+
+
+return [
+    'db' => [
+        'database' => '*LOCAL',
+        'driver' => 'IbmDb2',
+        'driver_options' => [
+        ],
+        'username' => 'CHANGE_ME',
+        'password' => 'CHANGE_ME',
+        'platform' => 'IbmDb2',
+        'platform_options' => [
+            'quote_identifiers' => false,
+        ],
+    ],
+];
