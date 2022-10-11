@@ -54,9 +54,4 @@ return static function (Application $app, MiddlewareFactory $factory, ContainerI
         Plant\Handler\DeletePlantHandler::class,
         'api.plant.delete'
     );
-    $app->get(
-        '/api/plants/modals/save[/{id:\d+}]',
-        Plant\Handler\SaveModalHandler::class,
-        'api.plants.modals.save'
-    );
 };
