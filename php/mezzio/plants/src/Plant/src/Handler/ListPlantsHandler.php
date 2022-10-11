@@ -11,7 +11,7 @@ use Plant\TableGateway\PlantTableGateway;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Rest\RestDispatchTrait;
+use SoBoRed\Mezzio\Rest\RestDispatchTrait;
 
 class ListPlantsHandler implements RequestHandlerInterface
 {

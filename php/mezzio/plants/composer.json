@@ -61,13 +61,13 @@
         "mezzio/mezzio-hal": "^2.2",
         "mezzio/mezzio-helpers": "^5.7",
         "mezzio/mezzio-platesrenderer": "^2.4",
-        "mezzio/mezzio-problem-details": "^1.4"
+        "mezzio/mezzio-problem-details": "^1.4",
+        "sobored/mezzio-rest-helpers": "^1.0"
     },
     "autoload": {
         "psr-4": {
             "App\\": "src/App/src/",
-            "Plant\\": "src/Plant/src/",
-            "Rest\\": "src/Rest/src/"
+            "Plant\\": "src/Plant/src/"
         }
     },
     "autoload-dev": {
@@ -91,7 +91,7 @@
         "enable-codestandard": "Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin::run",
         "cs-check": "phpcs",
         "cs-fix": "phpcbf",
-        "serve": "php -S 0.0.0.0:8080 -t public/",
+        "serve": "php -S 0.0.0.0:9080 -t public/",
         "test": "phpunit --colors=always",
         "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
     },
