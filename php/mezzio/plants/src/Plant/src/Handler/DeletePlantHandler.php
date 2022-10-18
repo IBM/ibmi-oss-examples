@@ -10,7 +10,7 @@ use Plant\TableGateway\PlantTableGateway;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Rest\Exception\NoResourceFoundException;
+use SoBoRed\Mezzio\Rest\Exception\NoResourceFoundException;
 
 class DeletePlantHandler implements RequestHandlerInterface
 {

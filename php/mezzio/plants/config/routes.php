@@ -54,16 +54,4 @@ return static function (Application $app, MiddlewareFactory $factory, ContainerI
         Plant\Handler\DeletePlantHandler::class,
         'api.plant.delete'
     );
-    $app->get(
-        '/api/plants/modals/save[/{id:\d+}]',
-        Plant\Handler\SaveModalHandler::class,
-        'api.plants.modals.save'
-    );
-
-    // API docs
-    $app->get('/api/doc/invalid-parameter', Rest\Doc\InvalidParameterHandler::class);
-    $app->get('/api/doc/method-not-allowed-error', Rest\Doc\MethodNotAllowedHandler::class);
-    $app->get('/api/doc/resource-not-found', Rest\Doc\ResourceNotFoundHandler::class);
-    $app->get('/api/doc/parameter-out-of-range', Rest\Doc\OutOfBoundsHandler::class);
-    $app->get('/api/doc/runtime-error', Rest\Doc\RuntimeErrorHandler::class);
 };
