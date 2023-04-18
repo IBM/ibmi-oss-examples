@@ -4,7 +4,8 @@
 from bottle import request, get, post, static_file, route, run, template
 import ibm_db_dbi as dbi
 from itoolkit import *
-from itoolkit.db2.idb2call import *     #for local jobs
+from itoolkit.db2.idb2call import *  #for local jobs 
+import os   
 
 version = tuple(map(int, dbi.__version__.split('.')))
 if version < (2, 0, 5, 5):
@@ -45,4 +46,4 @@ def cmd_toolkit():
     
     return template('cmd', data=data)
 
-run(host='0.0.0.0', port=9000, debug=True, reloader=True)
+run(host='0.0.0.0', port=os.getenv('PORT', '9000'), debug=True, reloader=True)

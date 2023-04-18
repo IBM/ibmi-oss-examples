@@ -2,6 +2,7 @@
 from bottle import route, run, template, request
 from string import capwords
 import ibm_db_dbi as dbi
+import os
 
 conn = None 
 @route('/', method=('GET', 'POST'))
@@ -48,7 +49,7 @@ def static_assets(path):
     with open(path[1:], "rb") as f:
         return f.read()
 
-run(host='0.0.0.0', port=3333, debug=True, reloader=True)
+run(host='0.0.0.0', port=os.getenv('PORT', '3333'), debug=True, reloader=True)
 
 # Example of running bottle with gunicorn:
 # run(host='0.0.0.0', port=3333, debug=True, reloader=True, server='gunicorn', workers=4)
